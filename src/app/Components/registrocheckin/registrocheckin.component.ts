@@ -122,6 +122,17 @@ export class RegistrocheckinComponent implements OnInit {
   agregarVehiculo() {
 
     const vehiculo = this.datosVehiculosForm.value;
+    
+    if (vehiculo.patente == null){
+      this.uiService.showSnackBar(
+        'Debe ingresar datos para poder cargar el vehículo.',
+        null,
+        3000
+      );
+  
+      return;
+    }
+
     this.vehiculos.push(vehiculo);
 
     this.datosVehiculosForm.reset();
