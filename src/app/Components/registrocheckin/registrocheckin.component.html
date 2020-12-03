@@ -127,17 +127,19 @@
           <button mat-button color="primary" (click)="agregarAcompanante()">Agregar
             <mat-icon>add</mat-icon>
           </button>
+
           <mat-card *ngFor="let acompanante of acompanantes" class="card">
-            <mat-card-header>
-              <div mat-card-avatar class="avatar-image"></div>
-              <mat-card-title>{{acompanante.nombre}} {{acompanante.apellidos}}</mat-card-title>
-              <mat-card-subtitle>Número de Documento: {{acompanante.dni}}</mat-card-subtitle>
-              <mat-card-actions style="margin-top: 2%; margin-left:2%;">
-                <button mat-button color="primary" (click)="quitarAcompanante(acompanante)">Quitar
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </mat-card-actions>
-            </mat-card-header>
+            <div style="display:flex;justify-content:space-between">
+              <mat-card-header>
+                <div mat-card-avatar class="avatar-image"></div>
+                <mat-card-title>{{acompanante.nombre}} {{acompanante.apellidos}}</mat-card-title>
+                <mat-card-subtitle>Número de Documento: {{acompanante.dni}}</mat-card-subtitle>
+              </mat-card-header>
+              <button mat-button color="primary" (click)="quitarAcompanante(acompanante)">Quitar
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
           </mat-card>
         </div>
         <div>
@@ -172,19 +174,22 @@
           <button mat-button color="primary" (click)="agregarVehiculo()">Agregar
             <mat-icon>add</mat-icon>
           </button>
-          <mat-card *ngFor="let vehiculo of vehiculos" class="card">
+
+        </div>
+        <mat-card *ngFor="let vehiculo of vehiculos" class="card">
+          <div style="display:flex;justify-content:space-between">
             <mat-card-header>
               <div mat-card-avatar class="avatar-image-vehicle"></div>
               <mat-card-title>{{vehiculo.marca}} {{vehiculo.modelo}}</mat-card-title>
               <mat-card-subtitle>Número de patente: {{vehiculo.patente}}</mat-card-subtitle>
-              <mat-card-actions style="margin-top: 2%; margin-left:2%;">
-                <button mat-button color="primary" (click)="quitarVehiculo(vehiculo)">Quitar
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </mat-card-actions>
             </mat-card-header>
-          </mat-card>
-        </div>
+            <!-- <mat-card-actions style="margin-top: 2%; margin-left:2%"> -->
+            <button mat-button color="primary" (click)="quitarVehiculo(vehiculo)">Quitar
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <!-- </mat-card-actions> -->
+        </mat-card>
         <div>
           <button mat-button matStepperPrevious color="accent">Volver</button>
         </div>

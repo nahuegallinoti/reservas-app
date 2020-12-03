@@ -108,14 +108,23 @@ export class RegistrocheckinComponent implements OnInit {
   agregarAcompanante() {
 
     const persona = this.datosAcompanantesForm.value;
-    this.acompanantes.push(persona);
-
-    this.datosAcompanantesForm.reset();
-    this.uiService.showSnackBar(
-      'La persona se agregó con éxito.',
+    
+    if(persona.nombre == null  || persona.apellidos == null || persona.dni== null || persona.fechaNacimiento ==null){
+      this.uiService.showSnackBar(
+      'Debe ingresar datos obligatorios para poder cargar acompañantes',
       null,
       3000
     );
+    return;
+    }
+    this.acompanantes.push(persona);
+    this.datosAcompanantesForm.reset();
+    this.uiService.showSnackBar(
+      'El acompañante se agregó con éxito.',
+      null,
+      3000
+    );
+    
 
   }
 
@@ -123,13 +132,12 @@ export class RegistrocheckinComponent implements OnInit {
 
     const vehiculo = this.datosVehiculosForm.value;
     
-    if (vehiculo.patente == null){
+    if (vehiculo.marca == null  || vehiculo.patente == null || vehiculo.modelo== null){
       this.uiService.showSnackBar(
-        'Debe ingresar datos para poder cargar el vehículo.',
+        'Debe ingresar datos obligatorios para poder cargar el vehículo.',
         null,
         3000
       );
-  
       return;
     }
 
