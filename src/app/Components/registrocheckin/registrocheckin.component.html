@@ -127,17 +127,19 @@
           <button mat-button color="primary" (click)="agregarAcompanante()">Agregar
             <mat-icon>add</mat-icon>
           </button>
+
           <mat-card *ngFor="let acompanante of acompanantes" class="card">
-            <mat-card-header>
-              <div mat-card-avatar class="avatar-image"></div>
-              <mat-card-title>{{acompanante.nombre}} {{acompanante.apellidos}}</mat-card-title>
-              <mat-card-subtitle>Número de Documento: {{acompanante.dni}}</mat-card-subtitle>
-              <mat-card-actions style="margin-top: 2%; margin-left:2%;">
-                <button mat-button color="primary" (click)="quitarAcompanante(acompanante)">Quitar
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </mat-card-actions>
-            </mat-card-header>
+            <div style="display:flex;justify-content:space-between">
+              <mat-card-header>
+                <div mat-card-avatar class="avatar-image"></div>
+                <mat-card-title>{{acompanante.nombre}} {{acompanante.apellidos}}</mat-card-title>
+                <mat-card-subtitle>Número de Documento: {{acompanante.dni}}</mat-card-subtitle>
+              </mat-card-header>
+              <button mat-button color="primary" (click)="quitarAcompanante(acompanante)">Quitar
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
           </mat-card>
         </div>
         <div>
@@ -147,33 +149,33 @@
       </form>
     </mat-step>
 
-  <!-- Datos Vehiculos -->
-  <mat-step [stepControl]="datosVehiculosForm" errorMessage="Faltan datos obligatorios">
-    <form [formGroup]="datosVehiculosForm">
-      <ng-template matStepLabel>Datos de Vehículos</ng-template>
-      <div>
-        <mat-form-field>
-          <mat-label>Marca</mat-label>
-          <mat-icon matSuffix>drive_eta</mat-icon>
-          <input matInput type="text" placeholder="Volkswagen" formControlName="marca">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Modelo</mat-label>
-          <mat-icon matSuffix>drive_eta</mat-icon>
-          <input matInput type="text" placeholder="Gol" formControlName="modelo">
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Patente</mat-label>
-          <mat-icon matSuffix>local_convenience_store</mat-icon>
-          <input matInput type="text" placeholder="AAA123" formControlName="patente">
-        </mat-form-field>
-        <button mat-button color="primary" (click)="agregarVehiculo()">Agregar
-          <mat-icon>add</mat-icon>
-        </button>
+    <!-- Datos Vehiculos -->
+    <mat-step [stepControl]="datosVehiculosForm" errorMessage="Faltan datos obligatorios">
+      <form [formGroup]="datosVehiculosForm">
+        <ng-template matStepLabel>Datos de Vehículos</ng-template>
+        <div>
+          <mat-form-field>
+            <mat-label>Marca</mat-label>
+            <mat-icon matSuffix>drive_eta</mat-icon>
+            <input matInput type="text" placeholder="Volkswagen" formControlName="marca">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Modelo</mat-label>
+            <mat-icon matSuffix>drive_eta</mat-icon>
+            <input matInput type="text" placeholder="Gol" formControlName="modelo">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Patente</mat-label>
+            <mat-icon matSuffix>local_convenience_store</mat-icon>
+            <input matInput type="text" placeholder="AAA123" formControlName="patente">
+          </mat-form-field>
+          <button mat-button color="primary" (click)="agregarVehiculo()">Agregar
+            <mat-icon>add</mat-icon>
+          </button>
 
-      </div>
+        </div>
         <mat-card *ngFor="let vehiculo of vehiculos" class="card">
           <div style="display:flex;justify-content:space-between">
             <mat-card-header>
@@ -188,11 +190,11 @@
           </div>
           <!-- </mat-card-actions> -->
         </mat-card>
-      <div>
-        <button mat-button matStepperPrevious color="accent">Volver</button>
-      </div>
-    </form>
-  </mat-step>
+        <div>
+          <button mat-button matStepperPrevious color="accent">Volver</button>
+        </div>
+      </form>
+    </mat-step>
 
     <!-- Cancelación Pago -->
     <mat-step [stepControl]="cancelacionPagoForm" errorMessage="Faltan datos obligatorios">
