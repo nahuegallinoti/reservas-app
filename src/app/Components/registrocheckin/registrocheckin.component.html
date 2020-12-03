@@ -193,16 +193,17 @@
 
     <!-- Cancelación Pago -->
     <mat-step [stepControl]="cancelacionPagoForm" errorMessage="Faltan datos obligatorios">
+
       <form [formGroup]="cancelacionPagoForm">
         <ng-template matStepLabel>Pago de Hospedaje</ng-template>
         <div>
           <mat-form-field>
             <mat-label>Total:</mat-label>
-            <input [(ngModel)]="evento?.extendedProps.montoTotal" matInput type="text" formControlName="total">
+            <input [ngModel]="evento?.extendedProps.montoTotal" matInput type="text" formControlName="total">
           </mat-form-field>
           <mat-form-field>
             <mat-label>Seña:</mat-label>
-            <input [(ngModel)]="evento?.extendedProps.montoSenia" matInput type="text" formControlName="sena">
+            <input [ngModel]="evento?.extendedProps.montoSenia" matInput type="text" formControlName="sena">
           </mat-form-field>
         </div>
         <div>
@@ -215,6 +216,7 @@
           <button mat-button matStepperNext color="primary" (click)="registrarCheckIn()">Guardar</button>
         </div>
       </form>
+
     </mat-step>
   </mat-horizontal-stepper>
 </div>
