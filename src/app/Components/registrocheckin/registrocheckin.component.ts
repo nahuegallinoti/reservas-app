@@ -55,7 +55,6 @@ export class RegistrocheckinComponent implements OnInit {
 
     this.reservaService.buscarEventos();
 
-
     this.datosPersonalesForm = this._formBuilder.group({
       nombre: [],
       apellidos: [],
@@ -89,7 +88,7 @@ export class RegistrocheckinComponent implements OnInit {
       total: [],
       remanente: [],
     });
-
+    
   }
 
   registrarCheckIn() {

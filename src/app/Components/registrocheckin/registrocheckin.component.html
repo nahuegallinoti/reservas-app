@@ -106,23 +106,23 @@
           <mat-form-field>
             <mat-label>Nombre</mat-label>
             <mat-icon matSuffix>perm_identity</mat-icon>
-            <input matInput type="text" placeholder="Juan" formControlName="nombre" required>
+            <input matInput type="text" placeholder="Juan" formControlName="nombre">
           </mat-form-field>
           <mat-form-field>
             <mat-label>Apellidos</mat-label>
             <mat-icon matSuffix>perm_identity</mat-icon>
-            <input matInput type="text" placeholder="López Romero" formControlName="apellidos" required>
+            <input matInput type="text" placeholder="López Romero" formControlName="apellidos">
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
             <mat-label>Número de Documento</mat-label>
             <mat-icon matSuffix>credit_card</mat-icon>
-            <input matInput type="number" placeholder="38746321" formControlName="dni" required>
+            <input matInput type="number" placeholder="38746321" formControlName="dni">
           </mat-form-field>
           <mat-form-field>
             <mat-label>Fecha de Nacimiento</mat-label>
-            <input matInput type="date" formControlName="fechaNacimiento" required>
+            <input matInput type="date" formControlName="fechaNacimiento">
           </mat-form-field>
           <button mat-button color="primary" (click)="agregarAcompanante()">Agregar
             <mat-icon>add</mat-icon>
@@ -192,6 +192,7 @@
         </mat-card>
         <div>
           <button mat-button matStepperPrevious color="accent">Volver</button>
+          <button mat-button matStepperNext color="primary">Siguiente</button>
         </div>
       </form>
     </mat-step>
@@ -213,11 +214,12 @@
         </div>
         <div>
           <mat-form-field>
-            <mat-label>Remanente:</mat-label>
-            <input matInput formControlName="remanente">
+            <mat-label>Pendiente:</mat-label>
+            <input [ngModel]="evento?.extendedProps.montoTotal - evento?.extendedProps.montoSenia" matInput formControlName="remanente">
           </mat-form-field>
         </div>
         <div>
+          <button mat-button matStepperPrevious color="accent">Volver</button>
           <button mat-button matStepperNext color="primary" (click)="registrarCheckIn()">Guardar</button>
         </div>
       </form>
