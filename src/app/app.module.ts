@@ -28,6 +28,7 @@ import { environment } from 'src/environments/environment';
 import { ReservasComponent } from './components/reservas/reservas.component';
 import { CheckInComponent } from './Components/check-in/check-in.component';
 import { RegistrocheckinComponent } from './Components/registrocheckin/registrocheckin.component';
+import { ConsumosComponent } from './Components/consumos/consumos.component'
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { RegistrocheckinComponent } from './Components/registrocheckin/registroc
     ReservasComponent,
     CheckInComponent,
     RegistrocheckinComponent,
+    ConsumosComponent
 
   ],
   imports: [

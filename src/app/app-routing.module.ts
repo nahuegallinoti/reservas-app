@@ -8,6 +8,9 @@ import { AuthGuard } from './Services/auth/auth-guard';
 import { ReservasComponent } from './components/reservas/reservas.component';
 import { CheckInComponent } from './Components/check-in/check-in.component';
 import { RegistrocheckinComponent } from './Components/registrocheckin/registrocheckin.component';
+import { ConsumosComponent } from './Components/consumos/consumos.component'
+
+
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -37,7 +40,11 @@ const appRoutes: Routes = [
     component: RegistrocheckinComponent,
     canActivate: [AuthGuard],
   },
-
+  {
+    path:'consumos',
+    component: ConsumosComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: '/calendario' },
 ];
 
