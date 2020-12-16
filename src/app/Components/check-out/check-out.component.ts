@@ -63,10 +63,10 @@ export class CheckOutComponent implements OnInit {
           var fechaDesde = new Date(evento.extendedProps.fechaDesde);
           var fechaHasta = new Date(evento.extendedProps.fechaHasta);
           var fechaActual = new Date();
-
-          if (fechaHasta >= fechaActual)
+          
+          if (fechaHasta >= fechaActual && fechaDesde <= fechaActual) {
             return evento;
-
+          }
         });
 
         this.eventos = eventos;
