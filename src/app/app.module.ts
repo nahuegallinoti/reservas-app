@@ -25,7 +25,7 @@ import { ReservaService } from './Services/evento.service';
 import { UIService } from './Shared/ui.service';
 
 import { environment } from 'src/environments/environment';
-import { ReservasComponent } from './components/reservas/reservas.component';
+import { ReservasComponent } from './Components/reservas/reservas.component';
 import { CheckInComponent } from './Components/check-in/check-in.component';
 import { RegistrocheckinComponent } from './Components/registrocheckin/registrocheckin.component';
 import { CheckOutComponent } from './Components/check-out/check-out.component';
