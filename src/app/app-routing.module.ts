@@ -10,6 +10,7 @@ import { CheckInComponent } from './Components/check-in/check-in.component';
 import { RegistrocheckinComponent } from './Components/registrocheckin/registrocheckin.component';
 import { CheckOutComponent } from './Components/check-out/check-out.component';
 import { RegistrocheckoutComponent } from './Components/registrocheckout/registrocheckout.component';
+import { ConsumosComponent } from './Components/consumos/consumos.component'
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -49,9 +50,12 @@ const appRoutes: Routes = [
     component: RegistrocheckoutComponent,
     canActivate: [AuthGuard],
   },
-
-
-  { path: '**', redirectTo: '/checkin' },
+  { 
+    path:'consumos',
+    component: ConsumosComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: '**', redirectTo: '/checkout' },
 ];
 
 @NgModule({

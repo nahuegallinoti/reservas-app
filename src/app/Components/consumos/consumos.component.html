@@ -1,0 +1,42 @@
+
+
+<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 120px;">
+  <button mat-button style="margin-left: 230px;color:#3f51b5;">+</button>
+  <div class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource">
+  <!-- Position Column -->
+  <ng-container matColumnDef="descripcion">
+    <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+    <td mat-cell *matCellDef="let data"> {{data.descripcion}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="monto">
+    <th mat-header-cell *matHeaderCellDef> Monto </th>
+    <td mat-cell *matCellDef="let data"> ${{data.monto}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="cabana">
+    <th mat-header-cell *matHeaderCellDef> Cabaña </th>
+    <td mat-cell *matCellDef="let data"> {{data.cabana}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fecha">
+    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+    <td mat-cell *matCellDef="let data"> {{data.fecha  | date:'dd-MM-yyyy'}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <!-- <ng-container matColumnDef="symbol">
+    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+  </ng-container> -->
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+  </div>
+</div>

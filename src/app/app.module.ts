@@ -30,6 +30,7 @@ import { CheckInComponent } from './Components/check-in/check-in.component';
 import { RegistrocheckinComponent } from './Components/registrocheckin/registrocheckin.component';
 import { CheckOutComponent } from './Components/check-out/check-out.component';
 import { RegistrocheckoutComponent } from './Components/registrocheckout/registrocheckout.component';
+import { ConsumosComponent } from './Components/consumos/consumos.component'
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { RegistrocheckoutComponent } from './Components/registrocheckout/registr
     RegistrocheckinComponent,
     CheckOutComponent,
     RegistrocheckoutComponent,
+    ConsumosComponent
 
   ],
   imports: [
