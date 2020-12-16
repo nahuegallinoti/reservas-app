@@ -5,7 +5,7 @@ import { DisponibilidadComponent } from './Components/disponibilidad/disponibili
 import { CalendarComponent } from './Components/calendar/calendar.component';
 import { LoginComponent } from './Services/auth/login/login.component';
 import { AuthGuard } from './Services/auth/auth-guard';
-import { ReservasComponent } from './components/reservas/reservas.component';
+import { ReservasComponent } from './Components/reservas/reservas.component';
 import { CheckInComponent } from './Components/check-in/check-in.component';
 import { RegistrocheckinComponent } from './Components/registrocheckin/registrocheckin.component';
 import { CheckOutComponent } from './Components/check-out/check-out.component';
