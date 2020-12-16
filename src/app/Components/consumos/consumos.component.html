@@ -1,29 +1,32 @@
-<div fxLayout="column" fxLayoutAlign="center center">
+<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 120px;">
   <div class="mat-elevation-z8">
 
   <table mat-table [dataSource]="dataSource">
 
 
 
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
 
   <!-- Position Column -->
-  <ng-container matColumnDef="position">
+  <ng-container matColumnDef="descripcion">
     <th mat-header-cell *matHeaderCellDef> Descripcion </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    <td mat-cell *matCellDef="let data"> {{data.descripcion}} </td>
   </ng-container>
 
   <!-- Name Column -->
-  <ng-container matColumnDef="name">
+  <ng-container matColumnDef="monto">
     <th mat-header-cell *matHeaderCellDef> Monto </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <td mat-cell *matCellDef="let data"> ${{data.monto}} </td>
   </ng-container>
 
   <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
+  <ng-container matColumnDef="cabana">
     <th mat-header-cell *matHeaderCellDef> Cabaña </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+    <td mat-cell *matCellDef="let data"> {{data.cabana}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fecha">
+    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+    <td mat-cell *matCellDef="let data"> {{data.fecha  | date:'yyyy-MM-dd'}} </td>
   </ng-container>
 
   <!-- Symbol Column -->
