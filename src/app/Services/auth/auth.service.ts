@@ -52,10 +52,6 @@ export class AuthService {
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         this.uiService.loadingStateChanged.next(false);
-        this.uiService.showSnackBar("Usuario logueado", null, {
-          duration: 3000,
-        });
-
       })
       .catch((error) => {
         this.uiService.loadingStateChanged.next(false);
