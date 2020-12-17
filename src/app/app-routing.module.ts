@@ -11,6 +11,7 @@ import { RegistrocheckinComponent } from './Components/registrocheckin/registroc
 import { CheckOutComponent } from './Components/check-out/check-out.component';
 import { RegistrocheckoutComponent } from './Components/registrocheckout/registrocheckout.component';
 import { ConsumosComponent } from './Components/consumos/consumos.component'
+import { FormConsumos } from './Components/consumos/form-consumos/form-consumos.component'
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -53,6 +54,11 @@ const appRoutes: Routes = [
   { 
     path:'consumos',
     component: ConsumosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path:'form-consumos',
+    component: FormConsumos,
     canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: '/checkout' },
