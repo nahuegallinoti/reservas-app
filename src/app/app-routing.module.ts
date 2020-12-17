@@ -9,6 +9,7 @@ import { ReservasComponent } from './components/reservas/reservas.component';
 import { CheckInComponent } from './Components/check-in/check-in.component';
 import { RegistrocheckinComponent } from './Components/registrocheckin/registrocheckin.component';
 import { ConsumosComponent } from './Components/consumos/consumos.component'
+import { FormConsumos } from './Components/consumos/form-consumos/form-consumos.component'
 
 
 
@@ -43,6 +44,11 @@ const appRoutes: Routes = [
   {
     path:'consumos',
     component: ConsumosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path:'form-consumos',
+    component: FormConsumos,
     canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: '/calendario' },
