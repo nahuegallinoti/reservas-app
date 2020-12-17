@@ -1,6 +1,7 @@
 <div class="container">
+  <div *ngIf="eventos.length == 0">No existen eventos en la fecha</div>
   <div fxLayout="row">
-    <div fxFlex.gt-sm="100%">
+    <div fxFlex.gt-sm="100%">    
       <mat-card>
         <mat-card-content>
           <mat-list>

@@ -27,11 +27,11 @@ import { UIService } from './Shared/ui.service';
 import { environment } from 'src/environments/environment';
 import { ReservasComponent } from './Components/reservas/reservas.component';
 import { CheckInComponent } from './Components/check-in/check-in.component';
-import { RegistrocheckinComponent } from './Components/registrocheckin/registrocheckin.component';
+import { RegistrocheckinComponent } from './Components/check-in/registrocheckin/registrocheckin.component';
 import { CheckOutComponent } from './Components/check-out/check-out.component';
-import { RegistrocheckoutComponent } from './Components/registrocheckout/registrocheckout.component';
+import { RegistrocheckoutComponent } from './Components/check-out/registrocheckout/registrocheckout.component';
 import { ConsumosComponent } from './Components/consumos/consumos.component'
-import { FormConsumos } from './Components/consumos/form-consumos/form-consumos.component'
+import { FormConsumosComponent } from './Components/consumos/form-consumos/form-consumos.component'
 
 @NgModule({
   declarations: [
@@ -48,7 +48,7 @@ import { FormConsumos } from './Components/consumos/form-consumos/form-consumos.
     CheckOutComponent,
     RegistrocheckoutComponent,
     ConsumosComponent,
-    FormConsumos
+    FormConsumosComponent
 
   ],
   imports: [
