@@ -61,10 +61,14 @@ export class CheckOutComponent implements OnInit {
 
         eventos = eventos.filter(function (evento) {
           var fechaDesde = new Date(evento.extendedProps.fechaDesde);
+          var fechaDesdee = fechaDesde.toLocaleDateString();
+
           var fechaHasta = new Date(evento.extendedProps.fechaHasta);
-          var fechaActual = new Date();
+          var fechaHastaa = fechaHasta.toLocaleDateString();
+
+          var fechaActual = new Date().toLocaleDateString();
           
-          if (fechaHasta >= fechaActual && fechaDesde <= fechaActual) {
+          if (fechaHastaa >= fechaActual && fechaDesdee <= fechaActual) {
             return evento;
           }
         });

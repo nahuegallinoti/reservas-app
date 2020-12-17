@@ -67,10 +67,11 @@ export class CheckInComponent implements OnInit {
 
         eventos = eventos.filter(function (evento) {
           var fechaDesde = new Date(evento.extendedProps.fechaDesde);
-          var fechaHasta = new Date(evento.extendedProps.fechaHasta);
-          var fechaActual = new Date();
+          var fechaDesdee = fechaDesde.toLocaleDateString();
+          
+          var fechaActual = new Date().toLocaleDateString();
 
-          if (fechaDesde >= fechaActual)
+          if (fechaDesdee >= fechaActual)
             return evento;
 
         });

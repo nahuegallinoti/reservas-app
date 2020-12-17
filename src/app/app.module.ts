@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { FormReservaComponent } from './Components/calendar/form-reserva/form-reserva.component';
 import { CalendarComponent } from './Components/calendar/calendar.component';
 import { MenuComponent } from './Components/menu/menu.component';
-import { DisponibilidadComponent } from './Components/disponibilidad/disponibilidad.component';
 import { LoginComponent } from './Services/auth/login/login.component';
 import { SignupComponent } from './Services/auth/signup/signup.component';
 import { AuthService } from './Services/auth/auth.service';
@@ -39,7 +38,6 @@ import { FormConsumosComponent } from './Components/consumos/form-consumos/form-
     FormReservaComponent,
     CalendarComponent,
     MenuComponent,
-    DisponibilidadComponent,
     LoginComponent,
     SignupComponent,
     ReservasComponent,
