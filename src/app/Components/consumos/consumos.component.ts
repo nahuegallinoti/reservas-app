@@ -70,7 +70,8 @@ export class ConsumosComponent implements OnInit{
   
   openDialog(): void {
     const dialogRef = this.dialog.open(FormConsumosComponent, {
-      width: '250px',
+      width: "540px",
+      height:"600px",
       data: {name: this.name, animal: this.animal}
     });
 
