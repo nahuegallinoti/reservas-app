@@ -6,7 +6,7 @@ import { Component, OnInit, Input, ViewChild,Inject,OnDestroy } from '@angular/c
 
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
-
+import { faArchive } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -23,7 +23,8 @@ export interface DialogData {
 
 export class FormConsumosComponent implements OnInit, OnDestroy {
   faPen = faPen;
-  faDollarSign  = faDollarSign 
+  faDollarSign  = faDollarSign ;
+  faArchive = faArchive;
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<FormConsumosComponent>,

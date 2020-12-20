@@ -1,11 +1,11 @@
-<form fxFlex fxLayout="column" class="formWidth">
+<form fxFlex fxLayout="column" class="fullWidth">
   <div>
     <mat-toolbar color="primary" style="padding-left: 16px; width: 100%;">Agregar consumo</mat-toolbar>
   </div>
   <div fxFlex fxLayoutGap="10px" class="formulario">
     <mat-form-field appearance="standard" class="fullWidth">
       <mat-label>
-        <fa-icon [icon]="faPen"></fa-icon> Descripcion
+        <fa-icon [icon]="faPen"></fa-icon> Descripción
       </mat-label>
       <input matInput formControlName="Descripcion" />
     </mat-form-field>
@@ -14,6 +14,12 @@
     <mat-form-field appearance="standard" hintLabel="Solo números" class="dni">
       <mat-label>
         <fa-icon [icon]="faDollarSign"></fa-icon> Monto
+      </mat-label>
+      <input matInput formControlName="monto" />
+    </mat-form-field>
+    <mat-form-field appearance="standard" hintLabel="Elige una categoria" class="categoria">
+      <mat-label>
+        <fa-icon [icon]="faArchive"></fa-icon> Categoría
       </mat-label>
       <input matInput formControlName="monto" />
     </mat-form-field>

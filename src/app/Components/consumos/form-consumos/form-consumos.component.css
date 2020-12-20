@@ -8,11 +8,17 @@
   }
   
   .dni {
-    width: 50%;
+    width: 45%;
     /* padding-right: 5px; */
-    padding-left: 25px;
+    padding-left: 30px;
   }
-  
+  .categoria {
+    width: 45%;
+    /* padding-right: 5px; */
+    padding-left: 20px;
+  }
+
+
   .telefono {
     width: 50%;
     padding-left: 5px;
