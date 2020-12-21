@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { Consumos } from 'src/app/Models/consumos.model';
+import { Producto } from 'src/app/Models/producto.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -38,7 +38,7 @@ export class ConsumosComponent implements OnInit{
   panelOpenState = false;
 
   constructor(private dialog: MatDialog,
-              private reservaService: ReservaService,){
+              private reservaService: ReservaService){
 
   }
 
@@ -61,7 +61,6 @@ export class ConsumosComponent implements OnInit{
         });
 
         this.eventos = eventos;
-        console.log(eventos);
       }
     );
 

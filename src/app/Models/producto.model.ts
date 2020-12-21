@@ -4,10 +4,9 @@ import { Reserva } from './reserva.model'
 
 
 
-export class Consumos extends BaseClass<Consumos>{
+export class Producto extends BaseClass<Producto>{
+    id: number;
     descripcion: string;
-    monto: number;
-    cabana: Cabana;
-    fecha: Date;
+    precio: number;
 }
 
