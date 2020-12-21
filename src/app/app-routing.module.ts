@@ -11,6 +11,7 @@ import { CheckOutComponent } from './Components/check-out/check-out.component';
 import { RegistrocheckoutComponent } from './Components/check-out/registrocheckout/registrocheckout.component';
 import { ConsumosComponent } from './Components/consumos/consumos.component'
 import { FormConsumosComponent } from './Components/consumos/form-consumos/form-consumos.component'
+import { AltaProductosComponent } from './Components/alta-producto/alta-productos.component'
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -53,6 +54,11 @@ const appRoutes: Routes = [
   {
     path:'form-consumos',
     component: FormConsumosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path:'alta-productos',
+    component: AltaProductosComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: '/consumos' },
