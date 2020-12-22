@@ -1,4 +1,14 @@
-import { Component} from '@angular/core';
+import {Component} from '@angular/core';
+
+export interface PeriodicElement {
+  producto: string;
+  precio: number;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {producto: "Coca/cola", precio: 123},
+
+];
 
 @Component({
   selector: 'alta-productos',
@@ -7,6 +17,7 @@ import { Component} from '@angular/core';
 })
 
 export class AltaProductosComponent{
-
+  displayedColumns: string[] = ['position', 'name'];
+  dataSource = ELEMENT_DATA;
   
 }
