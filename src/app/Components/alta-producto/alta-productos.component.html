@@ -1,5 +1,5 @@
 
-<div fxLayout="column" fxLayoutAlign="center center">
+<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 5rem">
     <div class="top" fxLayout="column">
         <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -10,7 +10,7 @@
         </ng-container>
      
        
-        <ng-container matColumnDef="name">
+        <ng-container matColumnDef="name" style="margin-left: 10px">
           <th mat-header-cell *matHeaderCellDef> Precio </th>
           <td mat-cell *matCellDef="let element"> $123 </td>
         </ng-container>
