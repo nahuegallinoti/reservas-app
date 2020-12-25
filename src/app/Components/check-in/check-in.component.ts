@@ -63,8 +63,6 @@ export class CheckInComponent implements OnInit {
           else return -1;
         });
 
-        console.log(eventos);
-
         eventos = eventos.filter(function (evento) {
           var fechaDesde = new Date(evento.extendedProps.fechaDesde);
           var fechaDesdee = fechaDesde.toLocaleDateString();
@@ -77,7 +75,6 @@ export class CheckInComponent implements OnInit {
         });
         
         this.eventos = eventos;
-        console.log(eventos);
       }
     );
 
@@ -89,7 +86,7 @@ export class CheckInComponent implements OnInit {
   }
 
   mostrarDetalleReserva(reserva: Reserva): void {
-    console.log(reserva);
+
   }
 
 }

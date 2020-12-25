@@ -1,11 +1,11 @@
-<form [formGroup]="consumosForm" (ngSubmit)="guardarConsumos()" fxFlex fxLayout="column" class="fullWidth">
+<form [formGroup]="consumosForm" fxFlex fxLayout="column" class="fullWidth">
   <div>
     <mat-toolbar color="primary" style="padding-left: 16px; width: 100%;">Agregar consumo</mat-toolbar>
   </div>
   <div fxFlex fxLayoutGap="10px" class="formulario">
 
     <mat-form-field appearance="standard">
-      <mat-label>Producto/Servicio</mat-label>
+      <mat-label>Seleccione un consumo</mat-label>
       <mat-select (closed)="calcularSubTotal()" formControlName="descripcion"
         (selectionChange)="onConsumoChange($event)">
         <mat-option *ngFor="let producto of productos" [value]="producto">
@@ -35,14 +35,31 @@
   </div>
 
   <mat-list>
-    <mat-list-item *ngFor="let consumo of consumos">
+    <!-- <mat-list-item class="mat-list-item" *ngFor="let consumo of consumo?.consumos">
       <mat-icon matListIcon>check_circle_outline</mat-icon>
-      <h3 matLine> {{consumo.producto.descripcion}} </h3>
+      <h3 matLine>{{consumo.producto.descripcion}} </h3>
       <p matLine>
-        <span> {{consumo.monto}} </span>
+        <span> Precio: {{consumo.monto}} </span>
       </p>
-    </mat-list-item>
+      <p matLine>
+        <span>Fecha: {{consumo.fecha | date: 'dd/MM/yyyy'}} </span>
+      </p>    
+    </mat-list-item> -->
+    <mat-card *ngFor="let consumo of consumo?.consumos" class="card" style="width: 90%; margin-left: 4%; margin-bottom: 2%">
+      <div style="display:flex;justify-content:space-between">
+        <mat-card-header>
+          <div mat-card-avatar class="avatar-image-consumo"></div>
+          <mat-card-title>{{consumo.producto.descripcion}}</mat-card-title>
+          <mat-card-subtitle>Precio: {{consumo.monto}}</mat-card-subtitle>
+          <mat-card-subtitle>Fecha: {{consumo.fecha}}</mat-card-subtitle>
+        </mat-card-header>
+        <button mat-button color="primary" (click)="quitarConsumo(consumo)">Quitar
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <!-- </mat-card-actions> -->
+    </mat-card>
   </mat-list>
 
-  <button mat-raised-button>Guardar</button>
+  <button mat-button color="primary" (click)="guardarConsumos()">Guardar</button>
 </form>

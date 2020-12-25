@@ -6,14 +6,13 @@
         <mat-card-content>
           <mat-list>
 
-            <mat-list-item *ngFor="let evento of eventos; index as eventoId" class="card" style="background-color:#51a81f;">
+            <mat-list-item *ngFor="let evento of eventos; index as eventoId" class="card" style="background-color:#b7e46f;">
 
               <h3 matLine>Cabaña: {{evento.extendedProps.cabana.nombre}}</h3>
               <h3 matLine>Titular de Reserva: {{evento.extendedProps.cliente.nombreYApellido}}</h3>
 
               <mat-card-actions style="margin-top: 2%; margin-left:2%">
-                <button mat-raised-button (click)="openDialog()" style="color:#335daa;">Consultar Consumos</button>
-                <button mat-raised-button (click)="openDialog()" style="color:#51a81f;">+ Agregar Consumo</button>
+                <button mat-raised-button (click)="openDialog(evento)" style="color:#51a81f;">+ Agregar / Consultar Consumos</button>
               </mat-card-actions>
 
               <mat-card-actions style="margin-top: 2%; margin-left:2%">

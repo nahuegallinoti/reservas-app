@@ -4,6 +4,7 @@ import { Estado } from './estado.model';
 import { BaseClass } from './baseClass.model';
 
 export class Reserva extends BaseClass<Reserva> {
+  id: number;
   fechaCreacion: Date;
   cliente: Cliente;
   idCabania: number;

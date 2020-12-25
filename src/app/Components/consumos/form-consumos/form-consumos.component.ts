@@ -11,12 +11,14 @@ import { ProductoService } from 'src/app/Services/producto.service';
 import { Subscription } from 'rxjs';
 import { Producto } from 'src/app/Models/producto.model';
 import { ReturnStatement, ThisReceiver } from '@angular/compiler';
-import { Consumo } from 'src/app/Models/consumo.model';
+import { Consumo, ItemConsumo } from 'src/app/Models/consumo.model';
+import { ConsumoService } from 'src/app/Services/consumo.service';
+import { Reserva } from 'src/app/Models/reserva.model';
+import { UIService } from 'src/app/Shared/ui.service';
 
 
 export interface DialogData {
-  animal: string;
-  name: string;
+  reserva: Reserva;
 }
 
 @Component({
@@ -26,13 +28,17 @@ export interface DialogData {
 })
 
 export class FormConsumosComponent implements OnInit, OnDestroy {
+
   faPen = faPen;
   faDollarSign = faDollarSign;
   faArchive = faArchive;
+
   productosSubscription: Subscription;
   productos: Producto[] = [];
-  consumos: Consumo[] = [];
   selectedProducto: Producto;
+
+  consumosSubscription: Subscription;
+  consumo: Consumo = new Consumo();
 
   cantidades: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   cantidadSelected: 1;
@@ -48,6 +54,8 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<FormConsumosComponent>,
     private productoService: ProductoService,
+    private consumoService: ConsumoService,
+    private uiService: UIService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit(): void {
@@ -57,7 +65,19 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.consumosSubscription = this.consumoService.consumosChanged.subscribe(
+      (consumos) => {
+        let consumosReserva = consumos.find(x => x.reserva.id == this.data.reserva.id);
+
+        if (consumosReserva != undefined) {
+          this.consumo = consumosReserva;
+        }
+
+      }
+    );
+
     this.productoService.buscarProductos();
+    this.consumoService.obtenerConsumosAnteriores();
 
   }
 
@@ -81,21 +101,39 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
     this.cantidadSelected = cantidad.value;
   }
 
+  quitarConsumo(consumo) {
+    const index: number = this.consumo.consumos.indexOf(consumo);
+
+    if (index !== -1) {
+      this.consumo.consumos.splice(index, 1);
+    }
+
+    this.uiService.showSnackBar(
+      'El consumo se quitó de la lista.',
+      null,
+      3000
+    );
+
+  }
 
   agregarConsumo() {
-    let consumo = new Consumo();
 
-    consumo.producto = this.selectedProducto;
+    let itemConsumo = new ItemConsumo();
 
-    consumo.cantidad = this.cantidadSelected;
+    itemConsumo.producto = this.selectedProducto;
+
+    itemConsumo.cantidad = this.cantidadSelected;
     this.cantidadSelected = 1;
 
-    let subtotal = consumo.producto.precio * consumo.cantidad;
-    consumo.monto = subtotal;
+    let subtotal = itemConsumo.producto.precio * itemConsumo.cantidad;
+    itemConsumo.monto = subtotal;
 
-    console.log(consumo);
-    this.consumos.push(consumo);
-    console.log(this.consumos);
+    itemConsumo.fecha = new Date();
+
+    this.consumo.reserva = this.data.reserva;
+
+    this.consumo.consumos.push(itemConsumo);
+
     this.resetForm();
   }
 
@@ -111,8 +149,11 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
   }
 
   guardarConsumos() {
-    //Guardar consumos
+
     this.resetForm();
+
+    this.consumoService.guardarConsumo(this.consumo);
+    this.consumoService.obtenerConsumosAnteriores();
   }
 
 }

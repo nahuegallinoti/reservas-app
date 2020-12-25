@@ -1,8 +1,4 @@
 import { Component, OnInit} from '@angular/core';
-import { Producto } from 'src/app/Models/producto.model';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { FormConsumosComponent } from './form-consumos/form-consumos.component';
 import { ReservaService } from 'src/app/Services/evento.service';
@@ -17,12 +13,6 @@ export interface fakeData {
   fecha: Date
 }
 
-const DATA: fakeData[] = [
-  {descripcion: 'FrigoBar', monto: 1234, cabana: 'azul', fecha: new Date()},
-  {descripcion: 'Limpieza', monto: 789, cabana: 'blanca', fecha: new Date()},
-  {descripcion: 'Cartas', monto: 654, cabana: 'verde', fecha: new Date()},
-];
-
 @Component({
   selector: 'app-consumos',
   templateUrl: './consumos.component.html',
@@ -31,8 +21,6 @@ const DATA: fakeData[] = [
 
 export class ConsumosComponent implements OnInit{
 
-  animal: string;
-  name: string;
   eventosSubscription: Subscription;
   eventos: Evento[] = [];
   panelOpenState = false;
@@ -67,20 +55,17 @@ export class ConsumosComponent implements OnInit{
     this.reservaService.buscarEventos();
   }
   
-  openDialog(): void {
+  openDialog(evento: Evento): void {
     const dialogRef = this.dialog.open(FormConsumosComponent, {
-      width: "40vw",
+      width: "30vw",
       height:"40vw",
-      data: {name: this.name, animal: this.animal}
+      data: {reserva: evento}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');
-      this.animal = result;
-      console.log(result);
     });
   }
 
   displayedColumns: string[] = ['descripcion', 'monto', 'cabana','fecha'];
-  dataSource = DATA;
 }

@@ -57,8 +57,6 @@ export class CheckOutComponent implements OnInit {
           else return -1;
         });
 
-        console.log(eventos);
-
         eventos = eventos.filter(function (evento) {
           var fechaDesde = new Date(evento.extendedProps.fechaDesde);
           var fechaDesdee = fechaDesde.toLocaleDateString();
@@ -74,7 +72,6 @@ export class CheckOutComponent implements OnInit {
         });
 
         this.eventos = eventos;
-        console.log(eventos);
       }
     );
 
