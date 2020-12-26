@@ -2,29 +2,30 @@
 
 
     <div class="top" fxLayout="column">
-        <div fxLayoutAlign="end">
-            <button>+</button>
-        </div>
+       
         <div class="mat-elevation-z8">
 
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-                <ng-container matColumnDef="position">
+                <ng-container matColumnDef="descripcion">
                     <th mat-header-cell *matHeaderCellDef> Producto/Servicio </th>
                     <td mat-cell *matCellDef="let element"> Coca cola </td>
                 </ng-container>
 
 
-                <ng-container matColumnDef="name" style="margin-left: 10px">
+                <ng-container matColumnDef="precio" style="margin-left: 10px">
                     <th mat-header-cell *matHeaderCellDef> Precio </th>
                     <td mat-cell *matCellDef="let element"> $123 </td>
                 </ng-container>
 
                 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-header-row *matHeaderRowDef="Columnas"></tr>
+                <tr mat-row *matRowDef="let row; columns: Columnas;"></tr>
             </table>
 
+        </div>
+        <div fxLayoutAlign="end">
+            <button mat-button color="primary" style="margin-top: 10px;">Agregar</button>
         </div>
     </div>
 

@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 
 export interface PeriodicElement {
-  producto: string;
+  descripcion: string;
   precio: number;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {producto: "Coca/cola", precio: 123},
+  {descripcion: "Coca/cola", precio: 123},
 
 ];
 
@@ -17,7 +17,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class AltaProductosComponent{
-  displayedColumns: string[] = ['position', 'name'];
+  Columnas: string[] = ['descripcion', 'precio'];
   dataSource = ELEMENT_DATA;
   
 }
