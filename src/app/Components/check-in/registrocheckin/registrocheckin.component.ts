@@ -94,12 +94,18 @@ export class RegistrocheckinComponent implements OnInit {
   registrarCheckIn() {
 
     let checkIn = new CheckIn();
-
+    
     checkIn.titular = this.datosPersonalesForm.value;
     checkIn.datosDomicilio = this.datosContactoForm.value;
     checkIn.acompanantes = this.acompanantes;
     checkIn.vehiculos = this.vehiculos;
+
+    this.evento.extendedProps.realizoCheckIn = true;
+
+    this.reservaService.actualizarReserva(this.evento.id, this.evento);
+    
     checkIn.evento = this.evento;
+
     this._checkinService.guardarCheckin(checkIn);
 
   }

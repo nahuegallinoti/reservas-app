@@ -4,6 +4,7 @@ import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Consumo } from '../Models/consumo.model';
 import { UIService } from '../Shared/ui.service';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -100,7 +101,7 @@ export class ConsumoService {
             consumo.id = id;
             consumo.reserva = consumo.reserva;
 
-            // consumo.consumos.forEach(consumo => consumo.fecha = consumo.fecha.toLocaleDateString());
+            consumo.consumos.map(consumo => consumo.fecha = moment(consumo.fecha.toDate()).format('L'));
             consumo.consumos = consumo.consumos;
 
             return consumo;

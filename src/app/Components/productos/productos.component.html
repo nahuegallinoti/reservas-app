@@ -3,7 +3,7 @@
         <mat-form-field fxFlexAlign="center">
             <input matInput type="text" (keyup)="filtrar($event.target.value)" placeholder="Buscar">
         </mat-form-field>
-        <div class="mat-elevation-z8 productos">
+        <div class="mat-elevation-z8">
             <table mat-table matSort [dataSource]="productos">
                 <ng-container matColumnDef="descripcion">
                     <th mat-header-cell *matHeaderCellDef> Descripcion </th>
@@ -18,12 +18,12 @@
                 <tr mat-header-row *matHeaderRowDef="columnas"></tr>
                 <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
             </table>
-            <mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 10, 25, 100]">
+            <mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 5, 10, 25, 50]">
             </mat-paginator>
         </div>
 
         
-    <button class="button btnAgregarProducto" mat-raised-button (click)="openDialog()" style="color:#51a81f;">+ Agregar Producto</button>
+    <button class="button button-primary btnAgregarProducto" mat-raised-button (click)="openDialog()" style="color:#51a81f;">+ Agregar Producto</button>
 
     </div>
 

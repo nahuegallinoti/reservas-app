@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Evento } from 'src/app/Models/evento.model';
 import { ReservaService } from 'src/app/Services/evento.service';
 import { UIService } from 'src/app/Shared/ui.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-check-out',
@@ -58,17 +59,23 @@ export class CheckOutComponent implements OnInit {
         });
 
         eventos = eventos.filter(function (evento) {
+
+          if (!evento.extendedProps.realizoCheckIn)
+            return;
+
           var fechaDesde = new Date(evento.extendedProps.fechaDesde);
           var fechaDesdee = fechaDesde.toLocaleDateString();
-
           var fechaHasta = new Date(evento.extendedProps.fechaHasta);
           var fechaHastaa = fechaHasta.toLocaleDateString();
 
           var fechaActual = new Date().toLocaleDateString();
-          
-          if (fechaHastaa >= fechaActual && fechaDesdee <= fechaActual) {
+
+          if (moment(fechaActual).isBetween(fechaDesdee, fechaHastaa))
+          {
+            
             return evento;
           }
+
         });
 
         this.eventos = eventos;
