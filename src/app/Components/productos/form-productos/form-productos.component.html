@@ -14,9 +14,12 @@
         <input matInput formControlName="precio" />
       </mat-form-field>
 
-      <button mat-button color="primary" (click)="agregarProducto()">Agregar
+  
+        <button mat-button color="primary" (click)="agregarProducto()" class="boton-agregar">Agregar
         <mat-icon>add</mat-icon>
       </button>
+    
+      
       
     </div>
   
@@ -34,5 +37,8 @@
       </mat-card>
     </mat-list>
 
-    <button mat-button color="primary" (click)="guardarProducto()">Guardar</button>
+    <!-- <div mat-dialog-actions style="justify-content: center;"> -->
+       <button mat-button style="margin-top: 10px;margin-bottom: 10px;" color="primary"(click)="guardarProducto()">Guardar</button>
+    <!-- </div> -->
+   
   </form>

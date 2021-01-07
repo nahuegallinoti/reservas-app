@@ -79,7 +79,7 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
   openDialog(): void {
     const dialogRef = this.dialog.open(FormProductosComponent, {
       width: "30vw",
-      height:"25vw",
+      height:"28vw",
     });
 
     dialogRef.afterClosed().subscribe(() => {
