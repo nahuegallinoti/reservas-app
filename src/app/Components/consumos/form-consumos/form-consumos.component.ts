@@ -10,7 +10,6 @@ import { faArchive } from '@fortawesome/free-solid-svg-icons';
 import { ProductoService } from 'src/app/Services/producto.service';
 import { Subscription } from 'rxjs';
 import { Producto } from 'src/app/Models/producto.model';
-import { ReturnStatement, ThisReceiver } from '@angular/compiler';
 import { Consumo, ItemConsumo } from 'src/app/Models/consumo.model';
 import { ConsumoService } from 'src/app/Services/consumo.service';
 import { Reserva } from 'src/app/Models/reserva.model';

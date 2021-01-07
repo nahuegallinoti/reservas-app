@@ -61,7 +61,7 @@ const appRoutes: Routes = [
     component: ProductosComponent,
     canActivate: [AuthGuard],
   },
-  { path: '**', redirectTo: '/consumos' },
+  { path: '**', redirectTo: '/productos' },
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { Producto } from 'src/app/Models/producto.model';
 import { ProductoService } from 'src/app/Services/producto.service';
 import { UIService } from 'src/app/Shared/ui.service';
+import { FormProductosComponent } from './form-productos/form-productos.component';
 
 @Component({
   selector: 'app-productos',
@@ -41,7 +43,8 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
 
   constructor(
     private productoService: ProductoService,
-    private uiService: UIService
+    private uiService: UIService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -72,4 +75,16 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
 
   ngOnDestroy(): void {
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(FormProductosComponent, {
+      width: "30vw",
+      height:"25vw",
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
+  }
+
 }

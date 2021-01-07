@@ -1,0 +1,38 @@
+<form [formGroup]="productosForm" fxFlex fxLayout="column" class="fullWidth">
+    <div>
+      <mat-toolbar color="primary" style="padding-left: 16px; width: 100%;">Agregar Producto</mat-toolbar>
+    </div>
+    <div fxFlex fxLayoutGap="10px" class="formulario">
+    
+      <mat-form-field appearance="standard" class="consumo">
+        <mat-label>Descripcion</mat-label>
+        <input matInput formControlName="descripcion" />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" class="consumo">
+        <mat-label>Precio</mat-label>
+        <input matInput formControlName="precio" />
+      </mat-form-field>
+
+      <button mat-button color="primary" (click)="agregarProducto()">Agregar
+        <mat-icon>add</mat-icon>
+      </button>
+      
+    </div>
+  
+    <mat-list>
+      <mat-card *ngFor="let producto of productos" class="card" style="width: 90%; margin-left: 4%; margin-bottom: 2%">
+        <div style="display:flex;justify-content:space-between">
+          <mat-card-header>
+            <mat-card-title>{{producto.descripcion}}</mat-card-title>
+            <mat-card-subtitle>Precio: {{producto.precio}}</mat-card-subtitle>
+          </mat-card-header>
+          <button mat-button color="primary" (click)="quitarProducto(producto)">Quitar
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </mat-list>
+
+    <button mat-button color="primary" (click)="guardarProducto()">Guardar</button>
+  </form>

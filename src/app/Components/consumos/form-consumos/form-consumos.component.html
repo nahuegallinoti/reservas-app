@@ -1,6 +1,6 @@
 <form [formGroup]="consumosForm" fxFlex fxLayout="column" class="fullWidth">
   <div>
-    <mat-toolbar color="primary" style="padding-left: 16px; width: 100%;">Agregar consumo</mat-toolbar>
+    <mat-toolbar color="primary" style="padding-left: 16px; width: 100%;">Agregar Consumo</mat-toolbar>
   </div>
   <div fxFlex fxLayoutGap="10px" class="formulario">
 
@@ -35,16 +35,6 @@
   </div>
 
   <mat-list>
-    <!-- <mat-list-item class="mat-list-item" *ngFor="let consumo of consumo?.consumos">
-      <mat-icon matListIcon>check_circle_outline</mat-icon>
-      <h3 matLine>{{consumo.producto.descripcion}} </h3>
-      <p matLine>
-        <span> Precio: {{consumo.monto}} </span>
-      </p>
-      <p matLine>
-        <span>Fecha: {{consumo.fecha | date: 'dd/MM/yyyy'}} </span>
-      </p>    
-    </mat-list-item> -->
     <mat-card *ngFor="let consumo of consumo?.consumos" class="card" style="width: 90%; margin-left: 4%; margin-bottom: 2%">
       <div style="display:flex;justify-content:space-between">
         <mat-card-header>
@@ -57,7 +47,6 @@
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-      <!-- </mat-card-actions> -->
     </mat-card>
   </mat-list>
 

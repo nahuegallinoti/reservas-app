@@ -1,0 +1,16 @@
+.consumo {
+    width: 30%;
+    padding-right: 10px;
+  }
+
+  .fullWidth {
+    width: 100%;
+  }
+
+  .formulario {
+    padding: 30px;
+  }
+  
+  mat-dialog-actions {
+    justify-content: flex-end;
+  }

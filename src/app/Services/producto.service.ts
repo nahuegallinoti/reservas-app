@@ -55,4 +55,30 @@ export class ProductoService {
       );
   }
 
+  guardarProductos(productos: Producto []) {
+
+    const itemsProductos = productos.map((obj) => { return Object.assign({}, obj) });
+
+    itemsProductos.forEach((obj) => {
+      this.firestore
+      .collection('producto')
+      .add(obj)
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'Se registraron los productos con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar guardar los productos: ' + error,
+          null,
+          3000
+        )
+      );
+
+    })
+
+  }
 }
