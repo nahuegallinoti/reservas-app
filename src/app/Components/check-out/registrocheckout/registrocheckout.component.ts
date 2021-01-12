@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Consumo } from 'src/app/Models/consumo.model';
+import { Consumo, ItemConsumo } from 'src/app/Models/consumo.model';
 import { ConsumoService } from 'src/app/Services/consumo.service';
 import { UIService } from 'src/app/Shared/ui.service';
 
@@ -14,13 +16,30 @@ import { UIService } from 'src/app/Shared/ui.service';
 export class RegistrocheckoutComponent implements OnInit {
 
   consumosSubscription: Subscription;
-  consumo = new MatTableDataSource<Consumo>();
+  consumo = new MatTableDataSource<ItemConsumo>();
   consumos: Consumo;
   reservaId: number;
   isLoading = false;
   isLoadingSubscription: Subscription;
   columnas: string[] = ['descripcion', 'precio'];
   total: number = 0;
+  private sort: MatSort;
+  private paginator: MatPaginator;
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    this.consumo.sort = this.sort;
+    this.consumo.paginator = this.paginator;
+  }
 
   constructor(
     private consumoService: ConsumoService,    
@@ -42,6 +61,7 @@ export class RegistrocheckoutComponent implements OnInit {
         let consumosReserva = consumos.find(x => x.reserva.id == this.reservaId);
 
         if (consumosReserva != undefined) {
+          this.consumo.data = consumosReserva.consumos.map(x => x);
           this.consumos = consumosReserva;
           this.consumos.consumos.map(x => this.total += x.monto);
         }
@@ -54,10 +74,18 @@ export class RegistrocheckoutComponent implements OnInit {
 
   }
 
+  ngAfterViewInit(): void {
+    this.consumo.sort = this.sort;
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.isLoading && this.isLoadingSubscription) {
+      this.isLoadingSubscription.unsubscribe();
+    }
+  }
+
   filtrar(valor: string): void{
     this.consumo.filter = valor.trim().toLowerCase();
   }
-
-
 
 }

@@ -77,13 +77,10 @@ export class CheckInComponent implements OnInit {
           var fechaActual = new Date().toLocaleDateString();
 
           if (moment(fechaActual).isBetween(fechaDesdee, fechaHastaa))
-          {
-            
             return evento;
-          }
 
         });
-        
+
         this.eventos = eventos;
       }
     );

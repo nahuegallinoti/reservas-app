@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-
 import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { Evento } from '../Models/evento.model';
 import { UIService } from '../Shared/ui.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class ReservaService {
