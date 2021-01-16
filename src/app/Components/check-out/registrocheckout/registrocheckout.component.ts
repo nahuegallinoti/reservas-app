@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Consumo, ItemConsumo } from 'src/app/Models/consumo.model';
 import { ConsumoService } from 'src/app/Services/consumo.service';
+import { ReservaService } from 'src/app/Services/evento.service';
 import { UIService } from 'src/app/Shared/ui.service';
 
 @Component({
@@ -23,6 +24,9 @@ export class RegistrocheckoutComponent implements OnInit {
   isLoadingSubscription: Subscription;
   columnas: string[] = ['descripcion', 'precio'];
   total: number = 0;
+  eventosSubscription: Subscription;
+  eventos = [];
+
   private sort: MatSort;
   private paginator: MatPaginator;
 
@@ -44,7 +48,9 @@ export class RegistrocheckoutComponent implements OnInit {
   constructor(
     private consumoService: ConsumoService,    
     private route: ActivatedRoute,
-    private uiService: UIService) { }
+    private uiService: UIService,
+    private reservaService: ReservaService,
+    ) { }
 
   ngOnInit(): void {
 
@@ -55,6 +61,13 @@ export class RegistrocheckoutComponent implements OnInit {
     this.route.params.subscribe(params => {      
       this.reservaId = params.reservaId;
     });
+
+    this.eventosSubscription = this.reservaService.eventosChanged.subscribe(
+      (eventos) => {
+        this.eventos = eventos;
+      }
+    );
+
 
     this.consumosSubscription = this.consumoService.consumosChanged.subscribe(
       (consumos) => {
@@ -71,6 +84,7 @@ export class RegistrocheckoutComponent implements OnInit {
     );
 
     this.consumoService.obtenerConsumosAnteriores();
+    this.reservaService.buscarEventos();
 
   }
 
@@ -86,6 +100,13 @@ export class RegistrocheckoutComponent implements OnInit {
 
   filtrar(valor: string): void{
     this.consumo.filter = valor.trim().toLowerCase();
+  }
+
+  
+  guardarCheckout(): void{    
+    let evento = this.eventos.find(x => x.id == this.reservaId);
+    evento.extendedProps.realizoCheckOut = true;
+    this.reservaService.actualizarReserva(this.reservaId.toString(), evento);
   }
 
 }

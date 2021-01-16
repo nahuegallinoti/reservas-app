@@ -11,8 +11,8 @@
 
                             <h3 matLine>Titular de Reserva: {{evento.extendedProps.cliente.nombreYApellido}}</h3>
                             <h3 matLine>Cabaña: {{evento.extendedProps.cabana.nombre}}</h3>
-                            <h3 matLine>Fecha Ingreso: {{evento.extendedProps.fechaDesde | date}}</h3>
-                            <h3 matLine>Fecha Egreso: {{evento.extendedProps.fechaHasta | date}}</h3>
+                            <h3 matLine>Fecha Ingreso: {{evento.extendedProps.fechaDesde | date:'dd/MM/yyyy'}}</h3>
+                            <h3 matLine>Fecha Egreso: {{evento.extendedProps.fechaHasta | date:'dd/MM/yyyy'}}</h3>
 
                             <mat-accordion>
                                 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -36,13 +36,16 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
 
-                            <mat-card-actions style="margin-top: 2%; margin-left:2%">
-                                <a mat-button [routerLink]="['/registrocheckout', evento.id]"> Realizar Check Out
+                            <mat-card-actions *ngIf="!evento.extendedProps.realizoCheckOut" style="margin-top: 2%; margin-left:2%">
+                                <a mat-button [routerLink] = "['/registrocheckout', evento.id]"> Realizar Check Out
                                     <mat-icon title="Realizar Check OUT">filter_frames</mat-icon>
                                 </a>
                             </mat-card-actions>
 
-                            <mat-card-actions style="margin-top: 2%; margin-left:2%">
+                            <mat-card-actions *ngIf="evento.extendedProps.realizoCheckOut" style="margin-top: 2%; margin-left:2%">
+                                <a mat-button [routerLink] = "['/detalleCheckOut', evento.id]"> Detalles Check Out
+                                    <mat-icon title="Detalle Check OUT">filter_frames</mat-icon>
+                                </a>
                             </mat-card-actions>
 
                         </mat-list-item>

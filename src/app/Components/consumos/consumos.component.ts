@@ -33,17 +33,13 @@ export class ConsumosComponent implements OnInit{
   ngOnInit(): void {
     this.eventosSubscription = this.reservaService.eventosChanged.subscribe(
       (eventos) => {
-        eventos.sort(function (a) {
-          if (a.extendedProps.estado.descripcion != "Pagado Total") return 1;
-          else return -1;
-        });
 
         eventos = eventos.filter(function (evento) {
           var fechaDesde = new Date(evento.extendedProps.fechaDesde);
           var fechaHasta = new Date(evento.extendedProps.fechaHasta);
           var fechaActual = new Date();
           
-          if (fechaHasta >= fechaActual && fechaDesde <= fechaActual) {
+          if (fechaHasta >= fechaActual && fechaDesde <= fechaActual && evento.extendedProps.realizoCheckIn) {
             return evento;
           }
         });

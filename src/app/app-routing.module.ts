@@ -61,7 +61,7 @@ const appRoutes: Routes = [
     component: ProductosComponent,
     canActivate: [AuthGuard],
   },
-  { path: '**', redirectTo: '/productos' },
+  { path: '**', redirectTo: '/checkout' },
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="center center">
     <div *ngIf="!isLoading" class="top" fxLayout="column">
+        <h1>Reservas</h1>
         <mat-form-field fxFlexAlign="center">
             <input matInput type="text" (keyup)="filtrar($event.target.value)" placeholder="Buscar">
         </mat-form-field>
@@ -27,12 +28,12 @@
 
                 <ng-container matColumnDef="fechaDesde">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Desde </th>
-                    <td mat-cell *matCellDef="let reserva"> {{reserva.fechaDesde | date}} </td>
+                    <td mat-cell *matCellDef="let reserva"> {{reserva.fechaDesde | date:'dd/MM/yyyy'}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="fechaHasta">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Hasta </th>
-                    <td mat-cell *matCellDef="let reserva"> {{reserva.fechaHasta | date}} </td>
+                    <td mat-cell *matCellDef="let reserva"> {{reserva.fechaHasta | date:'dd/MM/yyyy'}} </td>
                 </ng-container>
                 
                 <ng-container matColumnDef="montoTotal">

@@ -59,10 +59,6 @@ export class CheckInComponent implements OnInit {
 
     this.eventosSubscription = this.reservaService.eventosChanged.subscribe(
       (eventos) => {
-        eventos.sort(function (a) {
-          if (a.extendedProps.estado.descripcion != "Pagado Total") return 1;
-          else return -1;
-        });
 
         eventos = eventos.filter(function (evento) {
 
@@ -74,9 +70,9 @@ export class CheckInComponent implements OnInit {
           var fechaHasta = new Date(evento.extendedProps.fechaHasta);
           var fechaHastaa = fechaHasta.toLocaleDateString();
 
-          var fechaActual = new Date().toLocaleDateString();
+          var fechaActual = new Date();
 
-          if (moment(fechaActual).isBetween(fechaDesdee, fechaHastaa))
+          if (moment(fechaActual).isBetween(fechaDesde, fechaHasta))
             return evento;
 
         });

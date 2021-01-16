@@ -68,9 +68,9 @@ export class CheckOutComponent implements OnInit {
           var fechaHasta = new Date(evento.extendedProps.fechaHasta);
           var fechaHastaa = fechaHasta.toLocaleDateString();
 
-          var fechaActual = new Date().toLocaleDateString();
+          var fechaActual = new Date();
 
-          if (moment(fechaActual).isBetween(fechaDesdee, fechaHastaa))
+          if (moment(fechaActual).isBetween(fechaDesde, fechaHasta))
           {
             
             return evento;

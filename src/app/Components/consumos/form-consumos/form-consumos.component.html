@@ -39,9 +39,9 @@
       <div style="display:flex;justify-content:space-between">
         <mat-card-header>
           <div mat-card-avatar class="avatar-image-consumo"></div>
-          <mat-card-title>{{consumo.producto.descripcion}}</mat-card-title>
-          <mat-card-subtitle>Precio: {{consumo.monto}}</mat-card-subtitle>
-          <mat-card-subtitle>Fecha: {{consumo.fecha}}</mat-card-subtitle>
+          <mat-card-title>{{ consumo.producto.descripcion }}</mat-card-title>
+          <mat-card-subtitle>Precio: {{ consumo.monto | currency: 'USD'}}</mat-card-subtitle>
+          <mat-card-subtitle>Fecha: {{ consumo.fecha | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
         </mat-card-header>
         <button mat-button color="primary" (click)="quitarConsumo(consumo)">Quitar
           <mat-icon>delete</mat-icon>

@@ -224,7 +224,8 @@ export class FormReservaComponent implements OnInit, OnDestroy {
 
     reserva.estado = this.determinarEstadoReserva(reserva);
     reserva.realizoCheckIn = false;
-    
+    reserva.realizoCheckOut = false;
+   
     return reserva;
   }
 
@@ -237,8 +238,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       ' / Debe: $' +
       (reserva.montoTotal - reserva.montoSenia)
       : reserva.cabana.nombre + ' - ' + reserva.cliente.nombreYApellido;
-
-
+    
     const evento: Evento = {
       title: titulo,
       start: reserva.fechaDesde,

@@ -25,9 +25,7 @@ export class ConsumoService {
     this.obtenerConsumosAnteriores();
 
     let consumosReserva = this.consumos.find(x => x.reserva.id == consumo.reserva.id);
-
-    console.log(consumosReserva);
-
+  
     const itemsConsumo = consumo.consumos.map((obj) => { return Object.assign({}, obj) });
     const consum: Object = {
       reserva: consumo.reserva,
@@ -101,7 +99,7 @@ export class ConsumoService {
             consumo.id = id;
             consumo.reserva = consumo.reserva;
 
-            consumo.consumos.map(consumo => consumo.fecha = moment(consumo.fecha.toDate()).format('L'));
+            consumo.consumos.map(consumo => consumo.fecha = consumo.fecha.toDate());
             consumo.consumos = consumo.consumos;
 
             return consumo;
@@ -124,5 +122,6 @@ export class ConsumoService {
         }
       );
   }
+
 
 }

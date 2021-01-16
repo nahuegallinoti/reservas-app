@@ -14,7 +14,7 @@ import { Consumo, ItemConsumo } from 'src/app/Models/consumo.model';
 import { ConsumoService } from 'src/app/Services/consumo.service';
 import { Reserva } from 'src/app/Models/reserva.model';
 import { UIService } from 'src/app/Shared/ui.service';
-
+import * as moment from 'moment';
 
 export interface DialogData {
   reserva: Reserva;
@@ -58,6 +58,9 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit(): void {
+    
+    this.consumo.reserva = this.data.reserva;
+
     this.productosSubscription = this.productoService.productosChanged.subscribe(
       (productos) => {
         this.productos = productos;
@@ -128,8 +131,6 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
     itemConsumo.monto = subtotal;
 
     itemConsumo.fecha = new Date();
-
-    this.consumo.reserva = this.data.reserva;
 
     this.consumo.consumos.push(itemConsumo);
 
