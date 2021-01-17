@@ -32,7 +32,8 @@ import { RegistrocheckoutComponent } from './Components/check-out/registrochecko
 import { ConsumosComponent } from './Components/consumos/consumos.component'
 import { FormConsumosComponent } from './Components/consumos/form-consumos/form-consumos.component';
 import { ProductosComponent } from './Components/productos/productos.component';
-import { FormProductosComponent } from './Components/productos/form-productos/form-productos.component'
+import { FormProductosComponent } from './Components/productos/form-productos/form-productos.component';
+import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/detalle-check-in.component'
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { FormProductosComponent } from './Components/productos/form-productos/fo
     ConsumosComponent,
     FormConsumosComponent,
     ProductosComponent,
-    FormProductosComponent
+    FormProductosComponent,
+    DetalleCheckInComponent
 
   ],
   imports: [

@@ -8,6 +8,10 @@ import { Consumo, ItemConsumo } from 'src/app/Models/consumo.model';
 import { ConsumoService } from 'src/app/Services/consumo.service';
 import { ReservaService } from 'src/app/Services/evento.service';
 import { UIService } from 'src/app/Shared/ui.service';
+import * as moment from 'moment';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { Evento } from 'src/app/Models/evento.model';
 
 @Component({
   selector: 'app-registrocheckout',
@@ -22,10 +26,12 @@ export class RegistrocheckoutComponent implements OnInit {
   reservaId: number;
   isLoading = false;
   isLoadingSubscription: Subscription;
-  columnas: string[] = ['descripcion', 'precio'];
+  columnas: string[] = ['descripcion', 'precioUnidad', 'cantidad', 'total', 'fechaConsumo'];
   total: number = 0;
   eventosSubscription: Subscription;
   eventos = [];
+  evento: Evento;
+  esDetalle = false;
 
   private sort: MatSort;
   private paginator: MatPaginator;
@@ -46,11 +52,11 @@ export class RegistrocheckoutComponent implements OnInit {
   }
 
   constructor(
-    private consumoService: ConsumoService,    
+    private consumoService: ConsumoService,
     private route: ActivatedRoute,
     private uiService: UIService,
     private reservaService: ReservaService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
 
@@ -58,13 +64,15 @@ export class RegistrocheckoutComponent implements OnInit {
       (isLoading) => (this.isLoading = isLoading)
     );
 
-    this.route.params.subscribe(params => {      
+    this.route.params.subscribe(params => {
       this.reservaId = params.reservaId;
+      this.esDetalle = params.esDetalle == "false" ? false: true;
     });
 
     this.eventosSubscription = this.reservaService.eventosChanged.subscribe(
       (eventos) => {
         this.eventos = eventos;
+        this.evento = this.eventos.find(x => x.id == this.reservaId);
       }
     );
 
@@ -76,6 +84,7 @@ export class RegistrocheckoutComponent implements OnInit {
         if (consumosReserva != undefined) {
           this.consumo.data = consumosReserva.consumos.map(x => x);
           this.consumos = consumosReserva;
+          this.consumos.consumos.map(x => x.fecha = moment(x.fecha).toDate());
           this.consumos.consumos.map(x => this.total += x.monto);
         }
 
@@ -98,15 +107,29 @@ export class RegistrocheckoutComponent implements OnInit {
     }
   }
 
-  filtrar(valor: string): void{
-    this.consumo.filter = valor.trim().toLowerCase();
+
+  guardarCheckout(): void {
+    this.esDetalle = true;
+    this.evento = this.eventos.find(x => x.id == this.reservaId);
+    this.evento.extendedProps.realizoCheckOut = true;
+    this.reservaService.actualizarReserva(this.reservaId.toString(), this.evento);
+
   }
 
-  
-  guardarCheckout(): void{    
-    let evento = this.eventos.find(x => x.id == this.reservaId);
-    evento.extendedProps.realizoCheckOut = true;
-    this.reservaService.actualizarReserva(this.reservaId.toString(), evento);
+  descargarComprobante(): void {
+
+    const doc = new jsPDF();
+
+    doc.setTextColor(0)
+    doc.setFontSize(20);
+    doc.text('Consumos de la reserva a nombre de: ' + this.evento.extendedProps.cliente.nombreYApellido, 15, 10);
+
+    autoTable(doc, { html: '#my-table' })
+
+    doc.text('Total: $ ' + this.total.toString(), 150, 100);
+
+    doc.save(this.consumos.reserva.id.toString() + '.pdf');
+
   }
 
 }

@@ -3,6 +3,7 @@
         <mat-form-field fxFlexAlign="center">
             <input matInput type="text" (keyup)="filtrar($event.target.value)" placeholder="Buscar">
         </mat-form-field>
+        <h2>Productos</h2>
         <div class="mat-elevation-z8">
             <table mat-table matSort [dataSource]="productos">
                 <ng-container matColumnDef="descripcion">

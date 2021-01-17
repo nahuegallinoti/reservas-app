@@ -37,13 +37,13 @@
                             </mat-accordion>
 
                             <mat-card-actions *ngIf="!evento.extendedProps.realizoCheckOut" style="margin-top: 2%; margin-left:2%">
-                                <a mat-button [routerLink] = "['/registrocheckout', evento.id]"> Realizar Check Out
+                                <a mat-button [routerLink] = "['/registrocheckout', evento.id, false]"> Realizar Check Out
                                     <mat-icon title="Realizar Check OUT">filter_frames</mat-icon>
                                 </a>
                             </mat-card-actions>
 
                             <mat-card-actions *ngIf="evento.extendedProps.realizoCheckOut" style="margin-top: 2%; margin-left:2%">
-                                <a mat-button [routerLink] = "['/detalleCheckOut', evento.id]"> Detalles Check Out
+                                <a mat-button [routerLink] = "['/registrocheckout', evento.id, true]"> Detalle Check Out
                                     <mat-icon title="Detalle Check OUT">filter_frames</mat-icon>
                                 </a>
                             </mat-card-actions>

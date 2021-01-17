@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CheckIn } from '../Models/checkin.model';
 import { UIService } from '../Shared/ui.service';
 
@@ -44,6 +45,41 @@ export class CheckinService {
         )
       );
   }
+
+  ObtenerCheckIn() {
+    this.uiService.loadingStateChanged.next(true);
+    this.firestoreSubscription = this.firestore
+      .collection('checkin')
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          return docArray.map((doc: any) => {
+            const checkIn = doc.payload.doc.data();
+            const id = doc.payload.doc.id;
+
+            checkIn.id = id;
+
+            return checkIn;
+          });
+        })
+      )
+      .subscribe(
+        (checkins: CheckIn[]) => {
+          this.checkIn = checkins;
+          this.checkInChanged.next([...this.checkIn]);
+          this.uiService.loadingStateChanged.next(false);
+        },
+        (error) => {
+          this.uiService.showSnackBar(
+            'Hubo un error al intentar obtener los Check In, por favor intente de nuevo',
+            null,
+            3000
+          );
+          this.uiService.loadingStateChanged.next(false);
+        }
+      );
+  }
+
 
   parsearCheckInParaFirestore(checkin: CheckIn): object {
     const checkinParseado = checkin;

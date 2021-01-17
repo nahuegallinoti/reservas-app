@@ -24,6 +24,7 @@ export class CheckInComponent implements OnInit {
   panelOpenState = false;
   isLoadingSubscription: Subscription;
   eventosSubscription: Subscription;
+  columnas: string[] = ['descripcion', 'precioUnidad', 'cantidad', 'total', 'fechaConsumo'];
 
   private sort: MatSort;
   private paginator: MatPaginator;
@@ -61,9 +62,6 @@ export class CheckInComponent implements OnInit {
       (eventos) => {
 
         eventos = eventos.filter(function (evento) {
-
-          if (evento.extendedProps.realizoCheckIn)
-            return;
 
           var fechaDesde = new Date(evento.extendedProps.fechaDesde);
           var fechaDesdee = fechaDesde.toLocaleDateString();

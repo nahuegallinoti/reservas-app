@@ -12,6 +12,7 @@ import { RegistrocheckoutComponent } from './Components/check-out/registrochecko
 import { ConsumosComponent } from './Components/consumos/consumos.component'
 import { FormConsumosComponent } from './Components/consumos/form-consumos/form-consumos.component'
 import { ProductosComponent } from './Components/productos/productos.component';
+import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/detalle-check-in.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -42,7 +43,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'registrocheckout/:reservaId',
+    path: 'registrocheckout/:reservaId/:esDetalle',
     component: RegistrocheckoutComponent,
     canActivate: [AuthGuard],
   },
@@ -59,6 +60,11 @@ const appRoutes: Routes = [
   {
     path:'productos',
     component: ProductosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path:'detallecheckin/:eventoId',
+    component: DetalleCheckInComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: '/checkout' },
