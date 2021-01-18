@@ -33,4 +33,8 @@ table {
 .btnAgregarProducto {
     margin-top: 10px;
     border-radius: 5px;
+    color:#3f51b5;
+    background-color:#E5E7E9;
+    border: 1px solid #85929E;
+    margin-bottom: 1rem;
 }

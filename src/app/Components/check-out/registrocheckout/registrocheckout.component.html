@@ -43,8 +43,9 @@
         </div>
 
         
-    <button *ngIf="!esDetalle" class="btnRealizarCheckout" mat-raised-button (click)="guardarCheckout()" style="color:#51a81f;">Realizar Checkout</button>
-    <button *ngIf="esDetalle" class="button button-primary btnRealizarCheckout" mat-raised-button (click)="descargarComprobante()" style="color:#000000;">Descargar Comprobante</button>
+    <button *ngIf="!esDetalle" class="btnRealizarCheckout" mat-raised-button (click)="guardarCheckout()">Realizar Checkout</button>
+    <button *ngIf="esDetalle" class="button button-primary btnRealizarCheckout" mat-raised-button (click)="descargarComprobante()">  <mat-icon>download</mat-icon> Descargar Comprobante 
+    </button>
 
     </div>
 
