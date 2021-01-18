@@ -8,13 +8,12 @@
   }
 
   .avatar-image-consumo {    
-    height: 60px;
-    width: 40px;
+    height: 46;
+    width: 46;
     flex-shrink: 0;
     object-fit: cover;
     background-image: url('https://media.istockphoto.com/vectors/plastic-cup-of-soda-pop-hand-drawn-sketch-icon-vector-id931068732');
     background-size: cover;
-
   }
 
   .formulario {
@@ -25,3 +24,10 @@
     justify-content: flex-end;
   }
   
+  .card {
+    background-color: #c7dbe5ef;
+  }
+
+  .btnQuitarConsumo {
+    background-color: #e3f8fa;
+  }

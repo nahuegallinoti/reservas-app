@@ -72,6 +72,7 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
         let consumosReserva = consumos.find(x => x.reserva.id == this.data.reserva.id);
 
         if (consumosReserva != undefined) {
+          
           this.consumo = consumosReserva;
         }
 
@@ -127,8 +128,7 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
     itemConsumo.cantidad = this.cantidadSelected;
     this.cantidadSelected = 1;
 
-    let subtotal = itemConsumo.producto.precio * itemConsumo.cantidad;
-    itemConsumo.monto = subtotal;
+    itemConsumo.monto = this.consumosForm.value.total;
 
     itemConsumo.fecha = new Date();
 

@@ -215,9 +215,21 @@
         <div>
           <mat-form-field>
             <mat-label>Pendiente:</mat-label>
-            <input [ngModel]="evento?.extendedProps.montoTotal - evento?.extendedProps.montoSenia" matInput formControlName="remanente">
+            <input [ngModel]="evento?.extendedProps.montoTotal - evento?.extendedProps.montoSenia" matInput
+              formControlName="remanente">
           </mat-form-field>
+
+          <mat-form-field>
+            <mat-select name="formaPago" (selectionChange)="selectedValue($event)" [(value)]="selectedFormaPago"
+              placeholder="Forma de Pago">
+              <mat-option *ngFor="let formaPago of formasPago" [value]="formaPago.id">
+                {{formaPago.descripcion}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
         </div>
+
         <div>
           <button mat-button matStepperPrevious color="accent">Volver</button>
           <button mat-button matStepperNext color="primary" (click)="registrarCheckIn()">Guardar</button>

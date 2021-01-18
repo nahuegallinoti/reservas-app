@@ -32,6 +32,8 @@
     <button mat-button color="primary" (click)="agregarConsumo()">Agregar
       <mat-icon>add</mat-icon>
     </button>
+    <button class="btnQuitarConsumo" mat-button color="primary" (click)="guardarConsumos()">Guardar</button>
+
   </div>
 
   <mat-list>
@@ -39,16 +41,21 @@
       <div style="display:flex;justify-content:space-between">
         <mat-card-header>
           <div mat-card-avatar class="avatar-image-consumo"></div>
+          <div>
           <mat-card-title>{{ consumo.producto.descripcion }}</mat-card-title>
-          <mat-card-subtitle>Precio: {{ consumo.monto | currency: 'USD'}}</mat-card-subtitle>
+          
+          <mat-card-subtitle>Cantidad: {{ consumo.cantidad}}</mat-card-subtitle>
+          <mat-card-subtitle>Precio Unitario: {{ consumo.producto.precio | currency: 'USD'}}</mat-card-subtitle>
+          <mat-card-subtitle>Total: {{ consumo.monto | currency: 'USD'}}</mat-card-subtitle>
           <mat-card-subtitle>Fecha: {{ consumo.fecha | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
+        </div>
         </mat-card-header>
         <button mat-button color="primary" (click)="quitarConsumo(consumo)">Quitar
           <mat-icon>delete</mat-icon>
         </button>
+        
       </div>
     </mat-card>
   </mat-list>
 
-  <button mat-button color="primary" (click)="guardarConsumos()">Guardar</button>
 </form>
