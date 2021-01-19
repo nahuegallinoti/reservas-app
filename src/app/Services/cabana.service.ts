@@ -31,8 +31,9 @@ export class CabanaService {
             const id = doc.payload.doc.id;
             
             cabana.id = id;
-            cabana.numero = cabana.numero;
             cabana.nombre = cabana.nombre;
+            cabana.capacidad = cabana.capacidad;
+            cabana.precioDia = cabana.precioDia;
 
             return cabana;
           });
@@ -55,5 +56,30 @@ export class CabanaService {
       );
   }
 
-}
+  guardarCabanas(cabanas: Cabana []) {
 
+    const cabanasParse = cabanas.map((obj) => { return Object.assign({}, obj) });
+
+    cabanasParse.forEach((obj) => {
+      this.firestore
+      .collection('cabanias')
+      .add(obj)
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'Se registraron las cabañas con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar guardar las cabañas: ' + error,
+          null,
+          3000
+        )
+      );
+
+    })
+
+  }
+}

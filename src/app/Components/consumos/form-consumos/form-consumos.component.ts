@@ -63,6 +63,7 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
 
     this.productosSubscription = this.productoService.productosChanged.subscribe(
       (productos) => {
+        productos.map((producto) => producto.precio = Number(producto.precio));
         this.productos = productos;
       }
     );
@@ -128,7 +129,7 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
     itemConsumo.cantidad = this.cantidadSelected;
     this.cantidadSelected = 1;
 
-    itemConsumo.monto = this.consumosForm.value.total;
+    itemConsumo.monto = Number(this.consumosForm.value.total);
 
     itemConsumo.fecha = new Date();
 

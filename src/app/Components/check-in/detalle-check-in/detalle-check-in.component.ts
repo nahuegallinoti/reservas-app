@@ -56,7 +56,8 @@ export class DetalleCheckInComponent implements OnInit {
 
     this.checkInSubscription = this.checkInService.checkInChanged.subscribe(
       (checkIns) => {
-        let checkIn = checkIns.find(x => x.evento.id == this.eventoId);
+        let checkIn = checkIns.find(x => x.evento.id == this.eventoId);        
+        
         this.checkIn = checkIn;
         this.checkInTab.data.push(checkIn);
 
@@ -70,11 +71,14 @@ export class DetalleCheckInComponent implements OnInit {
   descargarComprobante(): void {
     const doc = new jsPDF();
 
-    doc.setTextColor(0)
-    doc.setFontSize(20);
-    doc.text('Check In de la reserva a nombre de: ' + this.checkIn.evento.extendedProps.cliente.nombreYApellido, 15, 10);
+    var img = new Image();
+    img.src = 'assets/cabanas.jpeg';
 
-    autoTable(doc, { html: '#my-table' })
+    doc.addImage(img, 'jpeg', 140, 7, 60, 20);
+        
+    doc.setFont("italic");
+    doc.text("Reserva a nombre de: " + this.checkIn.evento.extendedProps.cliente.nombreYApellido, 13, 40);
+    autoTable(doc, { html: '#my-table', margin: { top: 45 }});
 
     doc.save(this.checkIn.id.toString() + '.pdf');
 

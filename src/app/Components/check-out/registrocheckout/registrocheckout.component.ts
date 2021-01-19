@@ -85,7 +85,7 @@ export class RegistrocheckoutComponent implements OnInit {
           this.consumo.data = consumosReserva.consumos.map(x => x);
           this.consumos = consumosReserva;
           this.consumos.consumos.map(x => x.fecha = moment(x.fecha).toDate());
-          this.consumos.consumos.map(x => this.total += x.monto);
+          this.consumos.consumos.map(x => this.total += Number(x.monto));
         }
 
 
@@ -120,13 +120,17 @@ export class RegistrocheckoutComponent implements OnInit {
 
     const doc = new jsPDF();
 
-    doc.setTextColor(0)
-    doc.setFontSize(20);
-    doc.text('Consumos de la reserva a nombre de: ' + this.evento.extendedProps.cliente.nombreYApellido, 15, 10);
+    var img = new Image();
+    img.src = 'assets/cabanas.jpeg';
 
-    autoTable(doc, { html: '#my-table' })
+    doc.addImage(img, 'jpeg', 140, 7, 60, 20);
 
-    doc.text('Total: $ ' + this.total.toString(), 150, 100);
+    doc.setFont("italic");
+    doc.text('Consumos de la reserva a nombre de: ' + this.evento.extendedProps.cliente.nombreYApellido, 13, 40);
+
+    autoTable(doc, { html: '#my-table', margin: { top: 45 }});
+
+    doc.text('Total: $ ' + this.total.toFixed(2), 150, 100);
 
     doc.save(this.consumos.reserva.id.toString() + '.pdf');
 

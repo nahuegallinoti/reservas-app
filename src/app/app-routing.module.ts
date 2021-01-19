@@ -13,6 +13,7 @@ import { ConsumosComponent } from './Components/consumos/consumos.component'
 import { FormConsumosComponent } from './Components/consumos/form-consumos/form-consumos.component'
 import { ProductosComponent } from './Components/productos/productos.component';
 import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/detalle-check-in.component';
+import { CabanasComponent } from './Components/cabanas/cabanas.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -67,6 +68,12 @@ const appRoutes: Routes = [
     component: DetalleCheckInComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path:'cabanas',
+    component: CabanasComponent,
+    canActivate: [AuthGuard],
+  },
+
   { path: '**', redirectTo: '/checkout' },
 ];
 

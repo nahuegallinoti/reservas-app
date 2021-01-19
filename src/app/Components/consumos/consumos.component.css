@@ -7,7 +7,7 @@
   
   .card:hover {
     box-shadow: 0 1px 1px 0 #c0f5a7;
-    background-color: #c2f0b4e0;
+    background-color: #cce9be
   }
   
   .container {
@@ -23,7 +23,7 @@
   }
 
   .card-container {
-    background-color: #e0eff7f1;
+    background-color: #f0f0f0f1;
     width: 60%;
     margin-left: 20%;
     margin-top: 5%;
@@ -37,4 +37,5 @@
   
   .btnGestionarConsumos:hover {
     color: #000000;
+
   }

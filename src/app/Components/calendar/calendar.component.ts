@@ -121,7 +121,7 @@ export class CalendarComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.calendarOptions.events = this.events;
     } else {
       this.calendarOptions.events = this.events
-        .filter((evento) => evento.extendedProps.idCabania === id)
+        .filter((evento) => evento.extendedProps.cabana.numero === id)
         .slice();
     }
   }
@@ -135,12 +135,12 @@ export class CalendarComponent implements OnInit, AfterViewChecked, OnDestroy {
     if (cab.checked) {
       this.calendarOptions.events = this.calendarOptions.events.concat(
         this.events
-          .filter((event) => event.extendedProps.idCabania == cabana.numero)
+        .filter((event) => event.extendedProps.cabana.numero != cabana.numero)
           .slice()
       );
     } else {
       this.calendarOptions.events = this.calendarOptions.events
-        .filter((event) => event.extendedProps.idCabania != cabana.numero)
+        .filter((event) => event.extendedProps.cabana.numero != cabana.numero)
         .slice();
     }
   }

@@ -33,7 +33,9 @@ import { ConsumosComponent } from './Components/consumos/consumos.component'
 import { FormConsumosComponent } from './Components/consumos/form-consumos/form-consumos.component';
 import { ProductosComponent } from './Components/productos/productos.component';
 import { FormProductosComponent } from './Components/productos/form-productos/form-productos.component';
-import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/detalle-check-in.component'
+import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/detalle-check-in.component';
+import { CabanasComponent } from './Components/cabanas/cabanas.component';
+import { FormCabanasComponent } from './Components/cabanas/form-cabanas/form-cabanas.component'
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/
     FormConsumosComponent,
     ProductosComponent,
     FormProductosComponent,
-    DetalleCheckInComponent
+    DetalleCheckInComponent,
+    CabanasComponent,
+    FormCabanasComponent
 
   ],
   imports: [

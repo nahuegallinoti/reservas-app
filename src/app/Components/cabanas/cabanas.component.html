@@ -1,0 +1,39 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+    <div *ngIf="!isLoading" class="top" fxLayout="column">
+        <h1>Cabañas</h1>
+        <mat-form-field fxFlexAlign="center">
+            <input matInput type="text" (keyup)="filtrar($event.target.value)" placeholder="Buscar">
+        </mat-form-field>
+        <div class="mat-elevation-z8">
+            <table mat-table matSort [dataSource]="cabanas">
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre Cabaña </th>
+                    <td mat-cell *matCellDef="let cabana"> {{cabana.nombre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="capacidad">
+                    <th mat-header-cell *matHeaderCellDef> Capacidad de Personas </th>
+                    <td mat-cell *matCellDef="let cabana"> {{cabana.capacidad}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="precioDia">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio por Día </th>
+                    <td mat-cell *matCellDef="let cabana"> {{cabana.precioDia}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+            </table>
+            
+            <mat-paginator
+                [pageSize]="3"
+                [pageSizeOptions]="[3, 10, 25, 100]">
+            </mat-paginator>
+        </div>
+
+        <button class="button button-primary btnAgregarCabana" mat-raised-button (click)="openDialog()">+ Agregar Cabaña</button>
+
+    </div>
+
+    <mat-spinner *ngIf="isLoading" class="top"></mat-spinner>
+</div>

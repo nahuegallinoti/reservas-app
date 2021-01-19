@@ -1,13 +1,14 @@
 <div class="container">
-  <div *ngIf="eventos.length == 0">No existen eventos en la fecha</div>
-  <div fxLayout="row">
-    <div fxFlex.gt-sm="100%">    
+  <div *ngIf="eventos.length == 0">
+    <h2 style="text-align: center">No existen eventos en la fecha <mat-icon>error</mat-icon></h2>
+  </div>
+  <div fxLayout="row" *ngIf="eventos.length != 0">
+    <div fxFlex.gt-sm="100%">
       <mat-card>
         <mat-card-content>
           <mat-list>
 
-            <mat-list-item *ngFor="let evento of eventos; index as eventoId" class="card"
-              [ngStyle]="{'background-color': evento.extendedProps.estado.color}">
+            <mat-list-item *ngFor="let evento of eventos; index as eventoId" class="card">
 
               <h3 matLine>Titular de Reserva: {{evento.extendedProps.cliente.nombreYApellido}}</h3>
               <h3 matLine>Cabaña: {{evento.extendedProps.cabana.nombre}}</h3>
@@ -30,22 +31,24 @@
                   <mat-panel-description class="panelDescription">
                     Saldo a pagar:
                     {{evento.extendedProps.montoTotal - evento.extendedProps.montoSenia | currency: 'USD'}}
-                  </mat-panel-description> 
+                  </mat-panel-description>
 
                 </mat-expansion-panel>
               </mat-accordion>
 
-              <mat-card-actions *ngIf="!evento.extendedProps.realizoCheckIn" style="margin-top: 2%; margin-left:2%">
-                <a mat-button [routerLink]="['/registrocheckin', evento.id]"> Realizar Check In 
+              <mat-card-actions class="btnCheckIn" *ngIf="!evento.extendedProps.realizoCheckIn"
+                style="margin-top: 2%; margin-left:2%">
+                <a mat-button [routerLink]="['/registrocheckin', evento.id]"> Realizar Check In
                   <mat-icon title="Realizar Check IN">filter_frames</mat-icon>
                 </a>
-            </mat-card-actions>
+              </mat-card-actions>
 
-            <mat-card-actions *ngIf="evento.extendedProps.realizoCheckIn" style="margin-top: 2%; margin-left:2%">
-              <a mat-button [routerLink]="['/detallecheckin', evento.id]"> Detalle Check In
-                    <mat-icon title="Detalle Check IN">filter_frames</mat-icon>
-              </a>
-            </mat-card-actions>
+              <mat-card-actions class="btnCheckIn" *ngIf="evento.extendedProps.realizoCheckIn"
+                style="margin-top: 2%; margin-left:2%">
+                <a mat-button [routerLink]="['/detallecheckin', evento.id]"> Detalle Check In
+                  <mat-icon title="Detalle Check IN">filter_frames</mat-icon>
+                </a>
+              </mat-card-actions>
 
             </mat-list-item>
 

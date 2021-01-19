@@ -83,7 +83,7 @@
           matSuffix
           [for]="pickerDesde"
         ></mat-datepicker-toggle>
-        <mat-datepicker #pickerDesde startView="month"></mat-datepicker>
+        <mat-datepicker #pickerDesde startView="month" (closed)="calcularSubTotal()"></mat-datepicker>
         <mat-error *ngIf="FormReserva.controls.FechaDesde.getError('invalid')"
           >Inválido</mat-error
         >
@@ -104,7 +104,7 @@
           matSuffix
           [for]="pickerHasta"
         ></mat-datepicker-toggle>
-        <mat-datepicker #pickerHasta startView="month"></mat-datepicker>
+        <mat-datepicker #pickerHasta startView="month" (closed)="calcularSubTotal()"></mat-datepicker>
         <mat-error *ngIf="FormReserva.controls.FechaHasta.getError('invalid')"
           >Inválido</mat-error
         >
@@ -117,7 +117,7 @@
     <div class="fullWidth">
       <mat-form-field class="ocupantes" appearance="standard">
         <mat-label><fa-icon [icon]="faUsers"></fa-icon></mat-label>
-        <mat-select formControlName="CantOcupantes">
+        <mat-select formControlName="CantOcupantes" (closed)="calcularSubTotal()">
           <mat-option
             *ngFor="let numero of CantidadOcupantes"
             value="numero"
@@ -130,14 +130,13 @@
 
       <mat-form-field class="cabania" appearance="standard">
         <mat-label><fa-icon [icon]="faHome"></fa-icon></mat-label>
-        <mat-select (closed)="calcularSubTotal()" formControlName="Cabania">
-          <mat-option
-            *ngFor="let numero of Cabanias"
-            value="numero"
-            [value]="numero"
-            >{{ numero }}</mat-option
-          >
+
+        <mat-select name="cabana" (closed)="calcularSubTotal()" formControlName="Cabania">
+          <mat-option *ngFor="let cabana of cabanas" [value]="cabana.nombre">
+            {{ cabana.nombre }}
+          </mat-option>
         </mat-select>
+
         <mat-error>Requerido</mat-error>
       </mat-form-field>
 

@@ -1,0 +1,48 @@
+<form [formGroup]="cabanasForm" fxFlex fxLayout="column" class="fullWidth">
+    <div>
+      <mat-toolbar color="primary" style="padding-left: 16px; width: 100%;">Agregar Cabaña</mat-toolbar>
+    </div>
+    <div fxFlex fxLayoutGap="10px" class="formulario">
+    
+      <mat-form-field appearance="standard" class="consumo">
+        <mat-label>Nombre de Cabaña</mat-label>
+        <input matInput formControlName="nombre" />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" class="consumo">
+        <mat-label>Capacidad de Personas</mat-label>
+        <input matInput formControlName="capacidad" />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" class="consumo">
+        <mat-label>Precio por Día</mat-label>
+        <input matInput formControlName="precioDia" />
+      </mat-form-field>
+
+  
+        <button mat-button color="primary" (click)="agregarCabana()" class="boton-agregar">Agregar
+        <mat-icon>add</mat-icon>
+      </button>
+    
+      
+      
+    </div>
+  
+    <mat-list>
+      <mat-card *ngFor="let cabana of cabanas" class="card">
+        <div style="display:flex;justify-content:space-between">
+          <mat-card-header>
+            <mat-card-title>{{cabana.nombre}}</mat-card-title>
+            <mat-card-subtitle>Capacidad: {{cabana.capacidad}}</mat-card-subtitle>
+            <mat-card-subtitle>Precio por Día: {{cabana.precioDia}}</mat-card-subtitle>
+          </mat-card-header>
+          <button mat-button color="primary" (click)="quitarCabana(cabana)">Quitar
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </mat-list>
+
+       <button mat-button style="margin-top: 10px;margin-bottom: 10px;" color="primary"(click)="guardarCabana()">Guardar</button>
+   
+  </form>
