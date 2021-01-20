@@ -37,20 +37,22 @@
   </div>
 
   <mat-list>
-    <mat-card *ngFor="let consumo of consumo?.consumos" class="card" style="width: 90%; margin-left: 4%; margin-bottom: 2%">
+    <mat-card *ngFor="let consumo of consumo?.consumos" class="card" style="width: 90%; margin-left: 4%; margin-bottom: 2%;height: 6.5rem;">
       <div style="display:flex;justify-content:space-between">
         <mat-card-header>
           <div mat-card-avatar class="avatar-image-consumo"></div>
+
           <div>
-          <mat-card-title>{{ consumo.producto.descripcion }}</mat-card-title>
+            
+          <mat-card-title style="margin-bottom: 1rem;">{{ consumo.producto.descripcion }}</mat-card-title>
+         
+            <mat-card-subtitle class="fuente">Cantidad: {{ consumo.cantidad}} Precio Unitario: {{ consumo.producto.precio | currency: 'USD'}}</mat-card-subtitle>
+            <mat-card-subtitle class="fuente">Total: {{ consumo.monto | currency: 'USD'}} Fecha: {{ consumo.fecha | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
           
-          <mat-card-subtitle>Cantidad: {{ consumo.cantidad}}</mat-card-subtitle>
-          <mat-card-subtitle>Precio Unitario: {{ consumo.producto.precio | currency: 'USD'}}</mat-card-subtitle>
-          <mat-card-subtitle>Total: {{ consumo.monto | currency: 'USD'}}</mat-card-subtitle>
-          <mat-card-subtitle>Fecha: {{ consumo.fecha | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
+          
         </div>
         </mat-card-header>
-        <button mat-button color="primary" (click)="quitarConsumo(consumo)">Quitar
+        <button mat-button class="boton" color="primary" (click)="quitarConsumo(consumo)">Quitar
           <mat-icon>delete</mat-icon>
         </button>
         
