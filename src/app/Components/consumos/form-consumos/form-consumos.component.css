@@ -26,6 +26,10 @@
   
   .card {
     background-color: #c7dbe5ef;
+    width: 90%; 
+    margin-left: 4%; 
+    margin-bottom: 2%;
+    height: 8.5rem;
   }
  
   .btnAgregarConsumo {
@@ -38,20 +42,40 @@
     border: 1px solid #595d5a;
   }
 
-  .btnCloseDialog {
-    color: #7c1313;
-    border: 1px solid #595d5a;
-    background-color: #f8797fe7;
+  .close-button{
+    color: #ffffff;
+    float: right;
+  }  
+
+  .close-icon {
+    transition: 1s ease-in-out;
   }
   
+  .close-icon:hover {
+    transform: rotate(180deg);
+  }
+  
+  ::ng-deep .icon-outside .close-button{
+    float: right;
+    top:-52px;
+    right:-52px;
+  }
+  
+  ::ng-deep .icon-outside .mat-dialog-container {
+   overflow: unset
+  }
 
   .fuente{
-    font-size: 0.6rem;
+    font-size: 16px;
   }
   
-  .boton{
+  .btnCloseConsumo{
     width: 0.4rem;
     height: 1rem;
-    margin-top: 1.2rem;
+    margin-top: 1.6rem;
     margin-right: 0.2rem;
+  }
+
+  .headerAndClose {
+    background-color: #3f51b5;
   }

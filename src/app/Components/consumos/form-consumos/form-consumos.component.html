@@ -1,6 +1,10 @@
 <form [formGroup]="consumosForm" fxFlex fxLayout="column" class="fullWidth">
-  <div>
-    <mat-toolbar color="primary" style="padding-left: 16px; width: 100%;">Agregar Consumo</mat-toolbar>
+  <div class="headerAndClose">
+    <button tabindex="-1" mat-icon-button class="close-button" [mat-dialog-close]="true">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+
+    <mat-toolbar color="primary" style="padding-left: 16px; width: 90%;">Agregar Consumo</mat-toolbar>
 </div>
   <div fxFlex fxLayoutGap="10px" class="formulario">
 
@@ -35,25 +39,21 @@
     <button class="btnQuitarConsumo" mat-button color="primary" (click)="guardarConsumos()">Guardar
 
     </button>
-    <button mat-button class="btnCloseDialog" (click)="onNoClick()">Cerrar
-      <mat-icon>close</mat-icon>
-    </button>
-
   </div>
 
   <mat-list>
-    <mat-card *ngFor="let consumo of consumo?.consumos" class="card" style="width: 90%; margin-left: 4%; margin-bottom: 2%;height: 6.5rem;">
+    <mat-card *ngFor="let consumo of consumo?.consumos" class="card">
       <div style="display:flex;justify-content:space-between">
         <mat-card-header>
           <div mat-card-avatar class="avatar-image-consumo"></div>
 
           <div>
             
-          <mat-card-title style="margin-bottom: 1rem;">{{ consumo.producto.descripcion }}</mat-card-title>
+          <mat-card-title style="margin-bottom: 1rem;">{{ consumo.producto.descripcion }} X {{ consumo.cantidad}}</mat-card-title>
          
-            <mat-card-subtitle class="fuente">Cantidad: {{ consumo.cantidad}} Precio Unitario: {{ consumo.producto.precio | currency: 'USD'}}</mat-card-subtitle>
-            <mat-card-subtitle class="fuente">Total: {{ consumo.monto | currency: 'USD'}} Fecha: {{ consumo.fecha | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
-          
+            <mat-card-subtitle class="fuente">Precio Unitario: {{ consumo.producto.precio | currency: 'USD'}}</mat-card-subtitle>
+            <mat-card-subtitle class="fuente">Total: {{ consumo.monto | currency: 'USD'}}</mat-card-subtitle>
+            <mat-card-subtitle class="fuente">Fecha: {{ consumo.fecha | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
           
         </div>
         </mat-card-header>
