@@ -1,7 +1,7 @@
 <form [formGroup]="consumosForm" fxFlex fxLayout="column" class="fullWidth">
   <div>
     <mat-toolbar color="primary" style="padding-left: 16px; width: 100%;">Agregar Consumo</mat-toolbar>
-  </div>
+</div>
   <div fxFlex fxLayoutGap="10px" class="formulario">
 
     <mat-form-field appearance="standard">
@@ -29,10 +29,15 @@
       <input matInput formControlName="total" />
     </mat-form-field>
 
-    <button mat-button color="primary" (click)="agregarConsumo()">Agregar
+    <button class="btnAgregarConsumo" mat-button color="primary" (click)="agregarConsumo()">Agregar
       <mat-icon>add</mat-icon>
     </button>
-    <button class="btnQuitarConsumo" mat-button color="primary" (click)="guardarConsumos()">Guardar</button>
+    <button class="btnQuitarConsumo" mat-button color="primary" (click)="guardarConsumos()">Guardar
+
+    </button>
+    <button mat-button class="btnCloseDialog" (click)="onNoClick()">Cerrar
+      <mat-icon>close</mat-icon>
+    </button>
 
   </div>
 
@@ -52,8 +57,7 @@
         </mat-card-header>
         <button mat-button color="primary" (click)="quitarConsumo(consumo)">Quitar
           <mat-icon>delete</mat-icon>
-        </button>
-        
+        </button>  
       </div>
     </mat-card>
   </mat-list>

@@ -53,7 +53,7 @@ export class ConsumosComponent implements OnInit{
   
   openDialog(evento: Evento): void {
     const dialogRef = this.dialog.open(FormConsumosComponent, {
-      width: "30vw",
+      width: "35vw",
       height:"40vw",
       data: {reserva: evento}
     });

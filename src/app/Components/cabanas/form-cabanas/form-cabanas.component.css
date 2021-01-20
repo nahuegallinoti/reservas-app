@@ -3,11 +3,6 @@
     padding-right: 5px;
   }
 
-  .boton-agregar{
-    width: 20%;
-
-  }
-
   .fullWidth {
     width: 100%;
   }
@@ -16,10 +11,6 @@
     padding: 30px;
   }
 
-  .boton-guardar{
-    background-color:#3f51b5;
-    color:white;
-  }
   
   mat-dialog-actions {
     justify-content: flex-end;
@@ -29,4 +20,40 @@
     width: 90%; 
     margin-left: 4%; 
     margin-bottom: 2%
+  }
+
+  .btnAgregarCabana {
+    background-color: #ffffff;
+    border: 1px solid #595d5a;
+  }
+
+  .btnQuitarCabana {
+    background-color: #e3f8fa;
+    border: 1px solid #595d5a;
+  }
+
+  .close-button{
+    float: right;
+  }
+  
+  .close-icon {
+    transition: 1s ease-in-out;
+  }
+  
+  .close-icon:hover {
+    transform: rotate(180deg);
+  }
+  
+  ::ng-deep .icon-outside .close-button{
+    float: right;
+    top:-52px;
+    right:-52px;
+  }
+  
+  ::ng-deep .icon-outside .mat-dialog-container {
+   overflow: unset
+  }
+
+  .headerAndClose {
+    background-color: #3f51b5;
   }

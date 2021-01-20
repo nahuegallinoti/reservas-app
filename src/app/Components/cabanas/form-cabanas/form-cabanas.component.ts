@@ -66,8 +66,12 @@ export class FormCabanasComponent implements OnInit {
     }
   }
 
-
   resetForm() {
     this.cabanasForm.reset();
   }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }

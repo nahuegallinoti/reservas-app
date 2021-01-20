@@ -1,44 +1,45 @@
 <form [formGroup]="productosForm" fxFlex fxLayout="column" class="fullWidth">
-    <div>
-      <mat-toolbar color="primary" style="padding-left: 16px; width: 100%;">Agregar Producto</mat-toolbar>
-    </div>
-    <div fxFlex fxLayoutGap="10px" class="formulario">
-    
-      <mat-form-field appearance="standard" class="consumo">
-        <mat-label>Descripción</mat-label>
-        <input matInput formControlName="descripcion" />
-      </mat-form-field>
+  <div class="headerAndClose">
+    <button tabindex="-1" mat-icon-button class="close-button" [mat-dialog-close]="true">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
 
-      <mat-form-field appearance="standard" class="consumo">
-        <mat-label>Precio</mat-label>
-        <input matInput formControlName="precio" />
-      </mat-form-field>
+    <mat-toolbar color="primary" style="padding-left: 16px; width: 90%;">Agregar Producto</mat-toolbar>
+  </div>
+  <div fxFlex fxLayoutGap="10px" class="formulario">
 
-  
-        <button mat-button color="primary" (click)="agregarProducto()" class="boton-agregar">Agregar
-        <mat-icon>add</mat-icon>
-      </button>
-    
-      
-      
-    </div>
-  
-    <mat-list>
-      <mat-card *ngFor="let producto of productos" class="card" style="width: 90%; margin-left: 4%; margin-bottom: 2%">
-        <div style="display:flex;justify-content:space-between">
-          <mat-card-header>
-            <mat-card-title>{{producto.descripcion}}</mat-card-title>
-            <mat-card-subtitle>Precio: {{producto.precio}}</mat-card-subtitle>
-          </mat-card-header>
-          <button mat-button color="primary" (click)="quitarProducto(producto)">Quitar
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </mat-card>
-    </mat-list>
+    <mat-form-field appearance="standard" class="consumo">
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="descripcion" />
+    </mat-form-field>
 
-    <!-- <div mat-dialog-actions style="justify-content: center;"> -->
-       <button mat-button style="margin-top: 10px;margin-bottom: 10px;" color="primary"(click)="guardarProducto()">Guardar</button>
-    <!-- </div> -->
-   
-  </form>
+    <mat-form-field appearance="standard" class="consumo">
+      <mat-label>Precio</mat-label>
+      <input matInput formControlName="precio" />
+    </mat-form-field>
+
+<div>
+    <button mat-button class="btnAgregarProducto" color="primary" (click)="agregarProducto()">Agregar
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-button class="btnQuitarProducto" color="primary" (click)="guardarProducto()">Guardar
+    </button>
+  </div>
+
+  </div>
+
+  <mat-list>
+    <mat-card *ngFor="let producto of productos" class="card" style="width: 90%; margin-left: 4%; margin-bottom: 2%">
+      <div style="display:flex;justify-content:space-between">
+        <mat-card-header>
+          <mat-card-title>{{producto.descripcion}}</mat-card-title>
+          <mat-card-subtitle>Precio: {{producto.precio}}</mat-card-subtitle>
+        </mat-card-header>
+        <button mat-button color="primary" (click)="quitarProducto(producto)">Quitar
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+  </mat-list>
+
+</form>

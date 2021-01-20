@@ -27,7 +27,19 @@
   .card {
     background-color: #c7dbe5ef;
   }
+ 
+  .btnAgregarConsumo {
+    background-color: #ffffff;
+    border: 1px solid #595d5a;
+  }
 
   .btnQuitarConsumo {
     background-color: #e3f8fa;
+    border: 1px solid #595d5a;
+  }
+
+  .btnCloseDialog {
+    color: #7c1313;
+    border: 1px solid #595d5a;
+    background-color: #f8797fe7;
   }
