@@ -25,6 +25,12 @@
     border: 1px solid #595d5a;
   }
 
+  .btnGuardarProducto {
+    width: auto;
+    margin: auto;
+  }
+
+
   .headerAndClose {
     background-color: #3f51b5;
   }
@@ -37,14 +43,15 @@
   
   .close-icon {
     transition: 0.8s ease-in-out;
-    border-radius: 1px solid #e616d4;
-
+    transition-property: background-color, transform;
+    transition-duration: 500ms, 500ms;
   }
-
+  
   .close-icon:hover {
-    transform: rotate(180deg);
+    background-color: red;
+    transform: rotate(90deg) scale(1);
   }
-
+  
   ::ng-deep .icon-outside .close-button{
     float: right;
     top:-52px;

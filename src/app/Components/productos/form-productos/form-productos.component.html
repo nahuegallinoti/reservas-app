@@ -17,13 +17,10 @@
       <mat-label>Precio</mat-label>
       <input matInput formControlName="precio" />
     </mat-form-field>
-
-<div>
     <button mat-button class="btnAgregarProducto" color="primary" (click)="agregarProducto()">Agregar
       <mat-icon>add</mat-icon>
     </button>
-    <button mat-button class="btnQuitarProducto" color="primary" (click)="guardarProducto()">Guardar
-    </button>
+<div>
   </div>
 
   </div>
@@ -41,5 +38,8 @@
       </div>
     </mat-card>
   </mat-list>
+  <button *ngIf="productos.length > 0" class="btnGuardarProducto" mat-raised-button mat-primary color="primary" (click)="guardarProducto()">Guardar
+  </button>
+
 
 </form>

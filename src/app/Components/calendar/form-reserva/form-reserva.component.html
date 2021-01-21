@@ -1,9 +1,17 @@
 <form [formGroup]="FormReserva" fxFlex fxLayout="column" class="formWidth">
-  <div *ngIf="!isEditing">
-    <mat-toolbar color="primary">Registrar reserva</mat-toolbar>
+  <div class="headerAndCloseRegistrar" *ngIf="!isEditing">
+    <button tabindex="-1" mat-icon-button class="close-button" [mat-dialog-close]="true">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+
+    <mat-toolbar color="primary" style="padding-left: 16px; width: 90%;">Registrar reserva</mat-toolbar>
   </div>
-  <div *ngIf="isEditing">
-    <mat-toolbar color="accent">Editar reserva</mat-toolbar>
+  <div class="headerAndCloseEditar" *ngIf="isEditing">
+    <button tabindex="-1" mat-icon-button class="close-button" [mat-dialog-close]="true">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+
+    <mat-toolbar class="mat-editarReserva" style="padding-left: 16px; width: 90%;">Editar reserva</mat-toolbar>
   </div>
   <div fxFlex fxLayoutGap="10px" class="formulario">
     <mat-form-field appearance="standard" class="fullWidth">
@@ -116,7 +124,7 @@
     <br />
     <div class="fullWidth">
       <mat-form-field class="ocupantes" appearance="standard">
-        <mat-label><fa-icon [icon]="faUsers"></fa-icon></mat-label>
+        <mat-label><fa-icon [icon]="faUsers"></fa-icon> Cantidad de Personas</mat-label>
         <mat-select formControlName="CantOcupantes" (closed)="calcularSubTotal()">
           <mat-option
             *ngFor="let numero of CantidadOcupantes"
@@ -129,7 +137,7 @@
       </mat-form-field>
 
       <mat-form-field class="cabania" appearance="standard">
-        <mat-label><fa-icon [icon]="faHome"></fa-icon></mat-label>
+        <mat-label><fa-icon [icon]="faHome"></fa-icon> Cabaña</mat-label>
 
         <mat-select name="cabana" (closed)="calcularSubTotal()" formControlName="Cabania">
           <mat-option *ngFor="let cabana of cabanas" [value]="cabana.nombre">
@@ -139,6 +147,9 @@
 
         <mat-error>Requerido</mat-error>
       </mat-form-field>
+    </div>
+
+    <div class="fullWidth">
 
       <mat-form-field appearance="standard" class="monto">
         <mat-label><fa-icon [icon]="faDollarSign"></fa-icon> Seña</mat-label>
@@ -160,7 +171,7 @@
 
       <mat-dialog-actions fxFlexAlign="end">
         <button
-          class="mat-stroked-button mat-accent buttonMargin"
+          class="btnCancelarReserva mat-stroked-button buttonMargin"
           (click)="cancelar()"
         >
           Cancelar

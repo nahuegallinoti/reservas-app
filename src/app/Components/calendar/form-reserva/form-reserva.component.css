@@ -18,17 +18,17 @@
 }
 
 .monto {
-  width: 30%;
+  width: 50%;
   padding-right: 10px;
 }
 
 .ocupantes {
-  width: 20%;
+  width: 50%;
   padding-right: 10px;
 }
 
 .cabania {
-  width: 20%;
+  width: 50%;
   padding-right: 10px;
 }
 
@@ -50,4 +50,48 @@
 
 mat-dialog-actions {
   justify-content: flex-end;
+}
+
+.btnCancelarReserva {
+  color: red;
+}
+
+.close-button{
+  color: #ffffff;
+  float: right;
+}
+
+.close-icon {
+  transition: 0.8s ease-in-out;
+  transition-property: background-color, transform;
+  transition-duration: 500ms, 500ms;
+}
+
+.close-icon:hover {
+  background-color: red;
+  transform: rotate(90deg) scale(1);
+}
+
+::ng-deep .icon-outside .close-button{
+  float: right;
+  top:-52px;
+  right:-52px;
+}
+
+::ng-deep .icon-outside .mat-dialog-container {
+ overflow: unset
+}
+
+.headerAndCloseRegistrar {
+  background-color: #3f51b5;
+}
+
+.headerAndCloseEditar {
+  background-color: #27726e;
+}
+
+.mat-editarReserva{
+  background-color: #27726e;
+  color: #ffffff;
+
 }

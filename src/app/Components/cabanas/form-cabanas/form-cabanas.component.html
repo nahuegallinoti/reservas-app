@@ -28,7 +28,7 @@
       <button class="btnAgregarCabana" mat-button color="primary" (click)="agregarCabana()">Agregar
         <mat-icon>add</mat-icon>
       </button>
-      <button class="btnQuitarCabana" mat-button color="primary" (click)="guardarCabana()">Guardar
+      <button *ngIf="cabanas.length > 0" mat-raised-button mat-primary color="primary" (click)="guardarCabana()">Guardar
   
       </button>  
     </div>

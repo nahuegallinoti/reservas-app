@@ -29,7 +29,11 @@
 
   .btnQuitarCabana {
     background-color: #e3f8fa;
-    border: 1px solid #595d5a;
+  }
+
+  .btnGuardarCabana {
+    background-color: #e3f8fa;
+    border: 2px solid #595d5a;
   }
 
   .close-button{
@@ -38,13 +42,16 @@
   }
   
   .close-icon {
-    transition: 1s ease-in-out;
+    transition: 0.8s ease-in-out;
+    transition-property: background-color, transform;
+    transition-duration: 500ms, 500ms;
   }
   
   .close-icon:hover {
-    transform: rotate(180deg);
+    background-color: red;
+    transform: rotate(90deg) scale(1);
   }
-  
+    
   ::ng-deep .icon-outside .close-button{
     float: right;
     top:-52px;

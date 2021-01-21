@@ -36,7 +36,7 @@
     <button class="btnAgregarConsumo" mat-button color="primary" (click)="agregarConsumo()">Agregar
       <mat-icon>add</mat-icon>
     </button>
-    <button class="btnQuitarConsumo" mat-button color="primary" (click)="guardarConsumos()">Guardar
+    <button *ngIf="consumo?.consumos.length > 0" mat-raised-button mat-primary color="primary" (click)="guardarConsumos()">Guardar
 
     </button>
   </div>
@@ -57,7 +57,7 @@
           
         </div>
         </mat-card-header>
-        <button mat-button class="boton" color="primary" (click)="quitarConsumo(consumo)">Quitar
+        <button mat-button class="btnQuitarConsumo" color="primary" (click)="quitarConsumo(consumo)">Quitar
           <mat-icon>delete</mat-icon>
         </button>  
       </div>
