@@ -82,4 +82,27 @@ export class CabanaService {
     })
 
   }
+
+  actualizarCabana(id: number, cabana: Cabana) {
+
+    const cabanaParse = Object.assign({}, cabana);
+
+    this.firestore
+      .doc('cabanias/' + id)
+      .set(cabanaParse)
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'Se actualizaron los datos de la cabaña con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar actualizar la reserva: ' + error,
+          null,
+          3000
+        )
+      );
+  }
 }

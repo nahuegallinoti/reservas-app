@@ -23,6 +23,9 @@ export class FormCabanasComponent implements OnInit {
     precioDia: [0]
   });
 
+  idCabania: number;
+  numeroCabana: number;
+
   cabanas: Cabana[] = [];
 
   constructor(
@@ -31,17 +34,19 @@ export class FormCabanasComponent implements OnInit {
     private uiService: UIService,
     private cabanasService: CabanaService,
     @Inject(MAT_DIALOG_DATA) public data: DialogDataCabana
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
-    if (this.data.cabana != null)
-    {
+    if (this.data.cabana != null) {
       this.cabanasForm.setValue({
-        nombre: this.data.cabana.nombre, 
+        nombre: this.data.cabana.nombre,
         capacidad: this.data.cabana.capacidad,
         precioDia: this.data.cabana.precioDia
       })
+
+      this.idCabania = this.data.cabana.id;
+      this.numeroCabana = this.data.cabana.numero;
     }
   }
 
@@ -80,6 +85,30 @@ export class FormCabanasComponent implements OnInit {
       this.resetForm();
     }
   }
+
+  editarCabana() {
+    let cabana = new Cabana();
+
+    cabana.nombre = this.cabanasForm.value.nombre;
+    cabana.capacidad = Number(this.cabanasForm.value.capacidad);
+    cabana.precioDia = Number(this.cabanasForm.value.precioDia);
+    cabana.numero = this.numeroCabana;
+
+    if (cabana.nombre != null && cabana.precioDia != null)
+      this.cabanasService.actualizarCabana(this.idCabania, cabana)
+
+    else
+    {
+      this.uiService.showSnackBar(
+        "Ocurrió un error al intentar editar los datos de la cabaña" + null,
+        null,
+        3000
+      );
+
+    }
+    this.dialogRef.close();
+  }
+
 
   resetForm() {
     this.cabanasForm.reset();
