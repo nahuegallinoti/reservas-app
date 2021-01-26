@@ -24,3 +24,27 @@
     border: 1px solid #85929E;
     margin-bottom: 1rem;
 }
+
+.btnEditarCabana {
+    border-radius: 5px;
+    color:#000000;
+    background-color:#ffe392;
+    border: 1px solid #c8ca47;
+    margin-right: 10px;
+}
+
+.btnEditarCabana:hover {
+    box-shadow: 5px 5px 5px rgb(240, 238, 166);
+}
+
+.btnEliminarCabana {
+    border-radius: 5px;
+    color:#000000;
+    background-color:#e72121;
+    border: 1px solid #ca4747;
+    margin: auto;
+}
+
+.btnEliminarCabana:hover {
+    box-shadow: 5px 5px 5px rgb(228, 118, 118);
+}

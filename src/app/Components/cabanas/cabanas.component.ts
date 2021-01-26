@@ -5,9 +5,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Cabana } from 'src/app/Models/cabana.model';
+import { Evento } from 'src/app/Models/evento.model';
 import { CabanaService } from 'src/app/Services/cabana.service';
 import { UIService } from 'src/app/Shared/ui.service';
 import { FormCabanasComponent } from './form-cabanas/form-cabanas.component';
+import { QuitarCabanaComponent } from './quitar-cabana/quitar-cabana.component';
 
 @Component({
   selector: 'app-cabanas',
@@ -24,7 +26,7 @@ export class CabanasComponent implements OnInit {
   private sort: MatSort;
   private paginator: MatPaginator;
 
-  columnas: string[] = ['nombre', 'capacidad', 'precioDia'];
+  columnas: string[] = ['nombre', 'capacidad', 'precioDia', 'acciones'];
 
   @ViewChild(MatSort) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -46,7 +48,7 @@ export class CabanasComponent implements OnInit {
     private uiService: UIService,
     private dialog: MatDialog
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isLoadingSubscription = this.uiService.loadingStateChanged.subscribe(
@@ -70,17 +72,52 @@ export class CabanasComponent implements OnInit {
     }
   }
 
-  filtrar(valor: string): void{
+  filtrar(valor: string): void {
     this.cabanas.filter = valor.trim().toLowerCase();
   }
 
   ngOnDestroy(): void {
   }
 
-  openDialog(): void {
+  openDialogAgregarCabana(): void {
     const dialogRef = this.dialog.open(FormCabanasComponent, {
       width: "30vw",
-      height:"28vw",
+      height: "28vw",
+      data: {
+        reserva: null,
+      }
+
+    });
+
+
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogEditCabana(cabana: Evento): void {
+    const dialogRef = this.dialog.open(FormCabanasComponent, {
+      width: "30vw",
+      height: "28vw",
+      data: {
+        cabana: cabana,
+      }
+
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogEliminarCabana(cabana: Evento): void {
+
+    const dialogRef = this.dialog.open(QuitarCabanaComponent, {
+      width: "25vw",
+      height: "15vw",
+      data: {
+        cabana: cabana,
+      }
     });
 
     dialogRef.afterClosed().subscribe(() => {

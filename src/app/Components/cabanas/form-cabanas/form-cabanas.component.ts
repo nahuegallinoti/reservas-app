@@ -4,13 +4,18 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Cabana } from 'src/app/Models/cabana.model';
 import { CabanaService } from 'src/app/Services/cabana.service';
 import { UIService } from 'src/app/Shared/ui.service';
-import { DialogData } from '../../consumos/form-consumos/form-consumos.component';
+
+
+export interface DialogDataCabana {
+  cabana: Cabana;
+}
 
 @Component({
   selector: 'app-form-cabanas',
   templateUrl: './form-cabanas.component.html',
   styleUrls: ['./form-cabanas.component.css']
 })
+
 export class FormCabanasComponent implements OnInit {
   cabanasForm = this.formBuilder.group({
     nombre: [null],
@@ -25,10 +30,20 @@ export class FormCabanasComponent implements OnInit {
     public dialogRef: MatDialogRef<FormCabanasComponent>,
     private uiService: UIService,
     private cabanasService: CabanaService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataCabana
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    if (this.data.cabana != null)
+    {
+      this.cabanasForm.setValue({
+        nombre: this.data.cabana.nombre, 
+        capacidad: this.data.cabana.capacidad,
+        precioDia: this.data.cabana.precioDia
+      })
+    }
+  }
 
   guardarCabana() {
     this.resetForm();

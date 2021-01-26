@@ -1,5 +1,5 @@
 .fecha {
-  width: 50%;
+  width: 45%;
   padding-right: 5px;
 }
 
@@ -8,27 +8,27 @@
 }
 
 .dni {
-  width: 50%;
+  width: 45%;
   padding-right: 5px;
 }
 
 .telefono {
-  width: 50%;
+  width: 45%;
   padding-left: 5px;
 }
 
 .monto {
-  width: 50%;
+  width: 45%;
   padding-right: 10px;
 }
 
 .ocupantes {
-  width: 50%;
+  width: 45%;
   padding-right: 10px;
 }
 
 .cabania {
-  width: 50%;
+  width: 45%;
   padding-right: 10px;
 }
 

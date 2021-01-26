@@ -24,7 +24,7 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
   private sort: MatSort;
   private paginator: MatPaginator;
 
-  columnas: string[] = ['descripcion', 'precio'];
+  columnas: string[] = ['descripcion', 'precio', 'acciones'];
 
   @ViewChild(MatSort) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -77,6 +77,17 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
   }
 
   openDialog(): void {
+    const dialogRef = this.dialog.open(FormProductosComponent, {
+      width: "35vw",
+      height:"31vw",
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogEdit(): void {
     const dialogRef = this.dialog.open(FormProductosComponent, {
       width: "35vw",
       height:"31vw",

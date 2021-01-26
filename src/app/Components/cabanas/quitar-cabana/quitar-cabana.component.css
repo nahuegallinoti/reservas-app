@@ -1,36 +1,11 @@
-.consumo {
-    width: 35%;
-    padding-right: 5px;
-  }
-
-  .fullWidth {
+.fullWidth {
     width: 100%;
   }
 
   .formulario {
     padding: 30px;
   }
-
   
-  mat-dialog-actions {
-    justify-content: flex-end;
-  }
- 
-  .card {
-    width: 90%; 
-    margin-left: 4%; 
-    margin-bottom: 2%
-  }
-
-  .btnAgregarCabana {
-    background-color: #ffffff;
-    border: 1px solid #595d5a;
-  }
-
-  .btnQuitarCabana {
-    background-color: #e3f8fa;
-  }
-
   .close-button{
     color: #ffffff;
     float: right;

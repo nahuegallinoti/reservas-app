@@ -21,6 +21,14 @@
                     <td mat-cell *matCellDef="let cabana"> {{cabana.precioDia}} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="acciones">
+                    <mat-header-cell  *matHeaderCellDef > Acciones </mat-header-cell>
+                    <mat-cell *matCellDef="let row" >
+                        <button class="button btnEditarCabana" mat-raised-button (click)="openDialogEditCabana(row)">Modificar</button>
+                        <button class="button btnEliminarCabana" mat-raised-button (click)="openDialogEliminarCabana(row)">Quitar</button>
+                    </mat-cell>
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="columnas"></tr>
                 <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
             </table>
@@ -31,7 +39,7 @@
             </mat-paginator>
         </div>
 
-        <button class="button button-primary btnAgregarCabana" mat-raised-button (click)="openDialog()">+ Agregar Cabaña</button>
+        <button class="button button-primary btnAgregarCabana" mat-raised-button (click)="openDialogAgregarCabana()">+ Agregar Cabaña</button>
 
     </div>
 

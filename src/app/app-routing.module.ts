@@ -73,7 +73,6 @@ const appRoutes: Routes = [
     component: CabanasComponent,
     canActivate: [AuthGuard],
   },
-
   { path: '**', redirectTo: '/checkout' },
 ];
 

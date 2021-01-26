@@ -26,14 +26,13 @@
     background-color: #f0f0f0f1;
     width: 60%;
     margin-left: 20%;
-    margin-top: 5%;
+    margin-top: 3%;
   }
   
   .btnGestionarConsumos {
     color:#59ac29;
 
   }
-
   
   .btnGestionarConsumos:hover {
     color: #000000;

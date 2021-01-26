@@ -16,6 +16,14 @@
                     <td mat-cell *matCellDef="let producto"> {{producto.precio}} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="acciones">
+                    <mat-header-cell  *matHeaderCellDef > Acciones </mat-header-cell>
+                    <mat-cell *matCellDef="let row" >
+                        <button class="button btnEditarProducto" mat-raised-button (click)="openDialogEdit()">Modificar</button>
+                        <button class="button btnEliminarProducto" mat-raised-button (click)="openDialog()">Quitar</button>
+                    </mat-cell>
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="columnas"></tr>
                 <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
             </table>

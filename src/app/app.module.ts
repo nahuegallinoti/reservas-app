@@ -35,7 +35,8 @@ import { ProductosComponent } from './Components/productos/productos.component';
 import { FormProductosComponent } from './Components/productos/form-productos/form-productos.component';
 import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/detalle-check-in.component';
 import { CabanasComponent } from './Components/cabanas/cabanas.component';
-import { FormCabanasComponent } from './Components/cabanas/form-cabanas/form-cabanas.component'
+import { FormCabanasComponent } from './Components/cabanas/form-cabanas/form-cabanas.component';
+import { QuitarCabanaComponent } from './Components/cabanas/quitar-cabana/quitar-cabana.component'
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { FormCabanasComponent } from './Components/cabanas/form-cabanas/form-cab
     FormProductosComponent,
     DetalleCheckInComponent,
     CabanasComponent,
-    FormCabanasComponent
+    FormCabanasComponent,
+    QuitarCabanaComponent
 
   ],
   imports: [

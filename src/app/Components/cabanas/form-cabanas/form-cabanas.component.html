@@ -4,7 +4,8 @@
         <mat-icon class="close-icon">close</mat-icon>
       </button>
 
-      <mat-toolbar color="primary" style="padding-left: 16px; width: 90%;">Agregar Cabaña</mat-toolbar>
+      <mat-toolbar *ngIf="data.cabana" color="primary" style="padding-left: 16px; width: 90%;">Editar Cabaña</mat-toolbar>
+      <mat-toolbar *ngIf="!data.cabana" color="primary" style="padding-left: 16px; width: 90%;">Agregar Cabaña</mat-toolbar>
 
     </div>
     <div fxFlex fxLayoutGap="10px" class="formulario">
@@ -25,12 +26,17 @@
       </mat-form-field>
 
   
-      <button class="btnAgregarCabana" mat-button color="primary" (click)="agregarCabana()">Agregar
+      <button *ngIf="!data.cabana" class="btnAgregarCabana" mat-button color="primary" (click)="agregarCabana()">Agregar
         <mat-icon>add</mat-icon>
       </button>
-      <button *ngIf="cabanas.length > 0" mat-raised-button mat-primary color="primary" (click)="guardarCabana()">Guardar
+      <button class="btnGuardarCabana" *ngIf="!data.cabana && cabanas.length > 0" mat-raised-button mat-primary color="primary" (click)="guardarCabana()">Guardar
+  
+      </button>
+      
+      <button class="btnGuardarCabana" *ngIf="data.cabana" mat-raised-button mat-primary color="primary" (click)="guardarCabana()">Guardar
   
       </button>  
+
     </div>
   
     <mat-list>

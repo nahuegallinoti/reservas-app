@@ -38,3 +38,27 @@ table {
     border: 1px solid #85929E;
     margin-bottom: 1rem;
 }
+
+.btnEditarProducto {
+    border-radius: 5px;
+    color:#000000;
+    background-color:#ffe392;
+    border: 1px solid #c8ca47;
+    margin-right: 10px;
+}
+
+.btnEditarProducto:hover {
+    box-shadow: 5px 5px 5px rgb(240, 238, 166);
+}
+
+.btnEliminarProducto {
+    border-radius: 5px;
+    color:#000000;
+    background-color:#e72121;
+    border: 1px solid #ca4747;
+    margin: auto;
+}
+
+.btnEliminarProducto:hover {
+    box-shadow: 5px 5px 5px rgb(228, 118, 118);
+}
