@@ -24,6 +24,7 @@ import { Estado } from 'src/app/Models/estado.model';
 import { EstadoService } from 'src/app/Services/estado.service';
 import { EstadosConst } from 'src/app/Shared/estados';
 import { CabanaService } from 'src/app/Services/cabana.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'form-reserva',
@@ -50,7 +51,8 @@ export class FormReservaComponent implements OnInit, OnDestroy {
 
   fechaDesde: Date;
   fechaHastaMinima;
-  eventos = [];
+  eventos: Evento[] = [];
+  eventosCabanasActuales: Evento[] = [];
   tarifas = [];
   estados = [];
   cabanas = [];
@@ -80,7 +82,14 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.eventosSubscription = this.reservaService.eventosChanged.subscribe(
       (eventos) => {
+
+        var fechaDesde = this.fechaDesde == null ? this.eventoAEditar.start : this.fechaDesde;
+
         this.eventos = eventos;
+
+        this.eventosCabanasActuales = this.eventos.filter(x => moment(fechaDesde).
+          isBetween(x.start, x.end, null, "[)"));
+
       }
     );
 
@@ -98,6 +107,10 @@ export class FormReservaComponent implements OnInit, OnDestroy {
 
     this.cabanasSubscription = this.cabanasService.cabanasChanged.subscribe(
       (cabanas) => {
+
+        var cabanasOcupadas = cabanas.filter(cabana => this.eventosCabanasActuales.some(x => x.extendedProps.cabana.id == cabana.id));
+        cabanas = cabanas.filter(item => !cabanasOcupadas.includes(item));
+        console.log(cabanas);
         this.cabanas = cabanas;
       }
     );
@@ -223,7 +236,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     reserva.estado = this.determinarEstadoReserva(reserva);
     reserva.realizoCheckIn = false;
     reserva.realizoCheckOut = false;
-   
+
     return reserva;
   }
 
@@ -236,7 +249,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       ' / Debe: $' +
       (reserva.montoTotal - reserva.montoSenia)
       : reserva.cabana.nombre + ' - ' + reserva.cliente.nombreYApellido;
-    
+
     const evento: Evento = {
       title: titulo,
       start: reserva.fechaDesde,
@@ -252,13 +265,13 @@ export class FormReservaComponent implements OnInit, OnDestroy {
 
     let estado: Estado;
 
-    reserva.montoSenia == reserva.montoTotal ? 
-      estado = this.estados.find(estados => estados.identificador === EstadosConst.estadoPagado):
+    reserva.montoSenia == reserva.montoTotal ?
+      estado = this.estados.find(estados => estados.identificador === EstadosConst.estadoPagado) :
 
-    reserva.montoSenia == 0 ? 
-      estado = this.estados.find(estados => estados.identificador === EstadosConst.estadoPendienteSeña):
+      reserva.montoSenia == 0 ?
+        estado = this.estados.find(estados => estados.identificador === EstadosConst.estadoPendienteSeña) :
 
-    estado = this.estados.find(estados => estados.identificador === EstadosConst.estadoSeñado);
+        estado = this.estados.find(estados => estados.identificador === EstadosConst.estadoSeñado);
 
     return estado;
   }
@@ -295,7 +308,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
           ))
       ) {
         const evento = this.crearEvento(reserva);
-          
+
         if (this.isEditing) {
           const id = this.eventoAEditar.id;
           this.reservaService.actualizarReserva(id, evento);
