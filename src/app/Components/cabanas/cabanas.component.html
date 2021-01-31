@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="center center">
     <div *ngIf="!isLoading" class="top" fxLayout="column">
-        <h1>Cabañas</h1>
+        <h1 class="title">Cabañas</h1>
         <mat-form-field fxFlexAlign="center">
             <input matInput type="text" (keyup)="filtrar($event.target.value)" placeholder="Buscar">
         </mat-form-field>
@@ -24,8 +24,12 @@
                 <ng-container matColumnDef="acciones">
                     <mat-header-cell  *matHeaderCellDef > Acciones </mat-header-cell>
                     <mat-cell *matCellDef="let row" >
-                        <button class="button btnEditarCabana" mat-raised-button (click)="openDialogEditCabana(row)">Modificar</button>
-                        <button class="button btnEliminarCabana" mat-raised-button (click)="openDialogEliminarCabana(row)">Quitar</button>
+                        <button aria-label="Modificar Cabaña" class="button btnEditarCabana" mat-raised-button (click)="openDialogEditCabana(row)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button aria-label="Quitar Cabaña" class="button btnEliminarCabana" mat-raised-button (click)="openDialogEliminarCabana(row.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </mat-cell>
                 </ng-container>
 
@@ -39,7 +43,7 @@
             </mat-paginator>
         </div>
 
-        <button class="button button-primary btnAgregarCabana" mat-raised-button (click)="openDialogAgregarCabana()">+ Agregar Cabaña</button>
+        <button color="primary" class="button button-primary btnAgregarCabana" mat-raised-button (click)="openDialogAgregarCabana()">+ Agregar Cabaña</button>
 
     </div>
 

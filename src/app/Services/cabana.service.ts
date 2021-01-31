@@ -105,4 +105,26 @@ export class CabanaService {
         )
       );
   }
+
+  eliminarCabana(id: number) {
+
+    this.firestore
+      .doc('cabanias/' + id)
+      .delete()
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'La cabaña fue eliminada con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar eliminar la cabaña: ' + error,
+          null,
+          3000
+        )
+      );
+  }
+
 }

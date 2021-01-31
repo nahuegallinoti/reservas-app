@@ -1,0 +1,30 @@
+.container {
+    margin: auto;
+    background-color: #761a1a;
+}
+
+.buttons {
+    margin-left: 7rem;
+}
+
+.btnNo {
+    border: 1px solid #000000;
+    background-color:#ffffff;
+
+}
+
+.btnOk { 
+    border: 1px solid #000000;
+    background-color:#ac1b1b;
+    color: #ffffff;
+}
+
+.title { 
+    margin-top: 1rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+.mat-dialog-container {
+    overflow-x: hidden;
+}

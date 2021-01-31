@@ -56,10 +56,10 @@
             <mat-card-subtitle class="fuente">Fecha: {{ consumo.fecha | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
           
         </div>
-        </mat-card-header>
-        <button mat-button class="btnQuitarConsumo" color="primary" (click)="quitarConsumo(consumo)">Quitar
-          <mat-icon>delete</mat-icon>
-        </button>  
+        </mat-card-header> 
+        <button mat-button class="btnQuitarConsumo" (click)="quitarConsumo(consumo)" aria-label="Quitar Consumo">
+          <mat-icon>delete_outline</mat-icon>
+        </button>   
       </div>
     </mat-card>
   </mat-list>

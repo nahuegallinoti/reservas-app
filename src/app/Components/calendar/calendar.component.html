@@ -2,14 +2,14 @@
   <full-calendar class="myCalendar" [options]="calendarOptions" *ngIf="!isLoading">
   </full-calendar>
 
-  <div *ngIf="!isLoading && cabanas.length > 0">
+  <!-- <div *ngIf="!isLoading && cabanas.length > 0">
     <div *ngFor="let cabana of cabanas; let i = index">
       <mat-checkbox [ngStyle]="{ fontWeight: 'bold' }" [checked]="cabana.checked" (change)="checkCabania(cabana)"
         class="check" indeterminate="false" color="primary">
         {{cabana.nombre}}
       </mat-checkbox>
     </div>
-  </div>
+  </div> -->
 
   <mat-spinner *ngIf="isLoading"></mat-spinner>
 </div>

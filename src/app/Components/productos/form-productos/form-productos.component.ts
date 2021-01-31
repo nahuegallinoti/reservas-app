@@ -1,21 +1,29 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UIService } from 'src/app/Shared/ui.service';
-import { DialogData } from '../../consumos/form-consumos/form-consumos.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Producto } from 'src/app/Models/producto.model';
 import { ProductoService } from 'src/app/Services/producto.service';
+
+
+export interface DialogDataProducto {
+  producto: Producto;
+}
+
 
 @Component({
   selector: 'app-form-productos',
   templateUrl: './form-productos.component.html',
   styleUrls: ['./form-productos.component.css'],
 })
+
 export class FormProductosComponent implements OnInit {
   productosForm = this.formBuilder.group({
     descripcion: [null],
-    precio: [null],
+    precio: [0],
   });
+
+  idProducto: number;
 
   productos: Producto[] = [];
 
@@ -24,10 +32,22 @@ export class FormProductosComponent implements OnInit {
     public dialogRef: MatDialogRef<FormProductosComponent>,
     private uiService: UIService,
     private productoService: ProductoService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataProducto
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {  
+
+    
+    if (this.data?.producto != null) {
+    this.productosForm.setValue({
+      descripcion: this.data.producto.descripcion,
+      precio: this.data.producto.precio,
+    })
+
+    this.idProducto = this.data.producto.id;
+  }
+}
+
 
   guardarProducto() {
     this.resetForm();
@@ -61,6 +81,27 @@ export class FormProductosComponent implements OnInit {
 
       this.resetForm();
     }
+  }
+
+  editarProducto() {
+    let producto = new Producto();
+
+    producto.descripcion = this.productosForm.value.descripcion;
+    producto.precio = Number(this.productosForm.value.precio);
+
+    if (producto.descripcion != null && producto.precio != null)
+      this.productoService.editarProducto(this.idProducto, producto)
+
+    else
+    {
+      this.uiService.showSnackBar(
+        "Ocurrió un error al intentar editar los datos del producto" + null,
+        null,
+        3000
+      );
+
+    }
+    this.dialogRef.close();
   }
 
   resetForm() {

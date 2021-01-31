@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { Producto } from 'src/app/Models/producto.model';
 import { ProductoService } from 'src/app/Services/producto.service';
 import { UIService } from 'src/app/Shared/ui.service';
+import { ConfirmationDialogComponent } from '../Shared/Confirmation/confirmation-dialog/confirmation-dialog.component';
 import { FormProductosComponent } from './form-productos/form-productos.component';
 
 @Component({
@@ -97,5 +98,37 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
       console.log('The dialog was closed');
     });
   }
+
+  openDialogEditProducto(producto: Producto): void {
+    const dialogRef = this.dialog.open(FormProductosComponent, {
+      width: "30vw",
+      height: "28vw",
+      data: {
+        producto: producto,
+      }
+
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogEliminarProducto(idProducto: number): void {
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: "25vw",
+      height: "9vw",
+      data: "¿Desea eliminar el producto?",
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result)
+      {
+        this.productoService.eliminarProducto(idProducto);
+      }
+    });
+  }
+
 
 }

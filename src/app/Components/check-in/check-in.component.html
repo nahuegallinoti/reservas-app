@@ -1,9 +1,11 @@
 <div class="container">
   <div *ngIf="eventos.length == 0">
-    <h2 style="text-align: center">No existen eventos en la fecha <mat-icon>error</mat-icon></h2>
+    <h2 style="text-align: center">No existen eventos en la fecha <mat-icon>error</mat-icon>
+    </h2>
   </div>
   <div fxLayout="row" *ngIf="eventos.length != 0">
     <div fxFlex.gt-sm="100%">
+      <h1 class="title">Check In</h1>
       <mat-card>
         <mat-card-content>
           <mat-list>

@@ -18,33 +18,34 @@
 
 .btnAgregarCabana {
     margin-top: 10px;
-    border-radius: 5px;
-    color:#3f51b5;
-    background-color:#E5E7E9;
+    border-radius: 50px;
     border: 1px solid #85929E;
     margin-bottom: 1rem;
 }
 
 .btnEditarCabana {
-    border-radius: 5px;
-    color:#000000;
-    background-color:#ffe392;
-    border: 1px solid #c8ca47;
-    margin-right: 10px;
+    border-radius: 100px;
+    color:#1f5aa8f5;
+    border: 1px solid #396092; 
+    margin: 2px;
 }
 
 .btnEditarCabana:hover {
-    box-shadow: 5px 5px 5px rgb(240, 238, 166);
+    box-shadow: 2px 1px 2px #5174a3
 }
 
 .btnEliminarCabana {
-    border-radius: 5px;
-    color:#000000;
-    background-color:#e72121;
-    border: 1px solid #ca4747;
+    border-radius: 100px;
+    color:#9e1515;
+    border: 1px solid #725050; 
     margin: auto;
 }
 
 .btnEliminarCabana:hover {
-    box-shadow: 5px 5px 5px rgb(228, 118, 118);
+    box-shadow: 2px 1px 2px rgb(214, 96, 96);
 }
+
+.title {
+    text-align: center;
+    margin-top: 1%;
+  }

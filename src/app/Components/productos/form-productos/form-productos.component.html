@@ -4,7 +4,11 @@
       <mat-icon class="close-icon">close</mat-icon>
     </button>
 
-    <mat-toolbar color="primary" style="padding-left: 16px; width: 90%;">Agregar Producto</mat-toolbar>
+    <mat-toolbar *ngIf="data?.producto" color="primary" style="padding-left: 16px; width: 90%;">Editar Producto
+    </mat-toolbar>
+    <mat-toolbar *ngIf="!data?.producto" color="primary" style="padding-left: 16px; width: 90%;">Agregar Producto
+    </mat-toolbar>
+
   </div>
   <div fxFlex fxLayoutGap="10px" class="formulario">
 
@@ -17,11 +21,22 @@
       <mat-label>Precio</mat-label>
       <input matInput formControlName="precio" />
     </mat-form-field>
-    <button mat-button class="btnAgregarProducto" color="primary" (click)="agregarProducto()">Agregar
+
+
+    <button *ngIf="!data?.producto" mat-button class="btnAgregarProducto" color="primary"
+      (click)="agregarProducto()">Agregar
       <mat-icon>add</mat-icon>
     </button>
-<div>
-  </div>
+
+    <button class="btnGuardarProducto" *ngIf="!data?.producto && productos.length > 0" mat-raised-button mat-primary
+      color="primary" (click)="guardarProducto()">Guardar
+
+    </button>
+
+    <button class="btnGuardarProducto" *ngIf="data?.producto" mat-raised-button mat-primary color="primary"
+      (click)="editarProducto()">Actualizar
+
+    </button>
 
   </div>
 
@@ -38,8 +53,5 @@
       </div>
     </mat-card>
   </mat-list>
-  <button *ngIf="productos.length > 0" class="btnGuardarProducto" mat-raised-button mat-primary color="primary" (click)="guardarProducto()">Guardar
-  </button>
-
 
 </form>

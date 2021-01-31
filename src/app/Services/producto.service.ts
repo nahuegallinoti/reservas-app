@@ -81,4 +81,51 @@ export class ProductoService {
     })
 
   }
+
+  eliminarProducto(id: number) {
+
+    this.firestore
+      .doc('producto/' + id)
+      .delete()
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'El producto fue eliminado con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar eliminar el producto: ' + error,
+          null,
+          3000
+        )
+      );
+  }
+
+  editarProducto(id: number, producto: Producto) {
+
+    const productoParse = Object.assign({}, producto);
+
+    this.firestore
+      .doc('producto/' + id)
+      .set(productoParse)
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'Se actualizaron los datos del producto con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar actualizar el producto: ' + error,
+          null,
+          3000
+        )
+      );
+  }
+
+
+
 }

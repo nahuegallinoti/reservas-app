@@ -3,6 +3,7 @@
     transition: 0.3s;
     width: 100%;
     margin-top: 2%;
+    background-color: beige;
   }
   
   .card:hover {
@@ -23,10 +24,10 @@
   }
 
   .card-container {
-    background-color: #f0f0f0f1;
+    background-color: #f1bf90f1;
     width: 60%;
     margin-left: 20%;
-    margin-top: 3%;
+    margin-top: 2%;    
   }
   
   .btnGestionarConsumos {
@@ -37,4 +38,9 @@
   .btnGestionarConsumos:hover {
     color: #000000;
 
+  }
+
+  .title {
+    text-align: center;
+    margin-top: 2%
   }

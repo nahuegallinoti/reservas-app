@@ -8,8 +8,8 @@ import { Cabana } from 'src/app/Models/cabana.model';
 import { Evento } from 'src/app/Models/evento.model';
 import { CabanaService } from 'src/app/Services/cabana.service';
 import { UIService } from 'src/app/Shared/ui.service';
+import { ConfirmationDialogComponent } from '../Shared/Confirmation/confirmation-dialog/confirmation-dialog.component';
 import { FormCabanasComponent } from './form-cabanas/form-cabanas.component';
-import { QuitarCabanaComponent } from './quitar-cabana/quitar-cabana.component';
 
 @Component({
   selector: 'app-cabanas',
@@ -110,18 +110,19 @@ export class CabanasComponent implements OnInit {
     });
   }
 
-  openDialogEliminarCabana(cabana: Evento): void {
+  openDialogEliminarCabana(idCabania: number): void {
 
-    const dialogRef = this.dialog.open(QuitarCabanaComponent, {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: "25vw",
-      height: "15vw",
-      data: {
-        cabana: cabana,
-      }
+      height: "9vw",
+      data: "¿Desea eliminar la cabaña?",
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result)
+      {
+        this.cabanasService.eliminarCabana(idCabania);
+      }
     });
   }
 

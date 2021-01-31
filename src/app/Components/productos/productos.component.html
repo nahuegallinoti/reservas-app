@@ -1,9 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="center center">
     <div *ngIf="!isLoading" class="top" fxLayout="column">
+        <h1 class="title">Productos</h1>
         <mat-form-field fxFlexAlign="center">
             <input matInput type="text" (keyup)="filtrar($event.target.value)" placeholder="Buscar">
         </mat-form-field>
-        <h2>Productos</h2>
         <div class="mat-elevation-z8">
             <table mat-table matSort [dataSource]="productos">
                 <ng-container matColumnDef="descripcion">
@@ -19,8 +19,12 @@
                 <ng-container matColumnDef="acciones">
                     <mat-header-cell  *matHeaderCellDef > Acciones </mat-header-cell>
                     <mat-cell *matCellDef="let row" >
-                        <button class="button btnEditarProducto" mat-raised-button (click)="openDialogEdit()">Modificar</button>
-                        <button class="button btnEliminarProducto" mat-raised-button (click)="openDialog()">Quitar</button>
+                        <button class="button btnEditarProducto" mat-raised-button (click)="openDialogEditProducto(row)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button class="button btnEliminarProducto" mat-raised-button (click)="openDialogEliminarProducto(row.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </mat-cell>
                 </ng-container>
 
@@ -32,7 +36,7 @@
         </div>
 
         
-    <button class="button button-primary btnAgregarProducto" mat-raised-button (click)="openDialog()">+ Agregar Producto</button>
+    <button color="primary" class="button button-primary btnAgregarProducto" mat-raised-button (click)="openDialog()">+ Agregar Producto</button>
 
     </div>
 

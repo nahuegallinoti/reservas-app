@@ -36,7 +36,7 @@ import { FormProductosComponent } from './Components/productos/form-productos/fo
 import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/detalle-check-in.component';
 import { CabanasComponent } from './Components/cabanas/cabanas.component';
 import { FormCabanasComponent } from './Components/cabanas/form-cabanas/form-cabanas.component';
-import { QuitarCabanaComponent } from './Components/cabanas/quitar-cabana/quitar-cabana.component'
+import { ConfirmationDialogComponent } from './Components/Shared/Confirmation/confirmation-dialog/confirmation-dialog.component'
 
 @NgModule({
   declarations: [
@@ -58,7 +58,7 @@ import { QuitarCabanaComponent } from './Components/cabanas/quitar-cabana/quitar
     DetalleCheckInComponent,
     CabanasComponent,
     FormCabanasComponent,
-    QuitarCabanaComponent
+    ConfirmationDialogComponent
 
   ],
   imports: [

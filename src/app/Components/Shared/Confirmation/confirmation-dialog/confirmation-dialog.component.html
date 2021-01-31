@@ -1,0 +1,10 @@
+<div class="container mat-dialog-container">
+    <div mat-dialog-content>
+        <h1 class="title">{{mensaje}}</h1>
+    </div>
+
+    <div mat-dialog-actions class="buttons">
+        <button class="btnNo" mat-button (click)="onNoClick()">Cancelar</button>
+        <button class="btnOk" mat-button color="primary" [mat-dialog-close]="true">Aceptar</button>
+    </div>
+</div>
