@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -25,6 +25,7 @@ import { EstadoService } from 'src/app/Services/estado.service';
 import { EstadosConst } from 'src/app/Shared/estados';
 import { CabanaService } from 'src/app/Services/cabana.service';
 import * as moment from 'moment';
+import { ConfirmationDialogComponent } from '../../Shared/Confirmation/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'form-reserva',
@@ -68,6 +69,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     private cabanasService: CabanaService,
     private dialogRef: MatDialogRef<FormReservaComponent>,
     private uiService: UIService,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     if (data.isEditing) {
@@ -88,7 +90,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
         this.eventos = eventos;
 
         this.eventosCabanasActuales = this.eventos.filter(x => moment(fechaDesde).
-          isBetween(x.start, x.end, null, "[)"));
+          isBetween(x.start, x.end, null, "[]"));
 
       }
     );
@@ -110,7 +112,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
 
         var cabanasOcupadas = cabanas.filter(cabana => this.eventosCabanasActuales.some(x => x.extendedProps.cabana.id == cabana.id));
         cabanas = cabanas.filter(item => !cabanasOcupadas.includes(item));
-        console.log(cabanas);
+
         this.cabanas = cabanas;
       }
     );
@@ -378,8 +380,21 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     return Math.floor((Date.UTC(fechaHasta.getFullYear(), fechaHasta.getMonth(), fechaHasta.getDate()) - Date.UTC(fechaDesde.getFullYear(), fechaDesde.getMonth(), fechaDesde.getDate())) / (1000 * 60 * 60 * 24));
   }
 
-  cancelar() {
-    this.dialogRef.close();
+  openDialogEliminarReserva(): void {
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: "25vw",
+      height: "9vw",
+      data: "¿Desea eliminar la reserva?",
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result)
+      {
+        this.reservaService.eliminarReserva(this.eventoAEditar.id);
+        this.dialogRef.close();
+      }
+    });
   }
 
   ngOnDestroy(): void {

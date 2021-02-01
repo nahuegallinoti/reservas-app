@@ -170,11 +170,11 @@
       </mat-form-field>
 
       <mat-dialog-actions fxFlexAlign="end">
-        <button
+        <button *ngIf="isEditing"
           class="btnCancelarReserva mat-stroked-button buttonMargin"
-          (click)="cancelar()"
+          (click)="openDialogEliminarReserva()"
         >
-          Cancelar
+          Eliminar
         </button>
 
         <button

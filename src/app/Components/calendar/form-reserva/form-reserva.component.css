@@ -53,7 +53,8 @@ mat-dialog-actions {
 }
 
 .btnCancelarReserva {
-  color: red;
+  background-color: red;
+  color: #ffffff;
 }
 
 .close-button{
@@ -87,11 +88,11 @@ mat-dialog-actions {
 }
 
 .headerAndCloseEditar {
-  background-color: #27726e;
+  background-color: #3f51b5;
 }
 
 .mat-editarReserva{
-  background-color: #27726e;
+  background-color: #3f51b5;
   color: #ffffff;
 
 }

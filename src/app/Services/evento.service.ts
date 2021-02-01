@@ -119,4 +119,26 @@ export class ReservaService {
       this.firestoreSubscription.unsubscribe();
     }
   }
+
+  eliminarReserva(id: string) {
+
+    this.firestore
+      .doc('eventos/' + id)
+      .delete()
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'La reserva fue eliminada con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar eliminar la reserva: ' + error,
+          null,
+          3000
+        )
+      );
+  }
+
 }

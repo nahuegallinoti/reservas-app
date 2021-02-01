@@ -6,13 +6,6 @@ import { Subscription } from 'rxjs';
 import { Evento } from 'src/app/Models/evento.model';
 
 
-export interface fakeData {
-  descripcion: string;
-  monto: number;
-  cabana: string;
-  fecha: Date
-}
-
 @Component({
   selector: 'app-consumos',
   templateUrl: './consumos.component.html',
