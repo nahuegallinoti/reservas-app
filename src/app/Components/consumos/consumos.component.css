@@ -24,14 +24,14 @@
   }
 
   .card-container {
-    background-color: #f1bf90f1;
+    background-color: rgb(192, 224, 231);
     width: 60%;
     margin-left: 20%;
     margin-top: 2%;    
   }
   
   .btnGestionarConsumos {
-    color:#59ac29;
+    color:#297cac;
 
   }
   
