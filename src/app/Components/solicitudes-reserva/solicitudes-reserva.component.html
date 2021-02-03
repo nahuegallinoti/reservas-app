@@ -1,0 +1,56 @@
+<div class="container">
+  <div *ngIf="solicitudesReserva.length == 0">
+    <h2 style="text-align: center">No existen solicitudes de reserva <mat-icon>error</mat-icon>
+    </h2>
+  </div>
+  <div fxLayout="row" *ngIf="solicitudesReserva.length != 0">
+    <div fxFlex.gt-sm="100%">
+      <h1 class="title">Solicitudes de Reserva</h1>
+      <mat-card>
+        <mat-card-content>
+          <mat-list>
+
+            <mat-list-item *ngFor="let solicitudReserva of solicitudesReserva; index as eventoId" class="card">
+
+              <h3 matLine>Titular de Reserva: {{solicitudReserva.cliente.nombre}}
+                {{solicitudReserva.cliente.apellidos}}</h3>
+              <h3 matLine>Cantidad de Personas: {{solicitudReserva.cantidadPersonas}}</h3>
+              <h3 matLine>Fecha Desde: {{solicitudReserva.fechaDesde | date:'dd/MM/yyyy'}}</h3>
+              <h3 matLine>Fecha Hasta: {{solicitudReserva.fechaHasta | date:'dd/MM/yyyy'}}</h3>
+              <h3 matLine>Estado: {{solicitudReserva.estado.descripcion}}</h3>
+
+              <mat-form-field appearance="standard">
+                <mat-label>Estado Actual</mat-label>
+                <mat-select [disabled]="disableSelect" [(value)]="solicitudReserva.estado.descripcion">
+                  <mat-option [value]="estado.descripcion" *ngFor="let estado of estados">{{ estado.descripcion }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-card-actions class="btnAcciones" *ngIf="disableSelect">
+                <button mat-button (click)="disableSelect = !disableSelect"> Actualizar Estado Solicitud
+                  <mat-icon title="Gestionar Solicitud">filter_frames</mat-icon>
+                </button>
+              </mat-card-actions>
+
+              <mat-card-actions class="btnCancelarActualizacion" *ngIf="!disableSelect">
+                <button mat-button (click)="disableSelect = !disableSelect"> Cancelar
+                  <mat-icon title="Gestionar Solicitud">filter_frames</mat-icon>
+                </button>
+              </mat-card-actions>
+
+              <mat-card-actions class="btnAcciones" *ngIf="!disableSelect">
+                <button mat-button (click)="actualizarSolicitud(solicitudReserva)"> Guardar Estado Solicitud
+                  <mat-icon title="Gestionar Solicitud">filter_frames</mat-icon>
+                </button>
+              </mat-card-actions>
+
+
+            </mat-list-item>
+
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

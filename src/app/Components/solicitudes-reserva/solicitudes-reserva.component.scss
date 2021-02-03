@@ -1,0 +1,48 @@
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 2%;
+    background-color: rgb(192, 224, 231);
+    }
+    
+    .card:hover {
+      background-color: rgb(142, 202, 226);
+    }
+    
+    .container {
+      width: 75%;
+      margin: 0 auto;
+      padding: 10px 10px;
+    }
+  
+    .mat-form-field + .mat-form-field {
+      margin-left: 8px;
+    }
+
+    .mat-form-field {
+      width: 250px !important;
+    }
+
+    .panelDescription {
+      width: 190px;
+    }
+  
+    .btnAcciones {
+      margin-top: 2%; 
+      margin-left:2%;
+      background-color: #ecf7b2;
+      border-radius: 30px;
+    }
+    
+    .title {
+      text-align: center;
+      margin-top: 3%;
+    }
+
+    .btnCancelarActualizacion {
+      margin-top: 2%; 
+      margin-left:2%;
+      background-color:#f8b1b1;
+      border-radius: 30px;
+    }

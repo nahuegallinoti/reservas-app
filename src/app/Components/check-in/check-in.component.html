@@ -38,15 +38,13 @@
                 </mat-expansion-panel>
               </mat-accordion>
 
-              <mat-card-actions class="btnCheckIn" *ngIf="!evento.extendedProps.realizoCheckIn"
-                style="margin-top: 2%; margin-left:2%">
+              <mat-card-actions class="btnCheckIn" *ngIf="!evento.extendedProps.realizoCheckIn">
                 <a mat-button [routerLink]="['/registrocheckin', evento.id]"> Realizar Check In
                   <mat-icon title="Realizar Check IN">filter_frames</mat-icon>
                 </a>
               </mat-card-actions>
 
-              <mat-card-actions class="btnCheckIn" *ngIf="evento.extendedProps.realizoCheckIn"
-                style="margin-top: 2%; margin-left:2%">
+              <mat-card-actions class="btnCheckIn" *ngIf="evento.extendedProps.realizoCheckIn">
                 <a mat-button [routerLink]="['/detallecheckin', evento.id]"> Detalle Check In
                   <mat-icon title="Detalle Check IN">filter_frames</mat-icon>
                 </a>

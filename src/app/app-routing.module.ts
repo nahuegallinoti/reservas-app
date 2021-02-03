@@ -14,6 +14,7 @@ import { FormConsumosComponent } from './Components/consumos/form-consumos/form-
 import { ProductosComponent } from './Components/productos/productos.component';
 import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/detalle-check-in.component';
 import { CabanasComponent } from './Components/cabanas/cabanas.component';
+import { SolicitudesReservaComponent } from './Components/solicitudes-reserva/solicitudes-reserva.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -73,6 +74,12 @@ const appRoutes: Routes = [
     component: CabanasComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path:'solicitudes',
+    component: SolicitudesReservaComponent,
+    canActivate: [AuthGuard],
+  },
+
   { path: '**', redirectTo: '/checkout' },
 ];
 
