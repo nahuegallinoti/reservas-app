@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-function sendMailRegistroReserva (data) {
+function enviarEmailRegistroSolicitud (data) {
 
     return new Promise(function (resolve, reject) {
         var transporter = nodemailer.createTransport({
@@ -12,12 +12,9 @@ function sendMailRegistroReserva (data) {
         });
         const mailOptions = {
             from: 'Complejo de Cabañas',
-            to: data.dest, // Destinatario
-            subject: "Solicitud de Reserva de su Cabaña",
-            html: `<p style="font-size: 16px;">Pickle Riiiiiiiiiiiiiiiick!!</p>
-            <br />
-            <img src="https://media.cnnchile.com/sites/2/2020/04/rick_y_morty_7132_1570805482-740x430.jpg" />
-        `
+            to: data.destinatario,
+            subject: "Solicitud de Reserva de Cabaña",
+            html: data.html
         };
 
         try {
@@ -48,11 +45,10 @@ function sendMailRegistroCheckInReserva (data) {
         });
         const mailOptions = {
             from: 'Complejo de Cabañas',
-            to: data.dest, // Destinatario
-            subject: "Solicitud de Reserva de su Cabaña",
-            html: `<p style="font-size: 16px;">Pickle Rick!!</p>
-            <br />
-            <img src="https://media.cnnchile.com/sites/2/2020/04/rick_y_morty_7132_1570805482-740x430.jpg" />
+            to: data.destinatario,
+            subject: "Registro de Check In",
+            text: data.message,
+            html: `<a href="https://tesis-a16ed.web.app/">Portal de Reservas</a>
         `
         };
 
@@ -71,5 +67,5 @@ function sendMailRegistroCheckInReserva (data) {
     })
 };
 
-exports.sendMailRegistroReserva = sendMailRegistroReserva;
 exports.sendMailRegistroCheckInReserva = sendMailRegistroCheckInReserva;
+exports.enviarEmailRegistroSolicitud = enviarEmailRegistroSolicitud;

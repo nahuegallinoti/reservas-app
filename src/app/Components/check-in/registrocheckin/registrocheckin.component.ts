@@ -14,6 +14,7 @@ import { Evento } from 'src/app/Models/evento.model';
 import { FormaPagoService } from 'src/app/Services/forma-pago.service';
 import { FormaPago } from 'src/app/Models/formaPago.model';
 import { MatSelectChange } from '@angular/material/select';
+import { EmailService } from 'src/app/Services/email.service';
 
 @Component({
   selector: 'app-registrocheckin',
@@ -49,6 +50,7 @@ export class RegistrocheckinComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _checkinService: CheckinService,
+    private _emailService: EmailService,
     private uiService: UIService,
     private route: ActivatedRoute,
     private reservaService: ReservaService,
@@ -139,7 +141,7 @@ export class RegistrocheckinComponent implements OnInit {
     checkIn.evento = this.evento;
 
     this._checkinService.guardarCheckin(checkIn);
-
+    this._emailService.enviarEmailCheckIn(checkIn.id);
   }
 
   agregarAcompanante() {

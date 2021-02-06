@@ -9,12 +9,14 @@ export class EmailService {
 
   constructor() { }
 
-  enviarEmail(consumo) {
+  enviarEmailCheckIn(codigoComprobante) {
 
     axios.post(environment.functionMailCheckIn,
       {
-        dest: "nahuegallinoti@gmail.com",
-        data: consumo
+        destinatario: "nahuegallinoti@gmail.com",
+        html: `<h3>Se realizó correctamente el check in.</h3>
+        <h3>Puede consultar el estado de su reserva presionando sobre el link</h3> <a href="https://tesis-a16ed.web.app/">Portal de Reservas</a>         
+        <h3>Ingresando el número de comprobante: `+codigoComprobante
       })
       .then(function (response) {
         console.log(response);
@@ -22,6 +24,6 @@ export class EmailService {
       .catch(function (error) {
         console.log(error);
       });
-
   }
+
 }

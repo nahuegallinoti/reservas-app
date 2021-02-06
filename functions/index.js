@@ -21,7 +21,7 @@ app.post('/sendMailRegistroReserva', (req, res) => {
   try {
     // succesMessage es lo que sea que pasamos en la función resolve(...).
     // No tiene por qué ser un string, pero si solo es un mensaje de éxito, probablemente lo sea.
-    senderMail.sendMailRegistroReserva(req.body).then((successMessage) => {
+    senderMail.enviarEmailRegistroSolicitud(req.body).then((successMessage) => {
       res.status(200).send(successMessage);
     }).catch((errorMessage) => {
       res.status(400).send(errorMessage);

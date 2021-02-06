@@ -155,7 +155,6 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
 
     this.consumoService.guardarConsumo(this.consumo);
     this.consumoService.obtenerConsumosAnteriores();
-    this.emailService.enviarEmail(this.consumo);
   }
 
 }
