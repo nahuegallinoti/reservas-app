@@ -1,6 +1,9 @@
+
+## ReservasApp
+
 This is my thesis project for the title of systems analyst in the National Technological University (UTN - Córdoba)
 
-# Stack Tecnológico
+## Technology stack
 
 *Angular 11
 *Angular-Material
@@ -9,8 +12,7 @@ This is my thesis project for the title of systems analyst in the National Techn
 *Firebase Hosting - Host App
 *Firebase Functions
 
-# ReservasApp
-
+## Info
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
 
 ## Development server
