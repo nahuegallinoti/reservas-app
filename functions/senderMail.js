@@ -47,9 +47,7 @@ function sendMailRegistroCheckInReserva (data) {
             from: 'Complejo de Cabañas',
             to: data.destinatario,
             subject: "Registro de Check In",
-            text: data.message,
-            html: `<a href="https://tesis-a16ed.web.app/">Portal de Reservas</a>
-        `
+            html: data.html        
         };
 
         try {
