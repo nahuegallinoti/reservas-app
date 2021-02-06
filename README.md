@@ -12,6 +12,9 @@ This is my thesis project for the title of systems analyst in the National Techn
   * Firebase Cloud Firestore
   * Firebase Functions
   * Firebase Hosting
+  
+
+App Live: https://tesis-a16ed.web.app/
 
 ## Info
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
