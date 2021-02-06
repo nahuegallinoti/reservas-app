@@ -1,9 +1,7 @@
 // import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input, ViewChild, Inject, OnDestroy } from '@angular/core';
-
-
+import { FormBuilder } from '@angular/forms';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +12,8 @@ import { Consumo, ItemConsumo } from 'src/app/Models/consumo.model';
 import { ConsumoService } from 'src/app/Services/consumo.service';
 import { Reserva } from 'src/app/Models/reserva.model';
 import { UIService } from 'src/app/Shared/ui.service';
-import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
+import { EmailService } from 'src/app/Services/email.service';
 
 export interface DialogData {
   reserva: Reserva;
@@ -54,11 +53,12 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<FormConsumosComponent>,
     private productoService: ProductoService,
     private consumoService: ConsumoService,
+    private emailService: EmailService,
     private uiService: UIService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit(): void {
-    
+
     this.consumo.reserva = this.data.reserva;
 
     this.productosSubscription = this.productoService.productosChanged.subscribe(
@@ -73,7 +73,7 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
         let consumosReserva = consumos.find(x => x.reserva.id == this.data.reserva.id);
 
         if (consumosReserva != undefined) {
-          
+
           this.consumo = consumosReserva;
         }
 
@@ -155,6 +155,7 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
 
     this.consumoService.guardarConsumo(this.consumo);
     this.consumoService.obtenerConsumosAnteriores();
+    this.emailService.enviarEmail(this.consumo);
   }
 
 }
