@@ -3,10 +3,9 @@
 
 This is my thesis project for the title of systems analyst in the National Technological University (UTN - Córdoba)
 
-# Technology stack
+## Technology stack
 
-*Angular 11
-*Angular-Material
+*Angular 11                                                                                                                                                                  *Angular-Material
 *Firebase Authentication
 *Firebase Cloud Firestore - DataBase
 *Firebase Hosting - Host App
