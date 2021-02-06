@@ -15,7 +15,7 @@ This is my thesis project for the title of systems analyst in the National Techn
   
 
 ## Info
-App Live: https://tesis-a16ed.web.app/
+App Alive: https://tesis-a16ed.web.app/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
 
