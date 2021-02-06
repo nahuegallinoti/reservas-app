@@ -1,9 +1,9 @@
 
-## ReservasApp
+# ReservasApp
 
 This is my thesis project for the title of systems analyst in the National Technological University (UTN - Córdoba)
 
-## Technology stack
+# Technology stack
 
 *Angular 11
 *Angular-Material
