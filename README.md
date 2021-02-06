@@ -9,9 +9,9 @@ This is my thesis project for the title of systems analyst in the National Techn
 * Angular-Material
 * Firebase Services
   * Firebase Authentication
-  * Firebase Cloud Firestore - DataBase
-  * Firebase Hosting - Host App
+  * Firebase Cloud Firestore
   * Firebase Functions
+  * Firebase Hosting
 
 ## Info
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
