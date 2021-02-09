@@ -23,6 +23,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatStepperModule} from '@angular/material/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -49,7 +50,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatExpansionModule,
     MatSidenavModule,
     MatStepperModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTooltipModule
   ],
   exports: [
     CommonModule,
@@ -74,7 +76,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatExpansionModule,
     MatSidenavModule,
     MatStepperModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTooltipModule
 
   ],
   providers: [{ provide: MatDialogRef, useValue: {} }],

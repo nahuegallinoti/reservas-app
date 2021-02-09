@@ -80,7 +80,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
   },
 
-  { path: '**', redirectTo: '/checkout' },
+  { path: '**', redirectTo: '/solicitudes' },
 ];
 
 @NgModule({

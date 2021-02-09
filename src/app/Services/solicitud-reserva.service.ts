@@ -67,7 +67,8 @@ export class SolicitudReservaService {
             reserva.cantidadPersonas = reserva.cantidadPersonas;
             reserva.cliente = reserva.cliente;
             reserva.estado = reserva.estado;
-
+            reserva.costo = reserva.costo;
+            
             return reserva;
           });
         })

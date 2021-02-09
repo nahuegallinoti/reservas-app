@@ -1,4 +1,3 @@
-import { Cliente } from "./cliente.model";
 import { Estado } from "./estado.model";
 
 export class SolicitudReserva {
@@ -8,6 +7,9 @@ export class SolicitudReserva {
     cantidadPersonas: number;
     cliente: DatosClienteSolicitud;
     estado: Estado;
+    costo: number;
+    codigoReserva: number;
+    disabled: boolean;
   }
 
   
@@ -17,4 +19,5 @@ export class DatosClienteSolicitud {
   apellidos: string;
   telefono: number;
   email: string;
+  nroDocumento: number;
 }
