@@ -16,12 +16,20 @@
   <div fxFlex fxLayoutGap="10px" class="formulario">
     <mat-form-field appearance="standard" class="fullWidth">
       <mat-label
-        ><fa-icon [icon]="faUser"></fa-icon> Apellido y Nombre</mat-label
+        ><fa-icon [icon]="faUser"></fa-icon>Nombres</mat-label
       >
-      <input matInput formControlName="NombreYApellido" />
+      <input matInput formControlName="Nombre" />
       <mat-error>Requerido</mat-error>
     </mat-form-field>
     <br />
+    <mat-form-field appearance="standard" class="fullWidth">
+      <mat-label
+        ><fa-icon [icon]="faUser"></fa-icon> Apellidos</mat-label
+      >
+      <input matInput formControlName="Apellidos" />
+      <mat-error>Requerido</mat-error>
+    </mat-form-field>
+
     <div id="dniTelefono">
       <mat-form-field
         appearance="standard"
@@ -72,8 +80,8 @@
     <br />
     <mat-form-field appearance="standard" class="fullWidth">
       <mat-label><fa-icon [icon]="faEnvelope"></fa-icon> Correo</mat-label>
-      <input type="email" matInput formControlName="Correo" email />
-      <mat-error *ngIf="FormReserva.controls.Correo.invalid"
+      <input type="email" matInput formControlName="Email" email />
+      <mat-error *ngIf="FormReserva.controls.Email.invalid"
         >Correo Inválido</mat-error
       >
     </mat-form-field>

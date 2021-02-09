@@ -1,10 +1,12 @@
 import { BaseClass } from './baseClass.model';
 
 export class Cliente extends BaseClass<Cliente> {
+  id: number;
   dni: number;
-  nombreYApellido: string;
+  nombre: string;
+  apellidos: string;
   telefono?: number;
-  correo?: string;
+  email?: string;
   fechaNacimiento?: Date;
   
 }

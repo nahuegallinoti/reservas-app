@@ -110,9 +110,10 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     this.cabanasSubscription = this.cabanasService.cabanasChanged.subscribe(
       (cabanas) => {
 
-        var cabanasOcupadas = cabanas.filter(cabana => this.eventosCabanasActuales.some(x => x.extendedProps.cabana.id == cabana.id));
-        cabanas = cabanas.filter(item => !cabanasOcupadas.includes(item));
-
+        if (!this.isEditing) {
+          var cabanasOcupadas = cabanas.filter(cabana => this.eventosCabanasActuales.some(x => x.extendedProps.cabana.id == cabana.id));
+          cabanas = cabanas.filter(item => !cabanasOcupadas.includes(item));
+        }
         this.cabanas = cabanas;
       }
     );
@@ -132,10 +133,15 @@ export class FormReservaComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.FormReserva = this.formBuilder.group({
-      NombreYApellido: [
+      Nombre: [
         ,
         { validators: [Validators.required], updateOn: 'blur' },
       ],
+      Apellidos: [
+        ,
+        { validators: [Validators.required], updateOn: 'blur' },
+      ],
+
       Dni: [
         ,
         {
@@ -158,7 +164,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
           updateOn: 'blur',
         },
       ],
-      Correo: [null, { updateOn: 'blur' }],
+      Email: [null, { updateOn: 'blur' }],
       FechaDesde: [
         this.fechaDesde,
         { validators: [Validators.required], updateOn: 'blur' },
@@ -192,10 +198,11 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     );
     fechaHastaAMostrar.setDate(fechaHastaAMostrar.getDate() - 1);
     this.FormReserva.setValue({
-      NombreYApellido: this.eventoAEditar.extendedProps.cliente.nombreYApellido,
+      Nombre: this.eventoAEditar.extendedProps.cliente.nombre,
+      Apellidos: this.eventoAEditar.extendedProps.cliente.apellidos,
       Dni: this.eventoAEditar.extendedProps.cliente.dni,
       Telefono: this.eventoAEditar.extendedProps.cliente.telefono,
-      Correo: this.eventoAEditar.extendedProps.cliente.correo,
+      Email: this.eventoAEditar.extendedProps.cliente.email,
       FechaDesde: this.eventoAEditar.extendedProps.fechaDesde,
       FechaHasta: fechaHastaAMostrar,
       CantOcupantes: this.eventoAEditar.extendedProps.cantOcupantes,
@@ -213,9 +220,10 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   crearCliente(): Cliente {
     const cliente = new Cliente();
     cliente.dni = this.FormReserva.value.Dni;
-    cliente.nombreYApellido = this.FormReserva.value.NombreYApellido;
+    cliente.nombre = this.FormReserva.value.Nombre;
+    cliente.apellidos = this.FormReserva.value.Apellidos;
     cliente.telefono = this.FormReserva.value.Telefono;
-    cliente.correo = this.FormReserva.value.Correo;
+    cliente.email = this.FormReserva.value.Email;
 
     return cliente;
   }
@@ -243,14 +251,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   }
 
   crearEvento(reserva: Reserva): Evento {
-    const debe = +reserva.montoSenia < +reserva.montoTotal;
-    const titulo = debe
-      ? reserva.cabana.nombre +
-      ' - ' +
-      reserva.cliente.nombreYApellido +
-      ' / Debe: $' +
-      (reserva.montoTotal - reserva.montoSenia)
-      : reserva.cabana.nombre + ' - ' + reserva.cliente.nombreYApellido;
+    const titulo = reserva.cabana.nombre + ' - ' + reserva.cliente.nombre + ' ' + reserva.cliente.apellidos;
 
     const evento: Evento = {
       title: titulo,
@@ -389,8 +390,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-      {
+      if (result) {
         this.reservaService.eliminarReserva(this.eventoAEditar.id);
         this.dialogRef.close();
       }

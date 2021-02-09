@@ -126,7 +126,7 @@ export class RegistrocheckoutComponent implements OnInit {
     doc.addImage(img, 'jpeg', 140, 7, 60, 20);
 
     doc.setFont("italic");
-    doc.text('Consumos de la reserva a nombre de: ' + this.evento.extendedProps.cliente.nombreYApellido, 13, 40);
+    doc.text('Consumos de la reserva a nombre de: ' + this.evento.extendedProps.cliente.nombre + ' ' + this.evento.extendedProps.cliente.apellidos, 13, 40);
 
     autoTable(doc, { html: '#my-table', margin: { top: 45 }});
 

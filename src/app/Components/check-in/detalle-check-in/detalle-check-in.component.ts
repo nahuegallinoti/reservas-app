@@ -77,7 +77,7 @@ export class DetalleCheckInComponent implements OnInit {
     doc.addImage(img, 'jpeg', 140, 7, 60, 20);
         
     doc.setFont("italic");
-    doc.text("Reserva a nombre de: " + this.checkIn.evento.extendedProps.cliente.nombreYApellido, 13, 40);
+    doc.text("Reserva a nombre de: " + this.checkIn.evento.extendedProps.cliente.nombre + ' ' + this.checkIn.evento.extendedProps.cliente.apellidos, 13, 40);
     autoTable(doc, { html: '#my-table', margin: { top: 45 }});
 
     doc.save(this.checkIn.id.toString() + '.pdf');

@@ -8,7 +8,7 @@
             <table mat-table matSort [dataSource]="reservas">
                 <ng-container matColumnDef="nombreYApellido">
                     <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let reserva"> {{reserva.cliente.nombreYApellido}} </td>
+                    <td mat-cell *matCellDef="let reserva"> {{reserva.cliente.nombre}} , {{reserva.cliente.apellidos}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="dni">
