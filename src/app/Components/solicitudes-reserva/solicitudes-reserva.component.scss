@@ -15,6 +15,10 @@
       margin: 0 auto;
       padding: 10px 10px;
     }
+
+    .accordion {
+      margin-right: 3%;
+    }
   
     .mat-form-field + .mat-form-field {
       margin-left: 8px;
@@ -25,7 +29,7 @@
     }
 
     .panelDescription {
-      width: 190px;
+      width: 200px !important;
     }
   
     .btnAcciones {
@@ -46,3 +50,12 @@
       background-color:#f8b1b1;
       border-radius: 30px;
     }
+
+    .panelDescription {
+      width: 190px;
+    }
+
+    .mat-list-base .mat-list-item.mat-3-line {
+      height: auto !important;
+    }
+  

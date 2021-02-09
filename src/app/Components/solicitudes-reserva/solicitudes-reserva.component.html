@@ -14,37 +14,58 @@
 
               <h3 matLine>Titular de Reserva: {{solicitudReserva.cliente.nombre}}
                 {{solicitudReserva.cliente.apellidos}}</h3>
-              <h3 matLine>Cantidad de Personas: {{solicitudReserva.cantidadPersonas}}</h3>
               <h3 matLine>Fecha Desde: {{solicitudReserva.fechaDesde | date:'dd/MM/yyyy'}}</h3>
               <h3 matLine>Fecha Hasta: {{solicitudReserva.fechaHasta | date:'dd/MM/yyyy'}}</h3>
-              <h3 matLine>Estado: {{solicitudReserva.estado.descripcion}}</h3>
+
+              <mat-accordion class="accordion">
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title class="left-aligned-header">
+                    + Detalles
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-panel-description class="panelDescription">
+                    Documento Titular: {{solicitudReserva.cliente.nroDocumento}}
+                  </mat-panel-description>
+                  <mat-panel-description class="panelDescription">
+                    Código de Reserva: {{solicitudReserva.codigoReserva}}
+                  </mat-panel-description>
+                  <mat-panel-description class="panelDescription">
+                    Cantidad de Personas: {{solicitudReserva.cantidadPersonas}}
+                  </mat-panel-description>
+                  <mat-panel-description class="panelDescription">
+                    Costo Aproximado: {{solicitudReserva.costo | currency: 'USD'}}
+                  </mat-panel-description>
+
+                </mat-expansion-panel>
+              </mat-accordion>
 
               <mat-form-field appearance="standard">
                 <mat-label>Estado Actual</mat-label>
-                <mat-select [disabled]="disableSelect" [(value)]="solicitudReserva.estado.descripcion">
+                <mat-select [disabled]="solicitudReserva.disabled" [(value)]="solicitudReserva.estado.descripcion">
                   <mat-option [value]="estado.descripcion" *ngFor="let estado of estados">{{ estado.descripcion }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
 
-              <mat-card-actions class="btnAcciones" *ngIf="disableSelect">
-                <button mat-button (click)="disableSelect = !disableSelect"> Actualizar Estado Solicitud
+              <mat-card-actions class="btnAcciones" *ngIf="solicitudReserva.disabled && solicitudReserva.estado.descripcion != 'Solicitud Aceptada'">
+                <button mat-button (click)="solicitudReserva.disabled = !solicitudReserva.disabled">Actualizar Estado
+                  Solicitud
+                  <mat-icon title="Gestionar Solicitud">filter_frames</mat-icon>
+                </button>
+              </mat-card-actions>
+              
+              <mat-card-actions class="btnCancelarActualizacion" *ngIf="!solicitudReserva.disabled">
+                <button mat-button (click)="solicitudReserva.disabled = !solicitudReserva.disabled"> Cancelar
                   <mat-icon title="Gestionar Solicitud">filter_frames</mat-icon>
                 </button>
               </mat-card-actions>
 
-              <mat-card-actions class="btnCancelarActualizacion" *ngIf="!disableSelect">
-                <button mat-button (click)="disableSelect = !disableSelect"> Cancelar
-                  <mat-icon title="Gestionar Solicitud">filter_frames</mat-icon>
-                </button>
-              </mat-card-actions>
-
-              <mat-card-actions class="btnAcciones" *ngIf="!disableSelect">
+              <mat-card-actions class="btnAcciones" *ngIf="!solicitudReserva.disabled">
                 <button mat-button (click)="actualizarSolicitud(solicitudReserva)"> Guardar Estado Solicitud
                   <mat-icon title="Gestionar Solicitud">filter_frames</mat-icon>
                 </button>
               </mat-card-actions>
-
 
             </mat-list-item>
 
