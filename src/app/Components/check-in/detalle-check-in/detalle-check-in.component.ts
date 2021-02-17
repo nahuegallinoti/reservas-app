@@ -7,9 +7,9 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Subscription } from 'rxjs';
 import { CheckIn } from 'src/app/Models/checkin.model';
-import { Evento } from 'src/app/Models/evento.model';
 import { CheckinService } from 'src/app/Services/checkin.service';
-import { ReservaService } from 'src/app/Services/evento.service';
+import { EmailService } from 'src/app/Services/email.service';
+import { UploadFileFirebaseService } from 'src/app/Services/upload-file-firebase.service';
 import { UIService } from 'src/app/Shared/ui.service';
 
 @Component({
@@ -41,6 +41,8 @@ export class DetalleCheckInComponent implements OnInit {
     private route: ActivatedRoute,
     private uiService: UIService,
     private checkInService: CheckinService,
+    private emailService: EmailService,
+    private _uploadFileService: UploadFileFirebaseService
 
   ) { }
 
@@ -82,6 +84,12 @@ export class DetalleCheckInComponent implements OnInit {
 
     doc.save(this.checkIn.id.toString() + '.pdf');
 
+  }
+
+  enviarEmailComprobante(): void {
+    
+    this._uploadFileService.getFile(this.checkIn.evento.id);
+    // this.emailService.enviarEmailCheckIn(this.checkIn.evento.id, gs://tesis-a16ed.appspot.com/CheckIn/fhlSXeik9SuQ8qvUqJ2u);
   }
 
 }

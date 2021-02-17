@@ -6,7 +6,6 @@ import { CheckinService } from 'src/app/Services/checkin.service';
 import { UIService } from 'src/app/Shared/ui.service';
 import { Cliente } from 'src/app/Models/cliente.model';
 import { Vehiculo } from 'src/app/Models/vehiculo.model';
-import { Reserva } from 'src/app/Models/reserva.model';
 import { ActivatedRoute } from '@angular/router';
 import { ReservaService } from 'src/app/Services/evento.service';
 import { Subscription } from 'rxjs';
@@ -15,6 +14,9 @@ import { FormaPagoService } from 'src/app/Services/forma-pago.service';
 import { FormaPago } from 'src/app/Models/formaPago.model';
 import { MatSelectChange } from '@angular/material/select';
 import { EmailService } from 'src/app/Services/email.service';
+import jsPDF from 'jspdf';
+import { UploadFileFirebaseService } from 'src/app/Services/upload-file-firebase.service';
+
 
 @Component({
   selector: 'app-registrocheckin',
@@ -54,7 +56,8 @@ export class RegistrocheckinComponent implements OnInit {
     private uiService: UIService,
     private route: ActivatedRoute,
     private reservaService: ReservaService,
-    private formaPagoService: FormaPagoService
+    private formaPagoService: FormaPagoService,
+    private _uploadFileService: UploadFileFirebaseService
     ) { }
 
   ngOnInit() {
@@ -123,7 +126,7 @@ export class RegistrocheckinComponent implements OnInit {
   };
 
 
-  registrarCheckIn() {
+  async registrarCheckIn() {
 
     let checkIn = new CheckIn();
     
@@ -139,9 +142,10 @@ export class RegistrocheckinComponent implements OnInit {
     this.reservaService.actualizarReserva(this.evento.id, this.evento);
     
     checkIn.evento = this.evento;
-
+    
+    let docPdf = this.createPdf(checkIn);
+    this._uploadFileService.uploadFile(docPdf, checkIn.evento.id.toString());
     this._checkinService.guardarCheckin(checkIn);
-    this._emailService.enviarEmailCheckIn(checkIn.id);
   }
 
   agregarAcompanante() {
@@ -219,5 +223,28 @@ export class RegistrocheckinComponent implements OnInit {
     );
 
   }
-  
+    createPdf(checkIn: CheckIn): jsPDF {
+    const doc = new jsPDF();
+
+    var img = new Image();
+    img.src = 'assets/cabanas.jpeg';
+
+    doc.addImage(img, 'jpeg', 140, 7, 60, 20);
+        
+    doc.setFont("italic");
+    doc.text("Se registró correctamente el check in de la reserva a nombre de: " + checkIn.evento.extendedProps.cliente.nombre + ' ' + checkIn.evento.extendedProps.cliente.apellidos, 13, 40);
+    doc.text("Monto Total: " + checkIn.evento.extendedProps.montoTotal, 13, 50);
+    doc.text("Monto de seña: " + checkIn.evento.extendedProps.montoSenia, 13, 60);
+
+    let saldoPendiente = checkIn.evento.extendedProps.montoTotal - checkIn.evento.extendedProps.montoSenia;
+    doc.text("Saldo Pendiente: " + saldoPendiente, 13, 70);
+    doc.text("Forma de Pago: " + checkIn.formaPago.descripcion, 13, 80);
+
+    
+    doc.save(checkIn.evento.id.toString() + '.pdf');
+    
+    return doc;
+
+  }
+
 }

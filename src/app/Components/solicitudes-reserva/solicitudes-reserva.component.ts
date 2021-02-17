@@ -80,6 +80,7 @@ export class SolicitudesReservaComponent implements OnInit {
       {
         console.log(response);
         this.guardarDatosSolicitud(solicitudReserva);
+        this.solicitudesReserva.map(x => x.disabled = true);
       }
     });
   }
@@ -93,6 +94,12 @@ export class SolicitudesReservaComponent implements OnInit {
     if (solicitudReserva != undefined && solicitudReserva.estado.descripcion.toLowerCase() == "solicitud aceptada") {
 
       this.openDialogSeleccionarCabana(solicitudReserva);
+
+    }
+
+    else{
+      this.guardarDatosSolicitud(solicitudReserva);
+      this.solicitudesReserva.map(x => x.disabled = true);
 
     }
 

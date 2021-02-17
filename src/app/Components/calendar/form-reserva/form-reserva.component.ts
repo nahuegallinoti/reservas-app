@@ -241,7 +241,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     reserva.idCabania = this.FormReserva.value.Cabania;
     reserva.montoSenia = this.FormReserva.value.MontoSenia;
     reserva.montoTotal = this.FormReserva.value.MontoTotal;
-    reserva.cabana = this.cabanas.find(x => x.nombre == this.FormReserva.value.Cabania);
+    reserva.cabana = this.cabanas.find(x => x.id == this.FormReserva.value.Cabania);
 
     reserva.estado = this.determinarEstadoReserva(reserva);
     reserva.realizoCheckIn = false;
@@ -251,7 +251,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   }
 
   crearEvento(reserva: Reserva): Evento {
-    const titulo = reserva.cabana.nombre + ' - ' + reserva.cliente.nombre + ' ' + reserva.cliente.apellidos;
+    const titulo = reserva.cabana.nombre + ' - ' + reserva.cliente.apellidos + ' ' + reserva.cliente.nombre;
 
     const evento: Evento = {
       title: titulo,
@@ -358,13 +358,16 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   }
 
   calcularSubTotal() {
+    var cabanasOcupadas = this.cabanas.filter(cabana => this.eventosCabanasActuales.some(x => x.extendedProps.cabana.id == cabana.id));
+    this.cabanas = this.cabanas.filter(item => !cabanasOcupadas.includes(item));
+
     const fechaDesde = new Date(this.FormReserva.value.FechaDesde);
     const fechaHasta = new Date(this.FormReserva.value.FechaHasta);
 
     const cantOcupantes = this.FormReserva.value.CantOcupantes;
     const cantDias = this.calcularDiferenciaDeFechas(fechaDesde, fechaHasta) + 1; //Se suma 1 dia porque se cuenta desde que llego hasta el ultimo dia de hospedaje
 
-    const cabanaSelected = this.cabanas.find(x => x.nombre == this.FormReserva.value.Cabania)
+    const cabanaSelected = this.cabanas.find(x => x.id == this.FormReserva.value.Cabania)
 
     //TODO aqui se deberia sumar la tarifa fija segun epoca del año en ves de 1500
     const total = 1500 * cantOcupantes * cantDias + cabanaSelected.precioDia;

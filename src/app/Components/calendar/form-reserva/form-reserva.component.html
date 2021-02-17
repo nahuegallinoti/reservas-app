@@ -148,7 +148,7 @@
         <mat-label><fa-icon [icon]="faHome"></fa-icon> Cabaña</mat-label>
 
         <mat-select name="cabana" (closed)="calcularSubTotal()" formControlName="Cabania">
-          <mat-option *ngFor="let cabana of cabanas" [value]="cabana.nombre">
+          <mat-option *ngFor="let cabana of cabanas" [value]="cabana.id">
             {{ cabana.nombre }}
           </mat-option>
         </mat-select>

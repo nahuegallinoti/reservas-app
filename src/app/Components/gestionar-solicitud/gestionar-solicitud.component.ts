@@ -120,9 +120,10 @@ export class GestionarSolicitudComponent implements OnInit {
   crearReserva(): Reserva {
     const reserva = new Reserva();
     reserva.cliente = new Cliente();
-    reserva.cliente.correo = this.solicitudReserva.cliente.email;
-    reserva.cliente.dni = this.solicitudReserva.cliente.nroDocumento;
-    reserva.cliente.nombreYApellido = this.solicitudReserva.cliente.nombre + " " + this.solicitudReserva.cliente.apellidos;
+    reserva.cliente.email = this.solicitudReserva.cliente.email;
+    reserva.cliente.dni = this.solicitudReserva.cliente.dni;
+    reserva.cliente.nombre = this.solicitudReserva.cliente.nombre;
+    reserva.cliente.apellidos = this.solicitudReserva.cliente.apellidos;
     reserva.cliente.telefono = this.solicitudReserva.cliente.telefono;
     reserva.fechaCreacion = new Date();
     reserva.fechaDesde = new Date(this.solicitudReserva.fechaDesde);
@@ -144,12 +145,7 @@ export class GestionarSolicitudComponent implements OnInit {
   }
   crearEvento(reserva: Reserva): Evento {
 
-    const titulo = this.cabanaSelected.nombre +
-      ' - ' +
-      this.solicitudReserva.cliente.nombre + this.solicitudReserva.cliente.apellidos
-    ' / Debe: $' +
-      this.total;
-
+    const titulo = this.cabanaSelected.nombre + ' - ' + this.solicitudReserva.cliente.apellidos + ' ' + this.solicitudReserva.cliente.nombre
     const fechaDesde = new Date(this.solicitudReserva.fechaDesde);
     fechaDesde.setDate(fechaDesde.getDate() + 1);
 
@@ -165,6 +161,10 @@ export class GestionarSolicitudComponent implements OnInit {
     };
 
     return evento;
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 
 }

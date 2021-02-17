@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-function sendMailRegistroSolicitud (data) {
+function sendMailRegistroSolicitud(data) {
 
     return new Promise(function (resolve, reject) {
         var transporter = nodemailer.createTransport({
@@ -32,7 +32,7 @@ function sendMailRegistroSolicitud (data) {
     })
 };
 
-function sendMailRegistroCheckInReserva (data) {
+function sendMailRegistroCheckInReserva(data) {
 
     console.log(data);
     return new Promise(function (resolve, reject) {
@@ -47,7 +47,13 @@ function sendMailRegistroCheckInReserva (data) {
             from: 'Complejo de Cabañas',
             to: data.destinatario,
             subject: "Registro de Check In",
-            html: data.html        
+            html: data.html,
+        //     attachments:[ 
+        //     { 
+        //         filename: 'Random.pdf',
+        //         contentType: 'application/pdf',
+        //         path: 'assets/stickers/pdf/upch25-Jul-20160.pdf' } 
+        // ]
         };
 
         try {
@@ -65,7 +71,7 @@ function sendMailRegistroCheckInReserva (data) {
     })
 };
 
-function sendMailConfirmarReserva (data) {
+function sendMailConfirmarReserva(data) {
 
     console.log(data);
     return new Promise(function (resolve, reject) {
@@ -80,7 +86,7 @@ function sendMailConfirmarReserva (data) {
             from: 'Complejo de Cabañas',
             to: data.destinatario,
             subject: "Confirmación de Solicitud",
-            html: data.html        
+            html: data.html
         };
 
         try {
@@ -98,7 +104,7 @@ function sendMailConfirmarReserva (data) {
     })
 };
 
-function sendMailRechazarReserva (data) {
+function sendMailRechazarReserva(data) {
 
     console.log(data);
     return new Promise(function (resolve, reject) {
@@ -113,7 +119,7 @@ function sendMailRechazarReserva (data) {
             from: 'Complejo de Cabañas',
             to: data.destinatario,
             subject: "Rechazo de Solicitud",
-            html: data.html        
+            html: data.html
         };
 
         try {
