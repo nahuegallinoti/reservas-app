@@ -5,18 +5,30 @@
     </div>
     <mat-spinner *ngIf="isLoading" class="top"></mat-spinner>
 </div>
+
 <div *ngIf="!isLoading" class="row center_">
+
+    <div class="year_ddl">
+        <mat-form-field appearance="standard">
+            <mat-label>Año</mat-label>
+            <mat-select [(value)]="SelectedYear" (change)="OnYearChange()">
+              <mat-option [value]="item" *ngFor="let item of Years">{{ item }}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+
     <div class="col-6 pull-left">
         <div class="card-widget mt-15">
             <div class="card-widget-header">
-               <div class="header_ pull-left"><i class="ic_grain"></i> Charges vs Payments</div>
+               <div class="header_ pull-left"><i class="ic_grain"></i>Registrarse por cabina</div>
             </div>
             <div class="card-widget-body">
                 <div>
                     <canvas baseChart 
-                    [datasets]="paymentVsChargeGraphData"
+                    [datasets]="cabinData"
                     [labels]="barChartLabels"
-                    [options]="barChartOptions"
+                    [options]="CabinbarChartOptions"
                     [plugins]="barChartPlugins"
                     [legend]="barChartLegend"
                     [chartType]="barChartType">
@@ -28,17 +40,18 @@
     <div class="col-6 pull-left">
         <div class="card-widget mt-15">
             <div class="card-widget-header">
-               <div class="header_ pull-left"><i class="ic_grain"></i> Charges vs Payments</div>
+               <div class="header_ pull-left"><i class="ic_grain"></i>Consumo de producto</div>
             </div>
             <div class="card-widget-body">
                 <div>
-                    <canvas baseChart
-                    [data]="collectedRevenueChartData"
-                    [labels]="doughnutChartLabels"
-                    [legend]="doughnutChartLegend"
-                    [options]="doughnutChartOptions"
-                    [chartType]="doughnutChartType">
-                  </canvas>
+                    <canvas baseChart 
+                    [datasets]="productData"
+                    [labels]="barChartLabels"
+                    [options]="ProductbarChartOptions"
+                    [plugins]="barChartPlugins"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType">
+                    </canvas>
                 </div>
             </div>
         </div>
