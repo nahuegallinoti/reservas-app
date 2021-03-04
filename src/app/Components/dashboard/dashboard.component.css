@@ -1,0 +1,22 @@
+.row{
+    width: 80%;
+}
+.col-6{
+    width: 50%;
+}
+.pull-left{
+    float: left;
+}
+.center_{
+    align-items: center;
+    margin: auto;
+    padding: 10px;
+}
+.top {
+    margin-top: 50px;
+}
+.header_{
+    font-size: medium;
+    padding-bottom: 5px;
+    padding-left: 40px;
+  }

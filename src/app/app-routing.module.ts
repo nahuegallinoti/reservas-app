@@ -15,10 +15,16 @@ import { ProductosComponent } from './Components/productos/productos.component';
 import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/detalle-check-in.component';
 import { CabanasComponent } from './Components/cabanas/cabanas.component';
 import { SolicitudesReservaComponent } from './Components/solicitudes-reserva/solicitudes-reserva.component';
+import { DashboardComponent } from './Components/dashboard/dashboard.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
+  {
+    path: 'tablero',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'calendario',
     component: CalendarComponent,
