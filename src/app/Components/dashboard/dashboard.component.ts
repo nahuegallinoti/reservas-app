@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Label, MultiDataSet } from 'ng2-charts';
+import { Label } from 'ng2-charts';
+import { DashboardService } from 'src/app/Services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,21 +18,13 @@ export class DashboardComponent implements OnInit {
   public barChartLegend = true;
   public barChartPlugins = [];
   public cabinData: ChartDataSets[] = [
-    { data: [20,50,70,90,110,130,150,70,90,110,130,150], label: 'Cab1'},
-    { data: [30,40,60,80,100,120,140,70,90,110,130,150], label: 'Cab2' },
-    { data: [30,40,60,80,100,120,140,70,90,110,130,150], label: 'Cab3' },
-    { data: [30,40,60,80,100,120,140,70,90,110,130,150], label: 'Cab4' },
-    { data: [10,30,50,70,90,110,130,150,170,190,210,230], label: 'Cab5' },
-    { data: [20,40,60,80,100,120,140,160,180,200,220,250], label: 'Cab6' }
+    { data: [0,0,0,0,0,0,0,0,0,0,0,0], label: ''},
+    { data: [0,0,0,0,0,0,0,0,0,0,0,0], label: '' },
   ];
   
   public productData: ChartDataSets[] = [
-    { data: [20,50,70,90,110,130,150,70,90,110,130,150], label: 'P1'},
-    { data: [30,40,60,80,100,120,140,70,90,110,130,150], label: 'P2' },
-    { data: [30,40,60,80,100,120,140,70,90,110,130,150], label: 'P3' },
-    { data: [30,40,60,80,100,120,140,70,90,110,130,150], label: 'P4' },
-    { data: [10,30,50,70,90,110,130,150,170,190,210,230], label: 'P5' },
-    { data: [20,40,60,80,100,120,140,160,180,200,220,250], label: 'P6' }
+    { data: [0,0,0,0,0,0,0,0,0,0,0,0], label: ''},
+    { data: [0,0,0,0,0,0,0,0,0,0,0,0], label: '' },
   ];
 
   public CabinbarChartOptions: ChartOptions = {
@@ -98,15 +91,31 @@ export class DashboardComponent implements OnInit {
     
   };
 
-  constructor() { }
+  dashboardData : any;
+  constructor(
+    private dashboardService: DashboardService,
+  ) { }
 
   ngOnInit(): void {
 
     this.getYearsList();
+    this.getDashboardData();
   }
 
-  OnYearChange(){
+  getDashboardData()
+  {
+    this.isLoading = true;
+    this.dashboardService.getDashboardData(this.SelectedYear).then(res=>{
+      this.isLoading = false;
+      if(res.status)
+         this.cabinData = res.data.CheckInData;
 
+    }).catch(err=>{
+      this.isLoading = false;
+    });
+  }
+  OnYearChange(){
+    this.getDashboardData();
   }
 
   getYearsList(){

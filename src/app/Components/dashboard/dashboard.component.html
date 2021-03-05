@@ -11,7 +11,7 @@
     <div class="year_ddl">
         <mat-form-field appearance="standard">
             <mat-label>Año</mat-label>
-            <mat-select [(value)]="SelectedYear" (change)="OnYearChange()">
+            <mat-select [(value)]="SelectedYear" (selectionChange)="OnYearChange()">
               <mat-option [value]="item" *ngFor="let item of Years">{{ item }}
               </mat-option>
             </mat-select>
