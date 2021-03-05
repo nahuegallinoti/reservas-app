@@ -1,0 +1,29 @@
+.row{
+    width: 95%;
+}
+.col-6{
+    width: 50%;
+}
+.pull-left{
+    float: left;
+}
+.pull-right{
+    float: right;
+}
+.center_{
+    align-items: center;
+    margin: auto;
+    padding: 10px;
+}
+.top {
+    margin-top: 50px;
+}
+.header_{
+    font-size: medium;
+    padding-bottom: 5px;
+    padding-left: 40px;
+}
+.year_ddl {
+    width: 100% !important;
+    text-align: center;
+}

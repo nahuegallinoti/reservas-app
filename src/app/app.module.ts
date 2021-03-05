@@ -39,6 +39,8 @@ import { FormCabanasComponent } from './Components/cabanas/form-cabanas/form-cab
 import { ConfirmationDialogComponent } from './Components/Shared/Confirmation/confirmation-dialog/confirmation-dialog.component';
 import { SolicitudesReservaComponent } from './Components/solicitudes-reserva/solicitudes-reserva.component';
 import { GestionarSolicitudComponent } from './Components/gestionar-solicitud/gestionar-solicitud.component'
+import { ChartsModule } from 'ng2-charts';
+import { DashboardComponent } from './Components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import { GestionarSolicitudComponent } from './Components/gestionar-solicitud/ge
     FormCabanasComponent,
     ConfirmationDialogComponent,
     SolicitudesReservaComponent,
-    GestionarSolicitudComponent
+    GestionarSolicitudComponent,
+    DashboardComponent
 
   ],
   imports: [
@@ -78,6 +81,7 @@ import { GestionarSolicitudComponent } from './Components/gestionar-solicitud/ge
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    ChartsModule,
   ],
   exports: [],
   providers: [
