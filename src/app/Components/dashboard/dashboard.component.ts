@@ -107,8 +107,10 @@ export class DashboardComponent implements OnInit {
     this.isLoading = true;
     this.dashboardService.getDashboardData(this.SelectedYear).then(res=>{
       this.isLoading = false;
-      if(res.status)
-         this.cabinData = res.data.CheckInData;
+      if(res.status){
+        this.cabinData = res.data.CheckInData;
+        this.productData = res.data.ProductData;
+      }
 
     }).catch(err=>{
       this.isLoading = false;

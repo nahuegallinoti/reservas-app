@@ -131,7 +131,81 @@ export class DashboardService {
 
     var $this = this;
     return new Promise<any>((resolve, reject) => {
-        resolve({ status:false});
+
+        $this.firestore.collection('consumos'
+        ).snapshotChanges()
+        .pipe(
+            map((docArray) => {
+                var result=[];
+                docArray.forEach(doc => {
+                    const element = doc.payload.doc.data();
+                    var consuptions  = element['consumos'];
+                        consuptions.forEach(element => {
+                            var date = new Date(element['fecha'].seconds* 1000);
+                            if(date.getFullYear() == selectedYear){
+
+                                var product = result.filter(p=>p.product.id == element['producto'].id);
+                                if(product.length>0)
+                                {
+                                   var index =  result.indexOf(product[0]);
+                                   result[index].info.push({date:date, amount:element['monto']});
+                                }
+                                else{
+                                    result.push({
+                                        product:{
+                                            id:element['producto'].id,
+                                            name:element['producto'].descripcion,
+                                        },
+                                        info:[{
+                                            date:date,
+                                            amount:element['monto']
+                                        }]
+                                    });
+                                }
+                            }
+                            else{
+                                var product = result.filter(p=>p.product.id == element['producto'].id);
+                                if(product.length==0){
+                                    result.push({
+                                        product:{
+                                            id:element['producto'].id,
+                                            name:element['producto'].descripcion,
+                                        },
+                                        info:[{
+                                            date:date,
+                                            amount:0
+                                        }]
+                                    });
+                                }
+                            }
+                        });
+                });
+    
+                var result_set =[];
+                result.forEach(element => {
+                    var months = [];
+                    for (let index = 1; index <= 12; index++) {
+                        var consuptions_= element.info.filter(p=> p.date && p.date.getMonth()+1 == index);
+                        var amount = 0;
+                        consuptions_.forEach(con => {
+                            amount = amount + parseFloat(con['amount']);
+                        });
+                        months.push(amount);
+                    }
+                    result_set.push({
+                        data: months,
+                        label:element.product.name
+                    })
+                });
+                
+                return result_set;
+            })
+          )
+        .subscribe(snapshots => {
+            resolve({status:true, data:snapshots});
+        },error=>{
+            resolve({status:false, message:error.message});
+        });
     });
   }
 
