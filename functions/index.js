@@ -80,6 +80,22 @@ app.post('/sendMailRechazarReserva', (req, res) => {
   }
 });
 
+app.post('/sendMailCancelarReserva', (req, res) => {
+
+  try {
+    senderMail.sendMailCancelarReserva(req.body).then((successMessage) => {
+      res.status(200).send(successMessage);
+    }).catch((errorMessage) => {
+      res.status(400).send(errorMessage);
+    });
+  }
+
+  catch (err) {
+    res.status(400).send("Ocurrió un error al enviar el mail de cancelación de reserva: " + err.message);
+  }
+});
+
+
 //Para llamar a este metodo se llama a .../formulario/1 (id)
 app.get('/formulario/:id', (req, res) => {
   res.send('Formulario: ' + req.params.id);

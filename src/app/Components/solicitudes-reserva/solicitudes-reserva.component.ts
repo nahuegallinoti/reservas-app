@@ -10,6 +10,7 @@ import { SolicitudReservaService } from 'src/app/Services/solicitud-reserva.serv
 import { UIService } from 'src/app/Shared/ui.service';
 import { GestionarSolicitudComponent } from '../gestionar-solicitud/gestionar-solicitud.component';
 import * as moment from 'moment';
+import { ReservaService } from 'src/app/Services/evento.service';
 import { Evento } from 'src/app/Models/evento.model';
 
 @Component({
@@ -26,15 +27,19 @@ export class SolicitudesReservaComponent implements OnInit {
   solicitudesReservaSubscription: Subscription;
   estados: Estado[] = [];
   estadosSubscription: Subscription;
+  eventos: Evento[] = [];
+  eventosSubscription: Subscription;
   estadoActualSolicitud: Estado;
   panelOpenState = false;
+  estadoCancelado: Estado;
 
   constructor(
     private _solicituReservaService: SolicitudReservaService,
     private uiService: UIService,
     private dialog: MatDialog,
     private _estadoService: EstadoService,
-    private _emailService: EmailService
+    private _emailService: EmailService,
+    private _reservaService: ReservaService
   ) { }
 
   ngOnInit(): void {
@@ -52,16 +57,25 @@ export class SolicitudesReservaComponent implements OnInit {
 
     this.estadosSubscription = this._estadoService.estadosChanged.subscribe(
       (estados) => {
+        this.estadoCancelado = estados.find(x => x.descripcion.toLowerCase() == "cancelado");
 
-        estados = estados.filter(x => x.descripcion.toLowerCase() == "solicitud aceptada" || 
-                                      x.descripcion.toLowerCase() == "solicitud rechazada" ||
-                                      x.descripcion.toLowerCase() == "pendiente de aprobacion")
+        estados = estados.filter(x => x.descripcion.toLowerCase() == "solicitud aceptada" ||
+          x.descripcion.toLowerCase() == "solicitud rechazada" ||
+          x.descripcion.toLowerCase() == "pendiente de aprobacion" ||
+          x.descripcion.toLowerCase() == "cancelado")
         this.estados = estados;
       }
     )
+    this.eventosSubscription = this._reservaService.eventosChanged.subscribe(
+      (eventos) => {
+        this.eventos = eventos;
+      }
+    );
 
     this._solicituReservaService.obtenerReservas();
     this._estadoService.buscarEstados();
+    this._reservaService.buscarEventos();
+
 
   }
 
@@ -76,11 +90,11 @@ export class SolicitudesReservaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((response) => {
-      if (response)
-      {
+      if (response) {
         console.log(response);
         this.guardarDatosSolicitud(solicitudReserva);
         this.solicitudesReserva.map(x => x.disabled = true);
+
       }
     });
   }
@@ -92,12 +106,12 @@ export class SolicitudesReservaComponent implements OnInit {
   actualizarSolicitud(solicitudReserva: SolicitudReserva) {
 
     if (solicitudReserva != undefined && solicitudReserva.estado.descripcion.toLowerCase() == "solicitud aceptada") {
-
       this.openDialogSeleccionarCabana(solicitudReserva);
+
 
     }
 
-    else{
+    else {
       this.guardarDatosSolicitud(solicitudReserva);
       this.solicitudesReserva.map(x => x.disabled = true);
 
@@ -114,7 +128,7 @@ export class SolicitudesReservaComponent implements OnInit {
 
     var strMontoSena = this.formatMoney(montoSena);
 
-    solicitudReserva.estado = this.estados.find(e => e.descripcion == solicitudReserva.estado.descripcion);
+    solicitudReserva.estado = this.estados.find(e => e.descripcion.toLowerCase() == solicitudReserva.estado.descripcion.toLowerCase());
     solicitudReserva.disabled = true;
 
     this._solicituReservaService.actualizarReserva(solicitudReserva);
@@ -126,6 +140,38 @@ export class SolicitudesReservaComponent implements OnInit {
     else if (solicitudReserva.estado.descripcion.toLocaleLowerCase() == "solicitud rechazada")
       this._emailService.enviarEmailRechazoReserva();
 
+  }
+
+  cancelarSolicitudesPendienteSena(): void {
+
+    let solicitudesAceptadas = this.solicitudesReserva.filter(x => x.estado.descripcion.toLowerCase() == "solicitud aceptada");
+
+    const fechaActual = moment(Date.now());
+
+    solicitudesAceptadas = solicitudesAceptadas.filter(solicitud => {
+      let fechaDesde = moment(solicitud.fechaDesde);
+      let diferenciaDias = fechaDesde.diff(fechaActual, 'days');
+
+      if (diferenciaDias < 10 && diferenciaDias > 0) {
+
+        solicitud.estado = this.estadoCancelado;
+        this._solicituReservaService.actualizarReserva(solicitud);
+        this._emailService.enviarEmailCancelacionReserva();
+
+        let evento = this.eventos.find(e => e.solicitudReserva?.id == solicitud.id);
+        this._reservaService.eliminarReserva(evento.id);
+      }
+
+    });
+
+    if (solicitudesAceptadas.length == 0) {
+      this.uiService.showSnackBar(
+        'No existen solicitudes aceptadas, que estén pendientes de seña y deban cancelarse',
+        null,
+        3000
+      );
+
+    }
   }
 
 }

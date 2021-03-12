@@ -80,3 +80,8 @@
   .headerAndClose {
     background-color: #3f51b5;
   }
+
+  .btnDescargarComprobante {
+    margin-top: 2rem;
+    height: 2.5rem;
+}

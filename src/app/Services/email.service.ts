@@ -58,6 +58,23 @@ export class EmailService {
       });
   }
 
+  enviarEmailCancelacionReserva() {
+
+    axios.post(environment.functionMailCancelarReserva,
+      {
+        destinatario: "nahuegallinoti@gmail.com",
+        html: `<h3>Su reserva ha sido cancelada ya que no se realizó el pago de la seña en la fecha indicada.</h3>`
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+
+
 
 
 }

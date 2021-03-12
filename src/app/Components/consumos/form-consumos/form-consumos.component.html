@@ -5,7 +5,7 @@
     </button>
 
     <mat-toolbar color="primary" style="padding-left: 16px; width: 90%;">Agregar Consumo</mat-toolbar>
-</div>
+  </div>
   <div fxFlex fxLayoutGap="10px" class="formulario">
 
     <mat-form-field appearance="standard">
@@ -36,7 +36,8 @@
     <button class="btnAgregarConsumo" mat-button color="primary" (click)="agregarConsumo()">Agregar
       <mat-icon>add</mat-icon>
     </button>
-    <button *ngIf="consumo?.consumos.length > 0" mat-raised-button mat-primary color="primary" (click)="guardarConsumos()">Guardar
+    <button *ngIf="consumo?.consumos.length > 0" mat-raised-button mat-primary color="primary"
+      (click)="guardarConsumos()">Guardar
 
     </button>
   </div>
@@ -48,18 +49,24 @@
           <div mat-card-avatar class="avatar-image-consumo"></div>
 
           <div>
-            
-          <mat-card-title style="margin-bottom: 1rem;">{{ consumo.producto.descripcion }} X {{ consumo.cantidad}}</mat-card-title>
-         
-            <mat-card-subtitle class="fuente">Precio Unitario: {{ consumo.producto.precio | currency: 'USD'}}</mat-card-subtitle>
+
+            <mat-card-title style="margin-bottom: 1rem;">{{ consumo.producto.descripcion }} X {{ consumo.cantidad}}
+            </mat-card-title>
+
+            <mat-card-subtitle class="fuente">Precio Unitario: {{ consumo.producto.precio | currency: 'USD'}}
+            </mat-card-subtitle>
             <mat-card-subtitle class="fuente">Total: {{ consumo.monto | currency: 'USD'}}</mat-card-subtitle>
             <mat-card-subtitle class="fuente">Fecha: {{ consumo.fecha | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
-          
-        </div>
-        </mat-card-header> 
+
+          </div>
+        </mat-card-header>
         <button mat-button class="btnQuitarConsumo" (click)="quitarConsumo(consumo)" aria-label="Quitar Consumo">
-          <mat-icon>delete_outline</mat-icon>
-        </button>   
+          <mat-icon>delete_inline</mat-icon>
+        </button>
+        <button class="btnDescargarComprobante" mat-raised-button (click)="imprimirComprobante(consumo)">
+          <mat-icon>download</mat-icon>
+        </button>
+
       </div>
     </mat-card>
   </mat-list>

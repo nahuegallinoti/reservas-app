@@ -1,5 +1,6 @@
 import { Reserva } from './reserva.model';
 import { BaseClass } from './baseClass.model';
+import { SolicitudReserva } from './solicitudReserva.model';
 
 export class Evento {
   id?: string;
@@ -8,4 +9,5 @@ export class Evento {
   end: Date;
   extendedProps: Reserva;
   backgroundColor: string;
+  solicitudReserva?: SolicitudReserva;
 }

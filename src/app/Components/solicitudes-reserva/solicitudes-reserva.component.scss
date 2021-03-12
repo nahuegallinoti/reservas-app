@@ -59,3 +59,36 @@
       height: auto !important;
     }
   
+
+.btnCancelarSolicitudes {
+  border-radius: 5px;
+  color:#e73d1fd5;
+  background-color:#ffffff;
+  border: 1px solid #85929E;
+  margin-bottom: 1rem;
+  width: auto;
+  z-index: 10;
+  float: right;
+}
+
+.btnInfo {
+  border-radius: 5px;
+  color:#1a6db1e8;
+  background-color:#ffffff;
+  border: 1px solid #85929E;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  width: auto;
+  z-index: 10;
+  float: right;
+}
+
+.cont-buttons {
+  margin: auto;
+  padding: 10px;
+}
+
+::ng-deep .mat-tooltip {
+  background: rgba(120, 172, 218, 0.712)!important;
+  font-size: 15px;
+}

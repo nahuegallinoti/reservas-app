@@ -112,6 +112,7 @@ export class GestionarSolicitudComponent implements OnInit {
     const reserva = this.crearReserva();
     const evento = this.crearEvento(reserva);
 
+    evento.solicitudReserva = this.solicitudReserva;
     this._reservaService.guardarReserva(evento);
     this.dialogRef.close({data: true});
 
