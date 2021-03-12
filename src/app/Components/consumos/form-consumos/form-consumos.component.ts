@@ -14,6 +14,8 @@ import { Reserva } from 'src/app/Models/reserva.model';
 import { UIService } from 'src/app/Shared/ui.service';
 import { HttpClient } from '@angular/common/http';
 import { EmailService } from 'src/app/Services/email.service';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 export interface DialogData {
   reserva: Reserva;
@@ -156,5 +158,32 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
     this.consumoService.guardarConsumo(this.consumo);
     this.consumoService.obtenerConsumosAnteriores();
   }
+
+  imprimirComprobante(consumo: any): void {
+    const doc = new jsPDF();
+
+    var img = new Image();
+    img.src = 'assets/cabanas.jpeg';
+
+    doc.addImage(img, 'jpeg', 140, 7, 60, 20);
+
+    doc.setFontSize(20);
+    doc.text("Comprobante de consumo", 13, 40);
+
+    doc.setFontSize(15);
+    doc.setFont("italic");
+    doc.text("Producto: " + consumo.producto.descripcion, 13, 60);
+    doc.text("Precio Individual: $ " + consumo.producto.precio, 13, 70);
+    doc.text("Cantidad: " + consumo.cantidad, 13, 80);    
+    doc.text("Monto Total: $ " + consumo.monto, 13, 90);
+    doc.text("Fecha: " + new Date(consumo.fecha).toLocaleDateString(), 13, 110);
+    doc.text("Firma ____________________", 80, 140);
+    doc.text("Aclaración _______________", 80, 160);
+
+
+    doc.save(consumo.producto.id.toString() + '.pdf');
+
+  }
+
 
 }

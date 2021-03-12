@@ -6,6 +6,18 @@
   <div fxLayout="row" *ngIf="solicitudesReserva.length != 0">
     <div fxFlex.gt-sm="100%">
       <h1 class="title">Solicitudes de Reserva</h1>
+
+      <div class="cont-buttons">
+        <button class="btnInfo" mat-raised-button
+          matTooltip="Se cancelan las solicitudes que no se hayan señado hasta 10 días antes de la Fecha Desde"
+          matTooltipPosition="below">
+          <mat-icon>info</mat-icon>
+        </button>
+
+        <button class="btnCancelarSolicitudes" mat-raised-button (click)="cancelarSolicitudesPendienteSena()">
+          <mat-icon>track_changes</mat-icon>Cancelar Solicitudes Aceptadas Pendientes de Seña
+        </button>
+      </div>
       <mat-card>
         <mat-card-content>
           <mat-list>
@@ -21,7 +33,7 @@
                 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                   <mat-expansion-panel-header>
                     <mat-panel-title class="left-aligned-header">
-                    + Detalles
+                      + Detalles
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <mat-panel-description class="panelDescription">
@@ -48,13 +60,14 @@
                 </mat-select>
               </mat-form-field>
 
-              <mat-card-actions class="btnAcciones" *ngIf="solicitudReserva.disabled && solicitudReserva.estado.descripcion != 'Solicitud Aceptada'">
+              <mat-card-actions class="btnAcciones"
+                *ngIf="solicitudReserva.disabled && solicitudReserva.estado.descripcion != 'Solicitud Aceptada'">
                 <button mat-button (click)="solicitudReserva.disabled = !solicitudReserva.disabled">Actualizar Estado
                   Solicitud
                   <mat-icon title="Gestionar Solicitud">filter_frames</mat-icon>
                 </button>
               </mat-card-actions>
-              
+
               <mat-card-actions class="btnCancelarActualizacion" *ngIf="!solicitudReserva.disabled">
                 <button mat-button (click)="solicitudReserva.disabled = !solicitudReserva.disabled"> Cancelar
                   <mat-icon title="Gestionar Solicitud">filter_frames</mat-icon>

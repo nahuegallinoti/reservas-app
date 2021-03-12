@@ -16,7 +16,9 @@ export const environment = {
   },
   functionMailCheckIn: "https://us-central1-tesis-a16ed.cloudfunctions.net/appMail/sendMailRegistroCheckInReserva",
   functionMailConfirmarReserva: "https://us-central1-tesis-a16ed.cloudfunctions.net/appMail/sendMailConfirmarReserva",
-  functionMailRechazarReserva: "https://us-central1-tesis-a16ed.cloudfunctions.net/appMail/sendMailRechazarReserva"
+  functionMailRechazarReserva: "https://us-central1-tesis-a16ed.cloudfunctions.net/appMail/sendMailRechazarReserva",
+  functionMailCancelarReserva: "https://us-central1-tesis-a16ed.cloudfunctions.net/appMail/sendMailCancelarReserva"
+
 
 };
 

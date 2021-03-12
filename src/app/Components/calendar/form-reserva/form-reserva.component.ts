@@ -358,8 +358,8 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   }
 
   calcularSubTotal() {
-    var cabanasOcupadas = this.cabanas.filter(cabana => this.eventosCabanasActuales.some(x => x.extendedProps.cabana.id == cabana.id));
-    this.cabanas = this.cabanas.filter(item => !cabanasOcupadas.includes(item));
+    // var cabanasOcupadas = this.cabanas.filter(cabana => this.eventosCabanasActuales.some(x => x.extendedProps.cabana.id == cabana.id));
+    // this.cabanas = this.cabanas.filter(item => !cabanasOcupadas.includes(item));
 
     const fechaDesde = new Date(this.FormReserva.value.FechaDesde);
     const fechaHasta = new Date(this.FormReserva.value.FechaHasta);
