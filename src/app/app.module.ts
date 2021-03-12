@@ -41,7 +41,6 @@ import { SolicitudesReservaComponent } from './Components/solicitudes-reserva/so
 import { GestionarSolicitudComponent } from './Components/gestionar-solicitud/gestionar-solicitud.component'
 import { ChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
-import { PieStatComponent } from './Components/dashboard/pie/pie-stat/pie-stat.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +66,6 @@ import { PieStatComponent } from './Components/dashboard/pie/pie-stat/pie-stat.c
     SolicitudesReservaComponent,
     GestionarSolicitudComponent,
     DashboardComponent,
-    PieStatComponent
 
   ],
   imports: [
