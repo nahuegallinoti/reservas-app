@@ -58,11 +58,6 @@ export class SolicitudesReservaComponent implements OnInit {
     this.estadosSubscription = this._estadoService.estadosChanged.subscribe(
       (estados) => {
         this.estadoCancelado = estados.find(x => x.descripcion.toLowerCase() == "cancelado");
-
-        estados = estados.filter(x => x.descripcion.toLowerCase() == "solicitud aceptada" ||
-          x.descripcion.toLowerCase() == "solicitud rechazada" ||
-          x.descripcion.toLowerCase() == "pendiente de aprobacion" ||
-          x.descripcion.toLowerCase() == "cancelado")
         this.estados = estados;
       }
     )

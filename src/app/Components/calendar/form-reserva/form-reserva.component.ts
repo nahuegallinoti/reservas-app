@@ -26,6 +26,8 @@ import { EstadosConst } from 'src/app/Shared/estados';
 import { CabanaService } from 'src/app/Services/cabana.service';
 import * as moment from 'moment';
 import { ConfirmationDialogComponent } from '../../Shared/Confirmation/confirmation-dialog/confirmation-dialog.component';
+import { SolicitudReserva } from 'src/app/Models/solicitudReserva.model';
+import { SolicitudReservaService } from 'src/app/Services/solicitud-reserva.service';
 
 @Component({
   selector: 'form-reserva',
@@ -67,6 +69,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     private tarifaService: TarifaService,
     private estadoService: EstadoService,
     private cabanasService: CabanaService,
+    private solicitudReservaService: SolicitudReservaService,
     private dialogRef: MatDialogRef<FormReservaComponent>,
     private uiService: UIService,
     private dialog: MatDialog,
@@ -243,7 +246,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     reserva.montoTotal = this.FormReserva.value.MontoTotal;
     reserva.cabana = this.cabanas.find(x => x.id == this.FormReserva.value.Cabania);
 
-    reserva.estado = this.determinarEstadoReserva(reserva);
+    reserva.estado = this.determinarEstadoReserva();
     reserva.realizoCheckIn = false;
     reserva.realizoCheckOut = false;
 
@@ -264,21 +267,20 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     return evento;
   }
 
-  determinarEstadoReserva(reserva: Reserva): Estado {
+  determinarEstadoReserva(): Estado {
 
     let estado: Estado;
 
-    reserva.montoSenia == reserva.montoTotal ?
+    this.FormReserva.value.MontoSenia == this.FormReserva.value.MontoTotal ?
       estado = this.estados.find(estados => estados.identificador === EstadosConst.estadoPagado) :
 
-      reserva.montoSenia == 0 ?
+      this.FormReserva.value.MontoSenia == 0 ?
         estado = this.estados.find(estados => estados.identificador === EstadosConst.estadoPendienteSeña) :
 
         estado = this.estados.find(estados => estados.identificador === EstadosConst.estadoSeñado);
 
     return estado;
   }
-
 
   guardarReserva() {
 
@@ -311,16 +313,40 @@ export class FormReservaComponent implements OnInit, OnDestroy {
           ))
       ) {
         const evento = this.crearEvento(reserva);
+        const solicitudReserva = this.crearSolicitudReserva();        
 
         if (this.isEditing) {
           const id = this.eventoAEditar.id;
           this.reservaService.actualizarReserva(id, evento);
         } else {
           this.reservaService.guardarReserva(evento);
+          this.solicitudReservaService.guardarSolicitudReserva(solicitudReserva);
         }
         this.dialogRef.close();
       }
     }
+  }
+
+  crearSolicitudReserva(): SolicitudReserva {
+    let solicitudReserva = new SolicitudReserva();
+    solicitudReserva.cliente = new Cliente();
+    solicitudReserva.estado = new Estado();
+
+    solicitudReserva.cliente.nombre = this.FormReserva.value.Nombre;
+    solicitudReserva.cliente.apellidos = this.FormReserva.value.Apellidos;
+    solicitudReserva.cliente.telefono = this.FormReserva.value.Telefono;
+    solicitudReserva.cliente.email = this.FormReserva.value.Email;
+    solicitudReserva.cliente.dni = this.FormReserva.value.Dni;
+
+    solicitudReserva.cantidadPersonas = this.FormReserva.value.CantOcupantes;
+    solicitudReserva.codigoReserva = Math.round(Math.random() * (1000 - 12) + 123);
+    solicitudReserva.costo = this.FormReserva.value.MontoTotal;
+    solicitudReserva.disabled = true;
+    solicitudReserva.estado = this.determinarEstadoReserva();
+    solicitudReserva.fechaDesde = new Date(this.FormReserva.value.FechaDesde);
+    solicitudReserva.fechaHasta = new Date(this.FormReserva.value.FechaHasta);
+
+    return solicitudReserva;
   }
 
   verificarDisponibilidad(

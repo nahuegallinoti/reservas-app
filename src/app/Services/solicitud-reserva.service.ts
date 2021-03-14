@@ -31,14 +31,7 @@ export class SolicitudReservaService {
     this.firestore
       .collection('solicitudReserva')
       .add(solicitudParse)
-      .then(
-        (response) =>
-          this.uiService.showSnackBar(
-            'Se registró su solicitud de reserva con código: ' + response.id,
-            null,
-            10000
-          )
-      )
+      .then()
       .catch(
         (error) =>
           this.uiService.showSnackBar(
