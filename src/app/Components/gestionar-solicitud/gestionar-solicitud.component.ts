@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SolicitudReserva } from 'src/app/Models/solicitudReserva.model';
 import { Subscription } from 'rxjs';
 import { Cabana } from 'src/app/Models/cabana.model';
 import { CabanaService } from 'src/app/Services/cabana.service';
@@ -13,7 +12,7 @@ import { Estado } from 'src/app/Models/estado.model';
 import { Cliente } from 'src/app/Models/cliente.model';
 
 export interface DialogDataSolicitudReserva {
-  solicitudReserva: SolicitudReserva;
+  solicitudReserva: Reserva;
 }
 
 @Component({
@@ -23,7 +22,7 @@ export interface DialogDataSolicitudReserva {
 })
 export class GestionarSolicitudComponent implements OnInit {
 
-  solicitudReserva: SolicitudReserva;
+  solicitudReserva: Reserva;
   cabanaSelected: Cabana;
   strCabanaSelected: string;
   cabanas: Cabana[] = [];
@@ -68,7 +67,7 @@ export class GestionarSolicitudComponent implements OnInit {
       (cabanas) => {
         var cabanasOcupadas = cabanas.filter(cabana => this.eventosCabanasActuales.some(x => x.extendedProps.cabana.id == cabana.id));
         cabanas = cabanas.filter(item => !cabanasOcupadas.includes(item));
-        cabanas = cabanas.filter(item => item.capacidad >= this.solicitudReserva.cantidadPersonas);
+        cabanas = cabanas.filter(item => item.capacidad >= this.solicitudReserva.cantOcupantes);
 
         this.cabanas = cabanas;
         this.cabanaSelected = cabanas[0];
@@ -104,60 +103,41 @@ export class GestionarSolicitudComponent implements OnInit {
     const cantDias = fechaHasta.diff(fechaDesde, 'days') + 1;
 
     //TODO aqui se deberia sumar la tarifa fija segun epoca del año en ves de 1500
-    this.total = 1500 * this.solicitudReserva.cantidadPersonas * cantDias + this.cabanaSelected.precioDia;
+    this.total = 1500 * this.solicitudReserva.cantOcupantes * cantDias + this.cabanaSelected.precioDia;
 
   }
 
   guardarEvento() {
-    const reserva = this.crearReserva();
-    const evento = this.crearEvento(reserva);
+    
+    this.actualizarDatosReserva();
+    const evento = this.crearEvento();
 
-    evento.solicitudReserva = this.solicitudReserva;
     this._reservaService.guardarReserva(evento);
     this.dialogRef.close({data: true});
 
   }
 
-  crearReserva(): Reserva {
-    const reserva = new Reserva();
-    reserva.cliente = new Cliente();
-    reserva.cliente.email = this.solicitudReserva.cliente.email;
-    reserva.cliente.dni = this.solicitudReserva.cliente.dni;
-    reserva.cliente.nombre = this.solicitudReserva.cliente.nombre;
-    reserva.cliente.apellidos = this.solicitudReserva.cliente.apellidos;
-    reserva.cliente.telefono = this.solicitudReserva.cliente.telefono;
-    reserva.fechaCreacion = new Date();
-    reserva.fechaDesde = new Date(this.solicitudReserva.fechaDesde);
-    reserva.fechaHasta = new Date(this.solicitudReserva.fechaHasta);
-    reserva.fechaDesde.setDate(reserva.fechaDesde.getDate() + 1);
-    reserva.fechaHasta.setDate(reserva.fechaHasta.getDate() + 1);
-    reserva.cantOcupantes = this.solicitudReserva.cantidadPersonas;
-    reserva.idCabania = this.cabanaSelected.id;
-    reserva.montoSenia = 0;
-    reserva.montoTotal = this.total;
-    reserva.cabana = this.cabanas.find(x => x.nombre == this.strCabanaSelected);
+  actualizarDatosReserva() {
 
-    reserva.estado = this.estados.find(x => x.descripcion.toLowerCase() == "solicitud aceptada");
-    reserva.realizoCheckIn = false;
-    reserva.realizoCheckOut = false;
-
-    return reserva;
+    this.solicitudReserva.cabana = this.cabanaSelected;
+    this.solicitudReserva.montoTotal = this.total;
+    this.solicitudReserva.estado = this.estados.find(x => x.descripcion.toLowerCase() == "solicitud aceptada");
 
   }
-  crearEvento(reserva: Reserva): Evento {
+
+  crearEvento(): Evento {
 
     const titulo = this.cabanaSelected.nombre + ' - ' + this.solicitudReserva.cliente.apellidos + ' ' + this.solicitudReserva.cliente.nombre
-    const fechaDesde = new Date(this.solicitudReserva.fechaDesde);
-    fechaDesde.setDate(fechaDesde.getDate() + 1);
+    const fechaDesde = this.solicitudReserva.fechaDesde;
 
-    const fechaHasta = new Date(this.solicitudReserva.fechaHasta);
-    fechaHasta.setDate(fechaHasta.getDate() + 1);
+    const fechaHasta = this.solicitudReserva.fechaHasta;
+    this.solicitudReserva.montoTotal = this.total;
 
     const evento: Evento = {
       title: titulo,
       start: fechaDesde,
       end: fechaHasta,
-      extendedProps: reserva,
+      extendedProps: this.solicitudReserva,
       backgroundColor: "#EC7063",
     };
 

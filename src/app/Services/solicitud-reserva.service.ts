@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SolicitudReserva } from '../Models/solicitudReserva.model';
+import { Reserva } from '../Models/reserva.model';
 import { UIService } from '../Shared/ui.service';
 
 @Injectable({
@@ -10,20 +10,25 @@ import { UIService } from '../Shared/ui.service';
 })
 export class SolicitudReservaService {
 
-  private solicitudesReserva: SolicitudReserva[] = [];
+  private solicitudesReserva: Reserva[] = [];
   private firestoreSubscription: Subscription;
-  solicitudReservaChanged = new Subject<SolicitudReserva[]>();
+  solicitudReservaChanged = new Subject<Reserva[]>();
 
 
   constructor(private firestore: AngularFirestore,
     private uiService: UIService
   ) { }
 
-  guardarSolicitudReserva(solicitud: SolicitudReserva) {
+  guardarSolicitudReserva(solicitud: Reserva) {
 
     solicitud.cliente = Object.assign(
       {},
       solicitud.cliente
+    );
+
+    solicitud.cabana = Object.assign(
+      {},
+      solicitud.cabana
     );
 
     const solicitudParse = Object.assign({}, solicitud);
@@ -43,6 +48,13 @@ export class SolicitudReservaService {
 
   }
 
+  convertDate(date: any) {
+    
+    return new Date(date.seconds * 1000 + date.nanoseconds/1000000)
+
+  }
+
+
   obtenerReservas() {
     this.uiService.loadingStateChanged.next(true);
     this.firestoreSubscription = this.firestore
@@ -55,19 +67,25 @@ export class SolicitudReservaService {
             const id = doc.payload.doc.id;
 
             reserva.id = id;
-            reserva.fechaDesde = reserva.fechaDesde;
-            reserva.fechaHasta = reserva.fechaHasta;
-            reserva.cantidadPersonas = reserva.cantidadPersonas;
+            reserva.cabana = reserva.cabana;
             reserva.cliente = reserva.cliente;
             reserva.estado = reserva.estado;
-            reserva.costo = reserva.costo;
+            reserva.cantOcupantes = reserva.cantOcupantes;
+            reserva.codigoReserva = reserva.codigoReserva;
+            reserva.disabled = reserva.disabled;
+            reserva.fechaDesde = this.convertDate(reserva.fechaDesde);
+            reserva.fechaHasta = this.convertDate(reserva.fechaHasta);
+            reserva.montoSenia = reserva.montoSenia;
+            reserva.montoTotal = reserva.montoTotal;
+            reserva.realizoCheckIn = reserva.realizoCheckIn;
+            reserva.realizoCheckOut = reserva.realizoCheckOut;
             
             return reserva;
           });
         })
       )
       .subscribe(
-        (reservas: SolicitudReserva[]) => {
+        (reservas: Reserva[]) => {
           this.solicitudesReserva = reservas;
           this.solicitudReservaChanged.next([...this.solicitudesReserva]);
           this.uiService.loadingStateChanged.next(false);
@@ -88,7 +106,7 @@ export class SolicitudReservaService {
 
     this.firestore
       .doc('solicitudReserva/' + reserva.id)
-      .set(reserva)
+      .update(reserva)
       .then((response) => {
         this.uiService.showSnackBar(
           'Se actualizó la solicitud con éxito',

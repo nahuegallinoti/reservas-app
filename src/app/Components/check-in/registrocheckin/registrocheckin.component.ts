@@ -139,7 +139,7 @@ export class RegistrocheckinComponent implements OnInit {
 
     this.evento.extendedProps.realizoCheckIn = true;
 
-    this.reservaService.actualizarReserva(this.evento.id, this.evento);
+    this.reservaService.actualizarEvento(this.evento.id, this.evento);
     
     checkIn.evento = this.evento;
     

@@ -5,16 +5,17 @@ import { BaseClass } from './baseClass.model';
 
 export class Reserva extends BaseClass<Reserva> {
   id: number;
+  cabana?: Cabana;
+  cliente?: Cliente;
+  estado: Estado;
+  cantOcupantes: number;
+  codigoReserva: number;
+  disabled: boolean;
   fechaCreacion: Date;
-  cliente: Cliente;
-  idCabania: number;
   fechaDesde: Date;
   fechaHasta: Date;
-  cantOcupantes: number;
   montoSenia: number;
   montoTotal: number;
-  estado: Estado;
-  cabana: Cabana;
   realizoCheckIn: boolean;
   realizoCheckOut: boolean;
 }

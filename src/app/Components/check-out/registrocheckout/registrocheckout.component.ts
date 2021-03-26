@@ -112,7 +112,7 @@ export class RegistrocheckoutComponent implements OnInit {
     this.esDetalle = true;
     this.evento = this.eventos.find(x => x.id == this.reservaId);
     this.evento.extendedProps.realizoCheckOut = true;
-    this.reservaService.actualizarReserva(this.reservaId.toString(), this.evento);
+    this.reservaService.actualizarEvento(this.reservaId.toString(), this.evento);
 
   }
 

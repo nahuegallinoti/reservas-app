@@ -58,8 +58,11 @@ export class DetalleCheckInComponent implements OnInit {
 
     this.checkInSubscription = this.checkInService.checkInChanged.subscribe(
       (checkIns) => {
-        let checkIn = checkIns.find(x => x.evento.id == this.eventoId);        
-        
+        checkIns.map(x => x.evento.start = this.convertDate(x.evento.start));
+        checkIns.map(x => x.evento.end = this.convertDate(x.evento.end));
+
+        let checkIn = checkIns.find(x => x.evento.id == this.eventoId);
+
         this.checkIn = checkIn;
         this.checkInTab.data.push(checkIn);
 
@@ -70,6 +73,17 @@ export class DetalleCheckInComponent implements OnInit {
 
   }
 
+  convertDate(date: any) {
+
+    if (date.type === Date)
+      return date;
+
+    else
+
+      return new Date(date.seconds * 1000 + date.nanoseconds / 1000000)
+
+  }
+
   descargarComprobante(): void {
     const doc = new jsPDF();
 
@@ -77,17 +91,17 @@ export class DetalleCheckInComponent implements OnInit {
     img.src = 'assets/cabanas.jpeg';
 
     doc.addImage(img, 'jpeg', 140, 7, 60, 20);
-        
+
     doc.setFont("italic");
     doc.text("Reserva a nombre de: " + this.checkIn.evento.extendedProps.cliente.nombre + ' ' + this.checkIn.evento.extendedProps.cliente.apellidos, 13, 40);
-    autoTable(doc, { html: '#my-table', margin: { top: 45 }});
+    autoTable(doc, { html: '#my-table', margin: { top: 45 } });
 
     doc.save(this.checkIn.id.toString() + '.pdf');
 
   }
 
   enviarEmailComprobante(): void {
-    
+
     this._uploadFileService.getFile(this.checkIn.evento.id);
     // this.emailService.enviarEmailCheckIn(this.checkIn.evento.id, gs://tesis-a16ed.appspot.com/CheckIn/fhlSXeik9SuQ8qvUqJ2u);
   }
