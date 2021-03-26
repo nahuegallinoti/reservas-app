@@ -24,6 +24,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatStepperModule} from '@angular/material/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
@@ -51,7 +52,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatSidenavModule,
     MatStepperModule,
     BrowserAnimationsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonToggleModule
   ],
   exports: [
     CommonModule,
@@ -77,7 +79,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatSidenavModule,
     MatStepperModule,
     BrowserAnimationsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonToggleModule
 
   ],
   providers: [{ provide: MatDialogRef, useValue: {} }],
