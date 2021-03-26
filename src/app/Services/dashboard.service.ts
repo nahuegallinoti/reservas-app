@@ -280,9 +280,7 @@ export class DashboardService {
                     months.push(count_.length);
                 }
                 
-                return [{
-                    data: months
-                }];
+                return [{data: months}];
             })
           )
         .subscribe(snapshots => {
