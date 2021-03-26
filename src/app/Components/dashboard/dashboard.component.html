@@ -9,7 +9,7 @@
 <div *ngIf="!isLoading" class="row center_">
 
     <div class="year_ddl">
-        <mat-form-field appearance="standard">
+        <mat-form-field appearance="standard" class="year">
             <mat-label>Año</mat-label>
             <mat-select [(value)]="SelectedYear" (selectionChange)="OnYearChange()">
               <mat-option [value]="item" *ngFor="let item of Years">{{ item }}
@@ -69,7 +69,7 @@
             <div class="col-6 pull-left">
                 <div class="card-widget mt-15">
                     <div class="card-widget-header">
-                       <div class="header_ pull-left"><i class="ic_grain"></i>cancelado reservas</div>
+                       <div class="header_ pull-left"><i class="ic_grain"></i>Reservas Canceladas</div>
                     </div>
                     <div class="card-widget-body">
                         <div>
@@ -129,7 +129,7 @@
             <div class="col-6 pull-left">
                 <div class="card-widget mt-15">
                     <div class="card-widget-header">
-                       <div class="header_ pull-left"><i class="ic_grain"></i>cancelado reservas</div>
+                       <div class="header_ pull-left"><i class="ic_grain"></i>Reservas Canceladas</div>
                     </div>
                     <div class="card-widget-body">
                         <div>
