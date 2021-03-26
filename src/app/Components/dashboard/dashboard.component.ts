@@ -146,13 +146,39 @@ public DefaultPieChartOptions: ChartOptions = {
         this.productData = res.data.ProductData;
         this.canceledData = res.data.CancelReservationData;
 
-        this.cabinPieData = [this.cabinData[0]['data']];
-        //this.cabinPieLabels = [this.cabinData[0]['label']];
+        if(this.cabinData.length>0)
+        {
+          var pie_date=[];
+          this.cabinData.forEach(element => {
+            if(pie_date.length==0){
+              pie_date = Object.assign([], element['data']);
+            }
+            else{
+              for (let index = 0; index < element['data'].length; index++) {
+                pie_date[index] = pie_date[index] + element['data'][index];
+              }
+            }
+          });
+          this.cabinPieData = [pie_date];
+        }
 
-        this.productPieData= [this.productData[0]['data']];
-        //this.productPieLabels = [this.productData[0]['label']];
+        if(this.productData.length>0){
+          var pie_date=[];
+          this.productData.forEach(element => {
+            if(pie_date.length==0){
+              pie_date = Object.assign([], element['data']);
+            }
+            else{
+              for (let index = 0; index < element['data'].length; index++) {
+                pie_date[index] = (pie_date[index] + element['data'][index]);
+              }
+            }
+          });
+          this.productPieData = [pie_date];
+        }
         
-        this.canceledPieData = [this.canceledData[0]['data']];
+        if(this.canceledData.length>0)
+           this.canceledPieData = [this.canceledData[0]['data']];
       }
 
     }).catch(err=>{
