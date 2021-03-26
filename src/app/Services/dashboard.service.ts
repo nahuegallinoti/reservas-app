@@ -22,7 +22,8 @@ export class DashboardService {
 
         var data = {
             CheckInData:[],
-            ProductData:[]
+            ProductData:[],
+            CancelReservationData:[],
         }
         $this.getCheckInData(selectedYear).then(res=>{
 
@@ -34,9 +35,31 @@ export class DashboardService {
                 if(res.status)
                    data.ProductData =  res.data;
 
-                resolve({ status:true,data:data});
+                   this.getCancelReservationData(selectedYear).then(res=>{
+
+                    if(res.status)
+                       data.CancelReservationData =  res.data;
+
+                    resolve({ status:true,data:data});
+
+                    }).catch(error=>{
+                        resolve({ status:true,data:data});
+                    });
+
+                
             }).catch(error=>{
-                resolve({ status:true,data:data});
+
+                this.getCancelReservationData(selectedYear).then(res=>{
+
+                    if(res.status)
+                       data.CancelReservationData =  res.data;
+
+                    resolve({ status:true,data:data});
+
+                }).catch(error=>{
+                    resolve({ status:true,data:data});
+                });
+
             });
 
         }).catch(error=>{
@@ -48,7 +71,18 @@ export class DashboardService {
 
                 resolve({ status:true,data:data});
             }).catch(error=>{
-                resolve({ status:false,message:error.message});
+
+                this.getCancelReservationData(selectedYear).then(res=>{
+
+                    if(res.status)
+                       data.CancelReservationData =  res.data;
+
+                    resolve({ status:true,data:data});
+
+                }).catch(error=>{
+                    resolve({ status:false,message:error.message});
+                });
+                
             });
         });
     });
@@ -207,6 +241,58 @@ export class DashboardService {
             resolve({status:false, message:error.message});
         });
     });
+  }
+
+  getCancelReservationData(selectedYear){
+
+    var $this = this;
+    return new Promise<any>((resolve, reject) => {
+
+        $this.firestore.collection('solicitudReserva'
+        ).snapshotChanges()
+        .pipe(
+            map((docArray) => {
+                var result=[];
+                docArray.forEach(doc => {
+                    const element = doc.payload.doc.data();
+                    if(element['fechaDesde']){
+                        var date = null;
+                        if(typeof element['fechaDesde'] === 'object')
+                           date = new Date(element['fechaDesde'].seconds* 1000);
+                        else if(typeof element['fechaDesde'] === 'string')
+                            date = new Date(element['fechaDesde']);
+
+                        if(date && date.getFullYear() == selectedYear)
+                        {
+                            if(element['estado']['descripcion'] == "Cancelado")
+                            {
+                                result.push({
+                                    date:date
+                                });
+                            }
+                        }
+                    }
+                });
+    
+                var months = [];
+                for (let index = 1; index <= 12; index++) {
+                    var count_= result.filter(p=> p.date && p.date.getMonth()+1 == index);
+                    months.push(count_.length);
+                }
+                
+                return [{
+                    data: months
+                }];
+            })
+          )
+        .subscribe(snapshots => {
+            resolve({status:true, data:snapshots});
+        },error=>{
+            resolve({status:false, message:error.message});
+        });
+
+    });
+    
   }
 
 }

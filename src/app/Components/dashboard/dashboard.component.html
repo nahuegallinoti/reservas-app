@@ -16,46 +16,139 @@
               </mat-option>
             </mat-select>
         </mat-form-field>
+        <div class="pull-left">
+            <mat-button-toggle-group [value]="ChartType" (change)="onChartChange($event.value)"  name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle value="bar">Gráfico de barras</mat-button-toggle>
+                <mat-button-toggle value="pie">Gráfico circular</mat-button-toggle>
+              </mat-button-toggle-group>
+        </div>
       </div>
 
-    <div class="col-6 pull-left">
-        <div class="card-widget mt-15">
-            <div class="card-widget-header">
-               <div class="header_ pull-left"><i class="ic_grain"></i>Ocupación por cabaña</div>
-            </div>
-            <div class="card-widget-body">
-                <div>
-                    <canvas baseChart 
-                    [datasets]="cabinData"
-                    [labels]="barChartLabels"
-                    [options]="CabinbarChartOptions"
-                    [plugins]="barChartPlugins"
-                    [legend]="barChartLegend"
-                    [chartType]="barChartType">
-                    </canvas>
+      <div *ngIf="ChartType=='bar'">
+        <div class="row">
+            <div class="col-6 pull-left">
+                <div class="card-widget mt-15">
+                    <div class="card-widget-header">
+                       <div class="header_ pull-left"><i class="ic_grain"></i>Ocupación por cabaña</div>
+                    </div>
+                    <div class="card-widget-body">
+                        <div>
+                            <canvas baseChart 
+                            [datasets]="cabinData"
+                            [labels]="ChartLabels"
+                            [options]="CabinbarChartOptions"
+                            [plugins]="barChartPlugins"
+                            [legend]="barChartLegend"
+                            [chartType]="ChartType">
+                            </canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-6 pull-left">
-        <div class="card-widget mt-15">
-            <div class="card-widget-header">
-               <div class="header_ pull-left"><i class="ic_grain"></i>Consumos por producto/servicio</div>
-            </div>
-            <div class="card-widget-body">
-                <div>
-                    <canvas baseChart 
-                    [datasets]="productData"
-                    [labels]="barChartLabels"
-                    [options]="ProductbarChartOptions"
-                    [plugins]="barChartPlugins"
-                    [legend]="barChartLegend"
-                    [chartType]="barChartType">
-                    </canvas>
+            <div class="col-6 pull-left">
+                <div class="card-widget mt-15">
+                    <div class="card-widget-header">
+                       <div class="header_ pull-left"><i class="ic_grain"></i>Consumos por producto/servicio</div>
+                    </div>
+                    <div class="card-widget-body">
+                        <div>
+                            <canvas baseChart 
+                            [datasets]="productData"
+                            [labels]="ChartLabels"
+                            [options]="ProductbarChartOptions"
+                            [plugins]="barChartPlugins"
+                            [legend]="barChartLegend"
+                            [chartType]="ChartType">
+                            </canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+          </div>
+          <div class="row center_div">
+            <div class="col-6 pull-left">
+                <div class="card-widget mt-15">
+                    <div class="card-widget-header">
+                       <div class="header_ pull-left"><i class="ic_grain"></i>cancelado reservas</div>
+                    </div>
+                    <div class="card-widget-body">
+                        <div>
+                            <canvas baseChart 
+                            [datasets]="canceledData"
+                            [labels]="ChartLabels"
+                            [plugins]="barChartPlugins"
+                            [legend]="false"
+                            [chartType]="ChartType">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      <div *ngIf="ChartType=='pie'">
+        <div class="row">
+            <div class="col-6 pull-left">
+                <div class="card-widget mt-15">
+                    <div class="card-widget-header">
+                       <div class="header_ pull-left"><i class="ic_grain"></i>Ocupación por cabaña</div>
+                    </div>
+                    <div class="card-widget-body">
+                        <div>
+                            <canvas baseChart 
+                            [data]="cabinPieData"
+                            [labels]="ChartLabels"
+                            [legend]="false"
+                            [options]="DefaultPieChartOptions"
+                            [chartType]="ChartType">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 pull-left">
+                <div class="card-widget mt-15">
+                    <div class="card-widget-header">
+                       <div class="header_ pull-left"><i class="ic_grain"></i>Consumos por producto/servicio</div>
+                    </div>
+                    <div class="card-widget-body">
+                        <div>
+                            <canvas baseChart 
+                            [data]="productPieData"
+                            [labels]="ChartLabels"
+                            [options]="ProductPieChartOptions"
+                            [legend]="false"
+                            [chartType]="ChartType">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="row center_div">
+            <div class="col-6 pull-left">
+                <div class="card-widget mt-15">
+                    <div class="card-widget-header">
+                       <div class="header_ pull-left"><i class="ic_grain"></i>cancelado reservas</div>
+                    </div>
+                    <div class="card-widget-body">
+                        <div>
+                            <canvas baseChart 
+                            [data]="canceledPieData"
+                            [labels]="ChartLabels"
+                            [options]="DefaultPieChartOptions"
+                            [legend]="false"
+                            [chartType]="ChartType">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+     
+   
+   
 </div>
 
 
