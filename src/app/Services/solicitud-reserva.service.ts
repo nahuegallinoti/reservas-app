@@ -19,7 +19,7 @@ export class SolicitudReservaService {
     private uiService: UIService
   ) { }
 
-  guardarSolicitudReserva(solicitud: Reserva) {
+  guardarSolicitudReserva(solicitud: Reserva): any {
 
     solicitud.cliente = Object.assign(
       {},
@@ -36,7 +36,7 @@ export class SolicitudReservaService {
     this.firestore
       .collection('solicitudReserva')
       .add(solicitudParse)
-      .then()
+      .then((solicitud) => {return solicitud})
       .catch(
         (error) =>
           this.uiService.showSnackBar(

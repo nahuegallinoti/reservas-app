@@ -12,6 +12,11 @@ import * as moment from 'moment';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Evento } from 'src/app/Models/evento.model';
+import { EstadoService } from 'src/app/Services/estado.service';
+import { Estado } from 'src/app/Models/estado.model';
+import { EstadosConst } from 'src/app/Shared/estados';
+import { SolicitudReservaService } from 'src/app/Services/solicitud-reserva.service';
+import { Reserva } from 'src/app/Models/reserva.model';
 
 @Component({
   selector: 'app-registrocheckout',
@@ -32,6 +37,12 @@ export class RegistrocheckoutComponent implements OnInit {
   eventos = [];
   evento: Evento;
   esDetalle = false;
+
+  estadosSubscription: Subscription;
+  estados: Estado[] = [];
+
+  solicitudesReservaSubscription: Subscription;
+  solicitudesReserva: Reserva[] = [];
 
   private sort: MatSort;
   private paginator: MatPaginator;
@@ -56,6 +67,9 @@ export class RegistrocheckoutComponent implements OnInit {
     private route: ActivatedRoute,
     private uiService: UIService,
     private reservaService: ReservaService,
+    private estadoService: EstadoService,
+    private _solicituReservaService: SolicitudReservaService
+
   ) { }
 
   ngOnInit(): void {
@@ -76,6 +90,15 @@ export class RegistrocheckoutComponent implements OnInit {
       }
     );
 
+    this.estadosSubscription = this.estadoService.estadosChanged.subscribe((estados) => {
+      this.estados = estados;
+    })
+
+    this.solicitudesReservaSubscription = this._solicituReservaService.solicitudReservaChanged.subscribe((solicitudes) => {
+      this.solicitudesReserva = solicitudes;
+    })
+
+
 
     this.consumosSubscription = this.consumoService.consumosChanged.subscribe(
       (consumos) => {
@@ -94,6 +117,8 @@ export class RegistrocheckoutComponent implements OnInit {
 
     this.consumoService.obtenerConsumosAnteriores();
     this.reservaService.buscarEventos();
+    this.estadoService.buscarEstados();
+    this._solicituReservaService.obtenerReservas();
 
   }
 
@@ -112,9 +137,23 @@ export class RegistrocheckoutComponent implements OnInit {
     this.esDetalle = true;
     this.evento = this.eventos.find(x => x.id == this.reservaId);
     this.evento.extendedProps.realizoCheckOut = true;
+    this.evento.extendedProps.estado = this.estados.find(x => x.identificador == EstadosConst.estadoFinalizado)
     this.reservaService.actualizarEvento(this.reservaId.toString(), this.evento);
 
+    this.actualizarEstadoSolicitudReserva(this.evento.extendedProps.codigoReserva);
   }
+
+  actualizarEstadoSolicitudReserva(codigoReserva: number)
+  {
+    
+    let solicitudReserva = this.solicitudesReserva.find(x => x.codigoReserva == codigoReserva);
+
+    solicitudReserva.estado = this.estados.find(x => x.identificador == EstadosConst.estadoFinalizado)
+    solicitudReserva.realizoCheckOut = true;
+
+    this._solicituReservaService.actualizarReserva(solicitudReserva);
+  }
+
 
   descargarComprobante(): void {
 

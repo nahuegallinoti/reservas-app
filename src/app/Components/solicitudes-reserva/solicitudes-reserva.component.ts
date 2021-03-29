@@ -123,7 +123,7 @@ export class SolicitudesReservaComponent implements OnInit {
 
     var strMontoSena = this.formatMoney(montoSena);
 
-    solicitudReserva.montoSenia = montoSena;
+    // solicitudReserva.montoSenia = montoSena;
     solicitudReserva.realizoCheckIn = false;
     solicitudReserva.realizoCheckOut = false;
     
@@ -152,6 +152,7 @@ export class SolicitudesReservaComponent implements OnInit {
   cancelarSolicitudesPendienteSena(): void {
 
     let solicitudesAceptadas = this.solicitudesReserva.filter(x => x.estado.descripcion.toLowerCase() == "solicitud aceptada");
+    solicitudesAceptadas = solicitudesAceptadas.filter(x => x.montoSenia == 0);
 
     const fechaActual = moment(Date.now());
 
@@ -159,7 +160,7 @@ export class SolicitudesReservaComponent implements OnInit {
       let fechaDesde = moment(solicitud.fechaDesde);
       let diferenciaDias = fechaDesde.diff(fechaActual, 'days');
 
-      if (diferenciaDias < 10 && diferenciaDias >= 0) {
+      if (diferenciaDias < 10) {
 
         solicitud.estado = this.estadoCancelado;
         this._solicituReservaService.actualizarReserva(solicitud);

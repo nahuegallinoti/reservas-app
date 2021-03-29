@@ -16,6 +16,11 @@ import { MatSelectChange } from '@angular/material/select';
 import { EmailService } from 'src/app/Services/email.service';
 import jsPDF from 'jspdf';
 import { UploadFileFirebaseService } from 'src/app/Services/upload-file-firebase.service';
+import { EstadoService } from 'src/app/Services/estado.service';
+import { EstadosConst } from 'src/app/Shared/estados';
+import { Estado } from 'src/app/Models/estado.model';
+import { SolicitudReservaService } from 'src/app/Services/solicitud-reserva.service';
+import { Reserva } from 'src/app/Models/reserva.model';
 
 
 @Component({
@@ -46,6 +51,12 @@ export class RegistrocheckinComponent implements OnInit {
     text: "",
   };
 
+  solicitudesReservaSubscription: Subscription;
+  solicitudesReserva: Reserva[] = [];
+
+  estadosSubscription: Subscription;
+  estados: Estado [] = [];
+
   selectedCountryControl = new FormControl(this.selectedFormaPago);
 
 
@@ -57,7 +68,9 @@ export class RegistrocheckinComponent implements OnInit {
     private route: ActivatedRoute,
     private reservaService: ReservaService,
     private formaPagoService: FormaPagoService,
-    private _uploadFileService: UploadFileFirebaseService
+    private _uploadFileService: UploadFileFirebaseService,
+    private _estadoService: EstadoService,
+    private _solicituReservaService: SolicitudReservaService
     ) { }
 
   ngOnInit() {
@@ -75,11 +88,20 @@ export class RegistrocheckinComponent implements OnInit {
       (formasPago) => {
         this.formasPago = formasPago;
       }
-    )
+    )    
 
+    this.estadosSubscription = this._estadoService.estadosChanged.subscribe((estados) => {
+      this.estados = estados;
+    })
+
+    this.solicitudesReservaSubscription = this._solicituReservaService.solicitudReservaChanged.subscribe((solicitudes) => {
+      this.solicitudesReserva = solicitudes;
+    })
 
     this.reservaService.buscarEventos();
     this.formaPagoService.ObtenerFormasPago();
+    this._estadoService.buscarEstados();
+    this._solicituReservaService.obtenerReservas();
 
     this.datosPersonalesForm = this._formBuilder.group({
       nombre: [],
@@ -138,7 +160,12 @@ export class RegistrocheckinComponent implements OnInit {
     checkIn.vehiculos = this.vehiculos;
 
     this.evento.extendedProps.realizoCheckIn = true;
+    this.evento.extendedProps.estado = this.estados.find(x => x.identificador == EstadosConst.estadoPagado);
 
+    this.evento.extendedProps.montoSenia = this.cancelacionPagoForm.value.sena;
+    this.evento.extendedProps.montoTotal = this.cancelacionPagoForm.value.total;
+
+    this.actualizarEstadoSolicitudReserva(this.evento.extendedProps.codigoReserva);
     this.reservaService.actualizarEvento(this.evento.id, this.evento);
     
     checkIn.evento = this.evento;
@@ -146,6 +173,19 @@ export class RegistrocheckinComponent implements OnInit {
     let docPdf = this.createPdf(checkIn);
     this._uploadFileService.uploadFile(docPdf, checkIn.evento.id.toString());
     this._checkinService.guardarCheckin(checkIn);
+  }
+
+  actualizarEstadoSolicitudReserva(codigoReserva: number)
+  {
+    
+    let solicitudReserva = this.solicitudesReserva.find(x => x.codigoReserva == codigoReserva);
+
+    solicitudReserva.estado = this.estados.find(x => x.identificador == EstadosConst.estadoPagado)
+    solicitudReserva.montoSenia = this.cancelacionPagoForm.value.sena;
+    solicitudReserva.montoTotal = this.cancelacionPagoForm.value.total;
+    solicitudReserva.realizoCheckIn = true;
+
+    this._solicituReservaService.actualizarReserva(solicitudReserva);
   }
 
   agregarAcompanante() {

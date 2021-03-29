@@ -75,7 +75,7 @@ export class DetalleCheckInComponent implements OnInit {
 
   convertDate(date: any) {
 
-    if (date.type === Date)
+    if (date.seconds == undefined)
       return date;
 
     else

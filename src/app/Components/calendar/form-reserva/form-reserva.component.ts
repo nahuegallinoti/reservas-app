@@ -296,7 +296,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     if (this.FormReserva.valid) {
       
       if (this.isEditing) {
-        const solicitudReserva = this.solicitudesReservas.find(x => x.id == this.eventoAEditar.extendedProps.id);
+        const solicitudReserva = this.solicitudesReservas.find(x => x.codigoReserva == this.eventoAEditar.extendedProps.codigoReserva);
         this.actualizarSolicitudReserva(solicitudReserva);
         const evento = this.crearEvento(solicitudReserva);
         const id = this.eventoAEditar.id;
@@ -309,11 +309,11 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       }
 
       const cliente = this.crearCliente();
-      const reserva = this.crearReserva(cliente);
-      const evento = this.crearEvento(reserva);
+      const solicitudReserva = this.crearSolicitudReserva(cliente);
+      const evento = this.crearEvento(solicitudReserva);
 
 
-      if (+reserva.montoSenia > +reserva.montoTotal) {
+      if (+solicitudReserva.montoSenia > +solicitudReserva.montoTotal) {
         this.FormReserva.controls.MontoSenia.setErrors({ invalid: true });
         this.FormReserva.controls.MontoTotal.setErrors({ invalid: true });
         return;
@@ -322,20 +322,19 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       if (
         (!this.isEditing &&
           this.verificarDisponibilidad(
-            reserva.fechaDesde,
-            reserva.fechaHasta,
-            reserva.cabana.id
+            solicitudReserva.fechaDesde,
+            solicitudReserva.fechaHasta,
+            solicitudReserva.cabana.id
           )) ||
         (this.isEditing &&
           this.verificarDisponibilidad(
-            reserva.fechaDesde,
-            reserva.fechaHasta,
-            reserva.cabana.id,
+            solicitudReserva.fechaDesde,
+            solicitudReserva.fechaHasta,
+            solicitudReserva.cabana.id,
             this.eventoAEditar.id
           ))
       ) {
         
-          const solicitudReserva = this.crearSolicitudReserva();
           this.reservaService.guardarReserva(evento);
           this.solicitudReservaService.guardarSolicitudReserva(solicitudReserva);
 
@@ -363,25 +362,25 @@ export class FormReservaComponent implements OnInit, OnDestroy {
 
   }
 
-  crearSolicitudReserva(): Reserva {
+  crearSolicitudReserva(cliente: Cliente): Reserva {
     let solicitudReserva = new Reserva();
     solicitudReserva.cliente = new Cliente();
     solicitudReserva.estado = new Estado();
 
-    solicitudReserva.cliente.nombre = this.FormReserva.value.Nombre;
-    solicitudReserva.cliente.apellidos = this.FormReserva.value.Apellidos;
-    solicitudReserva.cliente.telefono = this.FormReserva.value.Telefono;
-    solicitudReserva.cliente.email = this.FormReserva.value.Email;
-    solicitudReserva.cliente.dni = this.FormReserva.value.Dni;
-
+    solicitudReserva.cliente = cliente;
+    solicitudReserva.estado = this.determinarEstadoReserva();
+    
     solicitudReserva.cantOcupantes = this.FormReserva.value.CantOcupantes;
     solicitudReserva.codigoReserva = Math.round(Math.random() * (1000 - 12) + 123);
     solicitudReserva.montoTotal = this.FormReserva.value.MontoTotal;
+    solicitudReserva.montoSenia = this.FormReserva.value.MontoSenia;
     solicitudReserva.disabled = true;
-    solicitudReserva.estado = this.determinarEstadoReserva();
+    solicitudReserva.fechaCreacion = new Date();
+    solicitudReserva.cabana = this.cabanas.find(x => x.id == this.FormReserva.value.Cabania);
     solicitudReserva.fechaDesde = new Date(this.FormReserva.value.FechaDesde);
     solicitudReserva.fechaHasta = new Date(this.FormReserva.value.FechaHasta);
-
+    solicitudReserva.realizoCheckIn = false;
+    solicitudReserva.realizoCheckOut = false;
     return solicitudReserva;
   }
 
@@ -451,14 +450,14 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: "25vw",
       height: "9vw",
-      data: "¿Desea eliminar la reserva?",
+      data: "¿Desea cancelar la reserva?",
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.reservaService.eliminarReserva(this.eventoAEditar.id);
 
-        let solicitudReserva = this.solicitudesReservas.find((reserva) => reserva.id == this.eventoAEditar.extendedProps.id);
+        let solicitudReserva = this.solicitudesReservas.find((reserva) => reserva.codigoReserva == this.eventoAEditar.extendedProps.codigoReserva);
         solicitudReserva.estado = this.estados.find(e => e.descripcion.toLowerCase() == "cancelado");
 
         this.solicitudReservaService.actualizarReserva(solicitudReserva);

@@ -115,7 +115,7 @@ export class DashboardComponent implements OnInit {
         label: function(tooltipItems, data) {
           return data.labels[tooltipItems.index] + ": $" + parseFloat(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].toString()).toFixed(2);
       }
-      }
+      },
     },
   
 };
