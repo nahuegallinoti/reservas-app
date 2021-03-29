@@ -134,14 +134,14 @@ export class SolicitudesReservaComponent implements OnInit {
 
 
     if (solicitudReserva.estado.descripcion.toLowerCase() == "solicitud aceptada")
-      this._emailService.enviarEmailConfirmacionReserva(strFechaVencimiento, strMontoSena);
+      this._emailService.enviarEmailConfirmacionReserva(strFechaVencimiento, strMontoSena, solicitudReserva.cliente.email);
 
     else if (solicitudReserva.estado.descripcion.toLocaleLowerCase() == "solicitud rechazada")
-      this._emailService.enviarEmailRechazoReserva();
+      this._emailService.enviarEmailRechazoReserva(solicitudReserva.cliente.email);
 
       else if (solicitudReserva.estado.descripcion.toLocaleLowerCase() == "cancelado")
       {        
-        this._emailService.enviarEmailCancelacionReserva();
+        this._emailService.enviarEmailCancelacionReserva(solicitudReserva.cliente.email);
 
         let evento = this.eventos.find(e => e.extendedProps?.id == solicitudReserva.id);
         this._reservaService.eliminarReserva(evento.id);        
@@ -164,7 +164,7 @@ export class SolicitudesReservaComponent implements OnInit {
 
         solicitud.estado = this.estadoCancelado;
         this._solicituReservaService.actualizarReserva(solicitud);
-        this._emailService.enviarEmailCancelacionReserva();
+        this._emailService.enviarEmailCancelacionReserva(solicitud.cliente.email);
 
         let evento = this.eventos.find(e => e.extendedProps?.id == solicitud.id);
         this._reservaService.eliminarReserva(evento.id);

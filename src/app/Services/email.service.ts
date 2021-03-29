@@ -26,11 +26,11 @@ export class EmailService {
       });
   }
 
-  enviarEmailConfirmacionReserva(fechaVencimiento, montoSena) {
+  enviarEmailConfirmacionReserva(fechaVencimiento, montoSena, destinatario) {
 
     axios.post(environment.functionMailConfirmarReserva,
       {
-        destinatario: "nahuegallinoti@gmail.com",
+        destinatario: destinatario,
         html: `<h3>Su reserva ha sido confirmada.</h3>
         <p>Tiene tiempo hasta el día: `+ fechaVencimiento + ` para realizar el pago de la seña con monto mínimo de: ` + montoSena + `</p>
         <p>Recuerde que puede consultar el detalle de su reserva con el código que le enviamos anteriormente!</p>`
@@ -43,11 +43,11 @@ export class EmailService {
       });
   }
 
-  enviarEmailRechazoReserva() {
+  enviarEmailRechazoReserva(destinatario) {
 
     axios.post(environment.functionMailRechazarReserva,
       {
-        destinatario: "nahuegallinoti@gmail.com",
+        destinatario: destinatario,
         html: `<h3>Su reserva ha sido rechazada ya que no hay disponibilidad en la fecha seleccionada.</h3>`
       })
       .then(function (response) {
@@ -58,11 +58,11 @@ export class EmailService {
       });
   }
 
-  enviarEmailCancelacionReserva() {
+  enviarEmailCancelacionReserva(destinatario) {
 
     axios.post(environment.functionMailCancelarReserva,
       {
-        destinatario: "nahuegallinoti@gmail.com",
+        destinatario: destinatario,
         html: `<h3>Su reserva ha sido cancelada ya que no se realizó el pago de la seña en la fecha indicada.</h3>`
       })
       .then(function (response) {
