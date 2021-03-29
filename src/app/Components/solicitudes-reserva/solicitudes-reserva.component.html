@@ -9,7 +9,7 @@
 
       <div class="cont-buttons">
         <button class="btnInfo" mat-raised-button
-          matTooltip="Se cancelan las solicitudes que no se hayan señado hasta 10 días antes de la Fecha Desde"
+          matTooltip="Se cancelan las solicitudes que se encuentren aceptadas y no se hayan señado hasta 10 días antes de la Fecha Desde"
           matTooltipPosition="below">
           <mat-icon>info</mat-icon>
         </button>
@@ -43,10 +43,10 @@
                     Código de Reserva: {{solicitudReserva.codigoReserva}}
                   </mat-panel-description>
                   <mat-panel-description class="panelDescription">
-                    Cantidad de Personas: {{solicitudReserva.cantidadPersonas}}
+                    Cantidad de Personas: {{solicitudReserva.cantOcupantes}}
                   </mat-panel-description>
                   <mat-panel-description class="panelDescription">
-                    Costo Aproximado: {{solicitudReserva.costo | currency: 'USD'}}
+                    Costo Aproximado: {{solicitudReserva.montoTotal | currency: 'USD'}}
                   </mat-panel-description>
 
                 </mat-expansion-panel>

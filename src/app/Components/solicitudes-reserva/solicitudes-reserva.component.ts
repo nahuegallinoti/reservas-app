@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Estado } from 'src/app/Models/estado.model';
-import { SolicitudReserva } from 'src/app/Models/solicitudReserva.model';
 import { EmailService } from 'src/app/Services/email.service';
 import { EstadoService } from 'src/app/Services/estado.service';
 import { SolicitudReservaService } from 'src/app/Services/solicitud-reserva.service';
@@ -12,6 +11,7 @@ import { GestionarSolicitudComponent } from '../gestionar-solicitud/gestionar-so
 import * as moment from 'moment';
 import { ReservaService } from 'src/app/Services/evento.service';
 import { Evento } from 'src/app/Models/evento.model';
+import { Reserva } from 'src/app/Models/reserva.model';
 
 @Component({
   selector: 'app-solicitudes-reserva',
@@ -21,7 +21,7 @@ import { Evento } from 'src/app/Models/evento.model';
 
 export class SolicitudesReservaComponent implements OnInit {
 
-  solicitudesReserva: SolicitudReserva[] = [];
+  solicitudesReserva: Reserva[] = [];
   isLoading = false;
   isLoadingSubscription: Subscription;
   solicitudesReservaSubscription: Subscription;
@@ -74,7 +74,7 @@ export class SolicitudesReservaComponent implements OnInit {
 
   }
 
-  openDialogSeleccionarCabana(solicitudReserva: SolicitudReserva): void {
+  openDialogSeleccionarCabana(solicitudReserva: Reserva): void {
     const dialogRef = this.dialog.open(GestionarSolicitudComponent, {
       width: "25vw",
       height: "18vw",
@@ -98,7 +98,7 @@ export class SolicitudesReservaComponent implements OnInit {
     return "$ " + (Math.round(n * 100) / 100).toLocaleString();
   }
 
-  actualizarSolicitud(solicitudReserva: SolicitudReserva) {
+  actualizarSolicitud(solicitudReserva: Reserva) {
 
     if (solicitudReserva != undefined && solicitudReserva.estado.descripcion.toLowerCase() == "solicitud aceptada") {
       this.openDialogSeleccionarCabana(solicitudReserva);
@@ -114,15 +114,19 @@ export class SolicitudesReservaComponent implements OnInit {
 
   }
 
-  guardarDatosSolicitud(solicitudReserva: SolicitudReserva) {
+  guardarDatosSolicitud(solicitudReserva: Reserva) {
     let fechaVencimiento = moment(solicitudReserva.fechaDesde);
     fechaVencimiento = fechaVencimiento.subtract(10, "days");
 
     var strFechaVencimiento = fechaVencimiento.format("DD-MM-YYYY");
-    var montoSena = solicitudReserva.costo / 10;
+    var montoSena = solicitudReserva.montoTotal / 10;
 
     var strMontoSena = this.formatMoney(montoSena);
 
+    // solicitudReserva.montoSenia = montoSena;
+    solicitudReserva.realizoCheckIn = false;
+    solicitudReserva.realizoCheckOut = false;
+    
     solicitudReserva.estado = this.estados.find(e => e.descripcion.toLowerCase() == solicitudReserva.estado.descripcion.toLowerCase());
     solicitudReserva.disabled = true;
 
@@ -135,11 +139,20 @@ export class SolicitudesReservaComponent implements OnInit {
     else if (solicitudReserva.estado.descripcion.toLocaleLowerCase() == "solicitud rechazada")
       this._emailService.enviarEmailRechazoReserva();
 
+      else if (solicitudReserva.estado.descripcion.toLocaleLowerCase() == "cancelado")
+      {        
+        this._emailService.enviarEmailCancelacionReserva();
+
+        let evento = this.eventos.find(e => e.extendedProps?.id == solicitudReserva.id);
+        this._reservaService.eliminarReserva(evento.id);        
+      }
+
   }
 
   cancelarSolicitudesPendienteSena(): void {
 
     let solicitudesAceptadas = this.solicitudesReserva.filter(x => x.estado.descripcion.toLowerCase() == "solicitud aceptada");
+    solicitudesAceptadas = solicitudesAceptadas.filter(x => x.montoSenia == 0);
 
     const fechaActual = moment(Date.now());
 
@@ -147,13 +160,13 @@ export class SolicitudesReservaComponent implements OnInit {
       let fechaDesde = moment(solicitud.fechaDesde);
       let diferenciaDias = fechaDesde.diff(fechaActual, 'days');
 
-      if (diferenciaDias < 10 && diferenciaDias > 0) {
+      if (diferenciaDias < 10) {
 
         solicitud.estado = this.estadoCancelado;
         this._solicituReservaService.actualizarReserva(solicitud);
         this._emailService.enviarEmailCancelacionReserva();
 
-        let evento = this.eventos.find(e => e.solicitudReserva?.id == solicitud.id);
+        let evento = this.eventos.find(e => e.extendedProps?.id == solicitud.id);
         this._reservaService.eliminarReserva(evento.id);
       }
 

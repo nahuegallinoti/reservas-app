@@ -15,7 +15,6 @@ import { faMoneyCheckAlt } from '@fortawesome/free-solid-svg-icons';
 import { Reserva } from '../../../Models/reserva.model';
 import { Cliente } from '../../../Models/cliente.model';
 import { Evento } from '../../../Models/evento.model';
-import { Colors } from '../../../Shared/colors';
 
 import { ReservaService } from '../../../Services/evento.service';
 import { UIService } from 'src/app/Shared/ui.service';
@@ -26,7 +25,6 @@ import { EstadosConst } from 'src/app/Shared/estados';
 import { CabanaService } from 'src/app/Services/cabana.service';
 import * as moment from 'moment';
 import { ConfirmationDialogComponent } from '../../Shared/Confirmation/confirmation-dialog/confirmation-dialog.component';
-import { SolicitudReserva } from 'src/app/Models/solicitudReserva.model';
 import { SolicitudReservaService } from 'src/app/Services/solicitud-reserva.service';
 
 @Component({
@@ -51,10 +49,12 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   tarifasSubscription: Subscription;
   estadosSubscription: Subscription;
   cabanasSubscription: Subscription;
+  reservasSubscription: Subscription;
 
   fechaDesde: Date;
   fechaHastaMinima;
   eventos: Evento[] = [];
+  solicitudesReservas: Reserva[] = [];
   eventosCabanasActuales: Evento[] = [];
   tarifas = [];
   estados = [];
@@ -121,11 +121,18 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.reservasSubscription = this.solicitudReservaService.solicitudReservaChanged.subscribe(
+      (reservas) => {
+        this.solicitudesReservas = reservas;
+      }
+    )
+
     this.reservaService.buscarEventos();
     this.tarifaService.buscarTarifas();
     this.estadoService.buscarEstados();
     this.cabanasService.obtenerCabanias();
-
+    this.solicitudReservaService.obtenerReservas();
+    
     this.buildForm();
     if (!this.isEditing) {
       this.limitarFechaHasta();
@@ -199,7 +206,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     const fechaHastaAMostrar: Date = new Date(
       this.eventoAEditar.extendedProps.fechaHasta.toString()
     );
-    fechaHastaAMostrar.setDate(fechaHastaAMostrar.getDate() - 1);
+    fechaHastaAMostrar.setDate(fechaHastaAMostrar.getDate());
     this.FormReserva.setValue({
       Nombre: this.eventoAEditar.extendedProps.cliente.nombre,
       Apellidos: this.eventoAEditar.extendedProps.cliente.apellidos,
@@ -209,7 +216,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       FechaDesde: this.eventoAEditar.extendedProps.fechaDesde,
       FechaHasta: fechaHastaAMostrar,
       CantOcupantes: this.eventoAEditar.extendedProps.cantOcupantes,
-      Cabania: this.eventoAEditar.extendedProps.idCabania,
+      Cabania: this.eventoAEditar.extendedProps.cabana.id,
       MontoSenia: this.eventoAEditar.extendedProps.montoSenia,
       MontoTotal: this.eventoAEditar.extendedProps.montoTotal,
     });
@@ -239,9 +246,8 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     reserva.fechaDesde = new Date(this.FormReserva.value.FechaDesde);
 
     reserva.fechaHasta = new Date(this.FormReserva.value.FechaHasta);
-    reserva.fechaHasta.setDate(reserva.fechaHasta.getDate() + 1);
+    reserva.fechaHasta.setDate(reserva.fechaHasta.getDate());
     reserva.cantOcupantes = this.FormReserva.value.CantOcupantes;
-    reserva.idCabania = this.FormReserva.value.Cabania;
     reserva.montoSenia = this.FormReserva.value.MontoSenia;
     reserva.montoTotal = this.FormReserva.value.MontoTotal;
     reserva.cabana = this.cabanas.find(x => x.id == this.FormReserva.value.Cabania);
@@ -288,10 +294,26 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     this.FormReserva.controls['MontoTotal'].updateValueAndValidity();
 
     if (this.FormReserva.valid) {
-      const cliente = this.crearCliente();
-      const reserva = this.crearReserva(cliente);
+      
+      if (this.isEditing) {
+        const solicitudReserva = this.solicitudesReservas.find(x => x.codigoReserva == this.eventoAEditar.extendedProps.codigoReserva);
+        this.actualizarSolicitudReserva(solicitudReserva);
+        const evento = this.crearEvento(solicitudReserva);
+        const id = this.eventoAEditar.id;
 
-      if (+reserva.montoSenia > +reserva.montoTotal) {
+        this.reservaService.actualizarEvento(id, evento);
+        
+        this.dialogRef.close();
+
+        return;
+      }
+
+      const cliente = this.crearCliente();
+      const solicitudReserva = this.crearSolicitudReserva(cliente);
+      const evento = this.crearEvento(solicitudReserva);
+
+
+      if (+solicitudReserva.montoSenia > +solicitudReserva.montoTotal) {
         this.FormReserva.controls.MontoSenia.setErrors({ invalid: true });
         this.FormReserva.controls.MontoTotal.setErrors({ invalid: true });
         return;
@@ -300,37 +322,28 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       if (
         (!this.isEditing &&
           this.verificarDisponibilidad(
-            reserva.fechaDesde,
-            reserva.fechaHasta,
-            reserva.idCabania
+            solicitudReserva.fechaDesde,
+            solicitudReserva.fechaHasta,
+            solicitudReserva.cabana.id
           )) ||
         (this.isEditing &&
           this.verificarDisponibilidad(
-            reserva.fechaDesde,
-            reserva.fechaHasta,
-            reserva.idCabania,
+            solicitudReserva.fechaDesde,
+            solicitudReserva.fechaHasta,
+            solicitudReserva.cabana.id,
             this.eventoAEditar.id
           ))
       ) {
-        const evento = this.crearEvento(reserva);
-        const solicitudReserva = this.crearSolicitudReserva();        
-
-        if (this.isEditing) {
-          const id = this.eventoAEditar.id;
-          this.reservaService.actualizarReserva(id, evento);
-        } else {
+        
           this.reservaService.guardarReserva(evento);
           this.solicitudReservaService.guardarSolicitudReserva(solicitudReserva);
-        }
+
         this.dialogRef.close();
       }
     }
   }
 
-  crearSolicitudReserva(): SolicitudReserva {
-    let solicitudReserva = new SolicitudReserva();
-    solicitudReserva.cliente = new Cliente();
-    solicitudReserva.estado = new Estado();
+  actualizarSolicitudReserva(solicitudReserva: Reserva) {
 
     solicitudReserva.cliente.nombre = this.FormReserva.value.Nombre;
     solicitudReserva.cliente.apellidos = this.FormReserva.value.Apellidos;
@@ -338,14 +351,36 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     solicitudReserva.cliente.email = this.FormReserva.value.Email;
     solicitudReserva.cliente.dni = this.FormReserva.value.Dni;
 
-    solicitudReserva.cantidadPersonas = this.FormReserva.value.CantOcupantes;
-    solicitudReserva.codigoReserva = Math.round(Math.random() * (1000 - 12) + 123);
-    solicitudReserva.costo = this.FormReserva.value.MontoTotal;
+    solicitudReserva.cantOcupantes = this.FormReserva.value.CantOcupantes;
+    solicitudReserva.montoTotal = this.FormReserva.value.MontoTotal;
+    solicitudReserva.montoSenia = this.FormReserva.value.MontoSenia;
     solicitudReserva.disabled = true;
-    solicitudReserva.estado = this.determinarEstadoReserva();
     solicitudReserva.fechaDesde = new Date(this.FormReserva.value.FechaDesde);
     solicitudReserva.fechaHasta = new Date(this.FormReserva.value.FechaHasta);
+    solicitudReserva.cabana = this.cabanas.find(x => x.id == this.FormReserva.value.Cabania);
+    this.solicitudReservaService.actualizarReserva(solicitudReserva);
 
+  }
+
+  crearSolicitudReserva(cliente: Cliente): Reserva {
+    let solicitudReserva = new Reserva();
+    solicitudReserva.cliente = new Cliente();
+    solicitudReserva.estado = new Estado();
+
+    solicitudReserva.cliente = cliente;
+    solicitudReserva.estado = this.determinarEstadoReserva();
+    
+    solicitudReserva.cantOcupantes = this.FormReserva.value.CantOcupantes;
+    solicitudReserva.codigoReserva = Math.round(Math.random() * (1000 - 12) + 123);
+    solicitudReserva.montoTotal = this.FormReserva.value.MontoTotal;
+    solicitudReserva.montoSenia = this.FormReserva.value.MontoSenia;
+    solicitudReserva.disabled = true;
+    solicitudReserva.fechaCreacion = new Date();
+    solicitudReserva.cabana = this.cabanas.find(x => x.id == this.FormReserva.value.Cabania);
+    solicitudReserva.fechaDesde = new Date(this.FormReserva.value.FechaDesde);
+    solicitudReserva.fechaHasta = new Date(this.FormReserva.value.FechaHasta);
+    solicitudReserva.realizoCheckIn = false;
+    solicitudReserva.realizoCheckOut = false;
     return solicitudReserva;
   }
 
@@ -367,7 +402,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       if (
         ((e.start <= fechaDesde && fechaDesde < fechaFinEvento) ||
           (fechaDesde <= e.start && e.start < fechaHastaParseada)) &&
-        e.extendedProps.idCabania === idCabania &&
+        e.extendedProps.cabana.id === idCabania &&
         (idEvento == null || e.id !== idEvento)
       ) {
         this.uiService.showSnackBar(
@@ -415,12 +450,18 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: "25vw",
       height: "9vw",
-      data: "¿Desea eliminar la reserva?",
+      data: "¿Desea cancelar la reserva?",
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.reservaService.eliminarReserva(this.eventoAEditar.id);
+
+        let solicitudReserva = this.solicitudesReservas.find((reserva) => reserva.codigoReserva == this.eventoAEditar.extendedProps.codigoReserva);
+        solicitudReserva.estado = this.estados.find(e => e.descripcion.toLowerCase() == "cancelado");
+
+        this.solicitudReservaService.actualizarReserva(solicitudReserva);
+
         this.dialogRef.close();
       }
     });

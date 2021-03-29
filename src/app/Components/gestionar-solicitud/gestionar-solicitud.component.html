@@ -31,7 +31,7 @@
                 <mat-list-item style="margin-top: 5%">
                     <mat-form-field class="itemForm" appearance="standard">
                         <mat-label>Total</mat-label>
-                        <input matInput [(value)]="total">
+                        <input matInput [(ngModel)]="total">
                     </mat-form-field>
                     <button mat-raised-button
                         matTooltip="Este precio se calcula en base a la cantidad de personas, el precio por día de la cabaña, la cantidad de días de hospedaje y el costo fijo de tarifa según temporada">

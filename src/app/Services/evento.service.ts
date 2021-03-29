@@ -80,7 +80,7 @@ export class ReservaService {
       );
   }
 
-  actualizarReserva(id: string, evento: Evento) {
+  actualizarEvento(id: string, evento: Evento) {
     const eventoParseado = this.parsearEventoParaFirestore(evento);
     this.firestore
       .doc('eventos/' + id)
