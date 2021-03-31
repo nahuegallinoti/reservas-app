@@ -52,6 +52,8 @@ export class SolicitudesReservaComponent implements OnInit {
         this.solicitudesReserva = solicitudesReserva;
         this.solicitudesReserva.map(solicitud => solicitud.disabled = true);
         this.solicitudesReserva.map(solicitud => solicitud.estado.descripcion.toLocaleLowerCase() == "solicitud aceptada" ? true : false);
+        this.solicitudesReserva.sort((a, b) => b.fechaDesde.getTime() - a.fechaDesde.getTime());
+
       }
     );
 
