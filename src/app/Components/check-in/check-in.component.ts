@@ -43,6 +43,8 @@ export class CheckInComponent implements OnInit {
 
           var fechaActual = new Date();
 
+          fechaDesde.setDate(fechaDesde.getDate() - 1);
+
           if (moment(fechaActual).isBetween(fechaDesde, fechaHasta))
             return evento;
 
