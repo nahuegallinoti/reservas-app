@@ -49,10 +49,20 @@ export class FormTarifasComponent implements OnInit {
   }
 
   guardarTarifa() {
-    this.resetForm();
+    let tarifa = new Tarifa();
 
-    // this.tarifaService.guardarTarifa(this.idTarifa);
+    tarifa.descripcion = this.tarifaForm.value.descripcion;
+    tarifa.precioDia = Number(this.tarifaForm.value.precioDia);
+    tarifa.fechaDesde = new Date(this.tarifaForm.value.fechaDesde);
+    tarifa.fechaHasta = new Date(this.tarifaForm.value.fechaHasta);
+
+    this.tarifaService.guardarTarifa(tarifa);
+
+    this.resetForm();
+    this.dialogRef.close();
+
     this.tarifaService.buscarTarifas();
+    
   }
 
   editarTarifa() {

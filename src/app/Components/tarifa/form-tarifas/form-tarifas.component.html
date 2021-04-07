@@ -36,7 +36,7 @@
       <mat-datepicker #pickerHasta startView="month"></mat-datepicker>
     </mat-form-field>
 
-      <button class="btnGuardarTarifa" *ngIf="!data?.tarifa && tarifas.length > 0" mat-raised-button mat-primary
+      <button class="btnGuardarTarifa" *ngIf="!data?.tarifa" mat-raised-button mat-primary
         color="primary" (click)="guardarTarifa()">Guardar
 
       </button>
