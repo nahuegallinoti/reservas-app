@@ -56,4 +56,73 @@ export class TarifaService {
         }
       );
   }
+
+  eliminarTarifa(id: number) {
+
+    this.firestore
+      .doc('tarifas/' + id)
+      .delete()
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'La tarifa fue eliminada con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar eliminar la tarifa: ' + error,
+          null,
+          3000
+        )
+      );
+  }
+
+  guardarTarifa(tarifa: Tarifa) {
+
+    const tarifaParse = Object.assign({}, tarifa);
+
+    this.firestore
+      .collection('tarifas')
+      .add(tarifaParse)
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'Se guardó la tarifa con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar guardar la tarifa: ' + error,
+          null,
+          3000
+        )
+      );
+
+  }
+
+  editarTarifa(id: number, tarifa: Tarifa) {
+
+    const tarifaParse = Object.assign({}, tarifa);
+
+    this.firestore
+      .doc('tarifas/' + id)
+      .set(tarifaParse)
+      .then((response) =>
+        this.uiService.showSnackBar(
+          'Se actualizaron los datos de la tarifa con éxito',
+          null,
+          3000
+        )
+      )
+      .catch((error) =>
+        this.uiService.showSnackBar(
+          'Ocurrió un error al intentar actualizar la tarifa: ' + error,
+          null,
+          3000
+        )
+      );
+  }
+
 }

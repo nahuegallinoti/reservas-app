@@ -1,0 +1,51 @@
+<form [formGroup]="tarifaForm" fxFlex fxLayout="column" class="fullWidth">
+  <div class="headerAndClose">
+    <button tabindex="-1" mat-icon-button class="close-button" [mat-dialog-close]="true">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+
+    <mat-toolbar *ngIf="data?.tarifa" color="primary" style="padding-left: 16px; width: 90%;">Editar Tarifa
+    </mat-toolbar>
+    <mat-toolbar *ngIf="!data?.tarifa" color="primary" style="padding-left: 16px; width: 90%;">Agregar Tarifa
+    </mat-toolbar>
+
+  </div>
+  <div fxFlex fxLayoutGap="10px" class="formulario">
+
+    <mat-form-field appearance="standard" class="consumo">
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="descripcion" />
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" class="consumo">
+      <mat-label>Precio por Día</mat-label>
+      <input matInput formControlName="precioDia" />
+    </mat-form-field>
+
+    <mat-form-field class="fecha">
+      <mat-label>Fecha Desde</mat-label>
+      <input matInput [matDatepicker]="pickerDesde" formControlName="fechaDesde" />
+      <mat-datepicker-toggle matSuffix [for]="pickerDesde"></mat-datepicker-toggle>
+      <mat-datepicker #pickerDesde startView="month"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="fecha">
+      <mat-label>Fecha Hasta</mat-label>
+      <input matInput [matDatepicker]="pickerHasta" formControlName="fechaHasta" />
+      <mat-datepicker-toggle matSuffix [for]="pickerHasta"></mat-datepicker-toggle>
+      <mat-datepicker #pickerHasta startView="month"></mat-datepicker>
+    </mat-form-field>
+
+      <button class="btnGuardarTarifa" *ngIf="!data?.tarifa && tarifas.length > 0" mat-raised-button mat-primary
+        color="primary" (click)="guardarTarifa()">Guardar
+
+      </button>
+
+      <button class="btnGuardarTarifa" *ngIf="data?.tarifa" mat-raised-button mat-primary color="primary"
+        (click)="editarTarifa()">Actualizar
+
+      </button>
+
+  </div>
+
+</form>

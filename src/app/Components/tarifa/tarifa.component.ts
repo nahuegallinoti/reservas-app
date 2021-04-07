@@ -1,31 +1,31 @@
-import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { Producto } from 'src/app/Models/producto.model';
-import { ProductoService } from 'src/app/Services/producto.service';
+import { Tarifa } from 'src/app/Models/tarifa.model';
+import { TarifaService } from 'src/app/Services/tarifa.service';
 import { UIService } from 'src/app/Shared/ui.service';
 import { ConfirmationDialogComponent } from '../Shared/Confirmation/confirmation-dialog/confirmation-dialog.component';
-import { FormProductosComponent } from './form-productos/form-productos.component';
+import { FormTarifasComponent } from './form-tarifas/form-tarifas.component';
 
 @Component({
-  selector: 'app-productos',
-  templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css']
+  selector: 'app-tarifa',
+  templateUrl: './tarifa.component.html',
+  styleUrls: ['./tarifa.component.css']
 })
-export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
+export class TarifaComponent implements OnInit {
 
   isLoading = false;
-  productos = new MatTableDataSource<Producto>();
-  productosSubscription: Subscription;
+  tarifas = new MatTableDataSource<Tarifa>();
+  tarifasSubscription: Subscription;
   isLoadingSubscription: Subscription;
 
   private sort: MatSort;
   private paginator: MatPaginator;
 
-  columnas: string[] = ['descripcion', 'precio', 'acciones'];
+  columnas: string[] = ['descripcion', 'precioDia', 'fechaDesde', 'fechaHasta', 'acciones'];
 
   @ViewChild(MatSort) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -38,30 +38,31 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
   }
 
   setDataSourceAttributes() {
-    this.productos.sort = this.sort;
-    this.productos.paginator = this.paginator;
+    this.tarifas.sort = this.sort;
+    this.tarifas.paginator = this.paginator;
   }
 
   constructor(
-    private productoService: ProductoService,
+    private tarifaService: TarifaService,
     private uiService: UIService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isLoadingSubscription = this.uiService.loadingStateChanged.subscribe(
       (isLoading) => (this.isLoading = isLoading)
     );
-    this.productosSubscription = this.productoService.productosChanged.subscribe(
+    this.tarifasSubscription = this.tarifaService.tarifasChanged.subscribe(
       (productos) => {
-        this.productos.data = productos.map(e => e);
+        this.tarifas.data = productos.map(e => e);
       }
     );
-    this.productoService.buscarProductos();
+    this.tarifaService.buscarTarifas();
+
   }
 
   ngAfterViewInit(): void {
-    this.productos.sort = this.sort;
+    this.tarifas.sort = this.sort;
   }
 
   ngAfterViewChecked(): void {
@@ -70,17 +71,13 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
     }
   }
 
-  filtrar(valor: string): void{
-    this.productos.filter = valor.trim().toLowerCase();
-  }
-
   ngOnDestroy(): void {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(FormProductosComponent, {
+    const dialogRef = this.dialog.open(FormTarifasComponent, {
       width: "35vw",
-      height:"31vw",
+      height: "31vw",
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -88,12 +85,12 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
     });
   }
 
-  openDialogEditProducto(producto: Producto): void {
-    const dialogRef = this.dialog.open(FormProductosComponent, {
+  openDialogEditTarifa(tarifa: Tarifa): void {
+    const dialogRef = this.dialog.open(FormTarifasComponent, {
       width: "30vw",
       height: "28vw",
       data: {
-        producto: producto,
+        tarifa: tarifa,
       }
 
     });
@@ -103,21 +100,24 @@ export class ProductosComponent implements OnInit, OnDestroy, AfterViewInit, Aft
     });
   }
 
-  openDialogEliminarProducto(idProducto: number): void {
+  openDialogEliminarTarifa(idTarifa: number): void {
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: "25vw",
       height: "9vw",
-      data: "¿Desea eliminar el producto?",
+      data: "¿Desea eliminar la tarifa?",
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-      {
-        this.productoService.eliminarProducto(idProducto);
+      if (result) {
+        this.tarifaService.eliminarTarifa(idTarifa);
       }
     });
   }
 
+  
+  filtrar(valor: string): void{
+    this.tarifas.filter = valor.trim().toLowerCase();
+  }
 
 }

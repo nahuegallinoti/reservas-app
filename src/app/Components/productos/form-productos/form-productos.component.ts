@@ -108,8 +108,4 @@ export class FormProductosComponent implements OnInit {
     this.productosForm.reset();
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }

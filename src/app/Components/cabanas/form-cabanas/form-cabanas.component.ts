@@ -114,8 +114,4 @@ export class FormCabanasComponent implements OnInit {
     this.cabanasForm.reset();
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }

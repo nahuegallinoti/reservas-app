@@ -1,0 +1,55 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+    <div *ngIf="!isLoading" class="top" fxLayout="column">
+        <h1 class="title">Tarifas</h1>
+        <mat-form-field fxFlexAlign="center">
+            <input matInput type="text" (keyup)="filtrar($event.target.value)" placeholder="Buscar">
+        </mat-form-field>
+        <div class="mat-elevation-z8">
+            <table mat-table matSort [dataSource]="tarifas">
+                <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                    <td mat-cell *matCellDef="let tarifa"> {{tarifa.descripcion}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="fechaDesde">
+                    <th mat-header-cell *matHeaderCellDef> Fecha Desde </th>
+                    <td mat-cell *matCellDef="let tarifa"> {{tarifa.fechaDesde | date:'dd/MM/yyyy'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fechaHasta">
+                    <th mat-header-cell *matHeaderCellDef> Fecha Hasta </th>
+                    <td mat-cell *matCellDef="let tarifa"> {{tarifa.fechaHasta | date:'dd/MM/yyyy'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="precioDia">
+                    <th mat-header-cell *matHeaderCellDef> Precio por Día </th>
+                    <td mat-cell *matCellDef="let tarifa"> {{tarifa.precioDia}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="acciones">
+                    <mat-header-cell  *matHeaderCellDef > Acciones </mat-header-cell>
+                    <mat-cell *matCellDef="let row" >
+                        <button class="button btnEditarTarifa" mat-raised-button (click)="openDialogEditTarifa(row)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button class="button btnEliminarTarifa" mat-raised-button (click)="openDialogEliminarTarifa(row.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+            </table>
+            <mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 5, 10, 25, 50]">
+            </mat-paginator>
+        </div>
+
+        
+    <button color="primary" class="button button-primary btnAgregarTarifa" mat-raised-button (click)="openDialog()">+ Agregar Tarifa</button>
+
+    </div>
+
+    <mat-spinner *ngIf="isLoading" class="top"></mat-spinner>
+
+</div>

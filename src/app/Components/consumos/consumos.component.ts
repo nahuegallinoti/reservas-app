@@ -32,6 +32,8 @@ export class ConsumosComponent implements OnInit{
           var fechaHasta = new Date(evento.extendedProps.fechaHasta);
           var fechaActual = new Date();
           
+          fechaDesde.setDate(fechaDesde.getDate() - 1);
+
           if (fechaHasta >= fechaActual && fechaDesde <= fechaActual && evento.extendedProps.realizoCheckIn && !evento.extendedProps.realizoCheckOut) {
             return evento;
           }

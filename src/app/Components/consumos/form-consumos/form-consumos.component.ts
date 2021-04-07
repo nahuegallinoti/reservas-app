@@ -91,10 +91,6 @@ export class FormConsumosComponent implements OnInit, OnDestroy {
 
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
   resetForm() {
     this.consumosForm.reset();
   }

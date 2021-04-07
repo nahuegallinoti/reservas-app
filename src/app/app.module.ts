@@ -41,6 +41,8 @@ import { SolicitudesReservaComponent } from './Components/solicitudes-reserva/so
 import { GestionarSolicitudComponent } from './Components/gestionar-solicitud/gestionar-solicitud.component'
 import { ChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { TarifaComponent } from './Components/tarifa/tarifa.component';
+import { FormTarifasComponent } from './Components/tarifa/form-tarifas/form-tarifas.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,8 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
     SolicitudesReservaComponent,
     GestionarSolicitudComponent,
     DashboardComponent,
+    TarifaComponent,
+    FormTarifasComponent,
 
   ],
   imports: [

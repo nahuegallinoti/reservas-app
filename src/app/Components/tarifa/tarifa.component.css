@@ -1,0 +1,55 @@
+.top {
+    margin-top: 50px;
+}
+
+.mat-cell, .mat-header-cell {
+    padding: 10px 10px 10px 0;
+}
+
+.mat-header-cell {
+    flex-direction: column;
+}
+  
+.mat-cell, .mat-header-cell {
+    text-align: center;
+    justify-content:center;
+}
+
+table {
+    width: 90%;
+    margin:1rem auto;
+ }
+
+.btnAgregarTarifa {
+    margin-top: 10px;
+    border-radius: 100px;
+    border: 1px solid #85929E;
+    margin-bottom: 1rem;
+}
+
+.btnEditarTarifa {
+    border-radius: 100px;
+    color:#1f5aa8f5;
+    border: 1px solid #396092; 
+    margin: 2px;
+}
+
+.btnEditarTarifa:hover {
+    box-shadow: 2px 1px 2px #5174a3
+}
+
+.btnEliminarTarifa {
+    border-radius: 100px;
+    color:#9e1515;
+    border: 1px solid #725050; 
+    margin: auto;
+}
+
+.btnEliminarTarifa:hover {
+    box-shadow: 2px 1px 2px rgb(214, 96, 96);
+}
+
+.title {
+    text-align: center;
+    margin-top: 1%;
+  }

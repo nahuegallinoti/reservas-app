@@ -424,14 +424,19 @@ export class FormReservaComponent implements OnInit, OnDestroy {
 
     const fechaDesde = new Date(this.FormReserva.value.FechaDesde);
     const fechaHasta = new Date(this.FormReserva.value.FechaHasta);
+    const fechaActual = new Date();
 
     const cantOcupantes = this.FormReserva.value.CantOcupantes;
     const cantDias = this.calcularDiferenciaDeFechas(fechaDesde, fechaHasta) + 1; //Se suma 1 dia porque se cuenta desde que llego hasta el ultimo dia de hospedaje
 
     const cabanaSelected = this.cabanas.find(x => x.id == this.FormReserva.value.Cabania)
 
-    //TODO aqui se deberia sumar la tarifa fija segun epoca del año en ves de 1500
-    const total = 1500 * cantOcupantes * cantDias + cabanaSelected.precioDia;
+    const tarifa = this.tarifas.find(x => moment(fechaDesde).isBetween(x.fechaDesde, x.fechaHasta, null, "[]"));
+
+    let precioDiaTarifa = 2300;
+    precioDiaTarifa = tarifa ? tarifa.precioDia : precioDiaTarifa;
+
+    const total = precioDiaTarifa * cantOcupantes * cantDias + cabanaSelected.precioDia;
 
     this.FormReserva.controls.MontoTotal.setValue(total);
 

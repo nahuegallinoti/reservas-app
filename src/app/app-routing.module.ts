@@ -16,6 +16,7 @@ import { DetalleCheckInComponent } from './Components/check-in/detalle-check-in/
 import { CabanasComponent } from './Components/cabanas/cabanas.component';
 import { SolicitudesReservaComponent } from './Components/solicitudes-reserva/solicitudes-reserva.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { TarifaComponent } from './Components/tarifa/tarifa.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -85,6 +86,12 @@ const appRoutes: Routes = [
     component: SolicitudesReservaComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path:'tarifas',
+    component: TarifaComponent,
+    canActivate: [AuthGuard],
+  },
+
 
   { path: '**', redirectTo: '/solicitudes' },
 ];
