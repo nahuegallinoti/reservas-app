@@ -208,17 +208,17 @@
         <ng-template matStepLabel>Pago de Hospedaje</ng-template>
         <div>
           <mat-form-field>
-            <mat-label>Total:</mat-label>
+            <mat-label> <fa-icon [icon]="faDollarSign"></fa-icon>  Total:</mat-label>
             <input [ngModel]="evento?.extendedProps.montoTotal" matInput type="text" formControlName="total">
           </mat-form-field>
-          <mat-form-field>
-            <mat-label>Monto a entregar:</mat-label>
-            <input [ngModel]="evento?.extendedProps.montoSenia" matInput type="text" formControlName="sena">
+          <mat-form-field appearance="standard" class="monto">
+            <mat-label> <fa-icon [icon]="faDollarSign"></fa-icon>  Monto a entregar:</mat-label>
+          <input [ngModel]="evento?.extendedProps.montoSenia" matInput type="text" formControlName="sena">
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
-            <mat-label>Pendiente:</mat-label>
+            <mat-label><fa-icon [icon]="faDollarSign"></fa-icon>  Pendiente:</mat-label>
             <input [ngModel]="evento?.extendedProps.montoTotal - evento?.extendedProps.montoSenia" matInput
               formControlName="remanente">
           </mat-form-field>

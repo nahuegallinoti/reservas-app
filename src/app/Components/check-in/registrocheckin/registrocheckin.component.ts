@@ -21,6 +21,8 @@ import { EstadosConst } from 'src/app/Shared/estados';
 import { Estado } from 'src/app/Models/estado.model';
 import { SolicitudReservaService } from 'src/app/Services/solicitud-reserva.service';
 import { Reserva } from 'src/app/Models/reserva.model';
+import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
+
 
 
 @Component({
@@ -44,6 +46,7 @@ export class RegistrocheckinComponent implements OnInit {
   evento: Evento;
   eventosSubscription: Subscription;
   formasPago: FormaPago[] = [];
+  faDollarSign = faDollarSign;
   formasPagoSubscription: Subscription;
   selectedFormaPago: string = "Contado";
   selectedData: { value: string; text: string } = {
