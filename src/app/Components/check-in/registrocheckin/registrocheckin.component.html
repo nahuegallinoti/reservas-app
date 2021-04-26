@@ -7,7 +7,10 @@
   <mat-horizontal-stepper #stepper>
     <!-- Datos Personales -->
     <mat-step [stepControl]="datosPersonalesForm" errorMessage="Faltan datos obligatorios">
-
+      <div class="tituloStep">
+          <h1>Datos personales titular de la reserva</h1>
+      </div>
+    
       <form [formGroup]="datosPersonalesForm">
         <ng-template matStepLabel>Datos Personales</ng-template>
 
@@ -63,6 +66,9 @@
 
     <!-- Datos Domicilio -->
     <mat-step [stepControl]="datosContactoForm" errorMessage="Faltan datos obligatorios">
+      <div class="tituloStep">
+        <h1>Domicilio completo del titular de la reserva</h1>
+    </div>
       <form [formGroup]="datosContactoForm">
         <ng-template matStepLabel>Datos del Domicilio</ng-template>
         <div>
@@ -104,6 +110,9 @@
 
     <!-- Datos Acompañantes -->
     <mat-step [stepControl]="datosAcompanantesForm" errorMessage="Faltan datos obligatorios">
+      <div class="tituloStep">
+        <h1>Registro de datos de acompañantes </h1>
+    </div>
       <form [formGroup]="datosAcompanantesForm">
         <ng-template matStepLabel>Datos de Acompañantes</ng-template>
         <div>
@@ -155,6 +164,9 @@
 
     <!-- Datos Vehiculos -->
     <mat-step [stepControl]="datosVehiculosForm" errorMessage="Faltan datos obligatorios">
+      <div class="tituloStep">
+        <h1>Datos de los vehículos asociados a la reserva</h1>
+    </div>
       <form [formGroup]="datosVehiculosForm">
         <ng-template matStepLabel>Datos de Vehículos</ng-template>
         <div>
@@ -203,7 +215,9 @@
 
     <!-- Cancelación Pago -->
     <mat-step [stepControl]="cancelacionPagoForm" errorMessage="Faltan datos obligatorios">
-
+      <div class="tituloStep">
+        <h1>Registro del cobro de hospedaje</h1>
+    </div>
       <form [formGroup]="cancelacionPagoForm">
         <ng-template matStepLabel>Pago de Hospedaje</ng-template>
         <div>
