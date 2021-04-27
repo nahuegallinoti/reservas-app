@@ -138,6 +138,7 @@ export class RegistrocheckinComponent implements OnInit {
       sena: [],
       total: [],
       remanente: [],
+      cupon : [],
     });
     
   }
@@ -167,6 +168,7 @@ export class RegistrocheckinComponent implements OnInit {
 
     this.evento.extendedProps.montoSenia = this.cancelacionPagoForm.value.sena;
     this.evento.extendedProps.montoTotal = this.cancelacionPagoForm.value.total;
+    this.evento.extendedProps.cupon = this.cancelacionPagoForm.value.cupon;
 
     this.actualizarEstadoSolicitudReserva(this.evento.extendedProps.codigoReserva);
     this.reservaService.actualizarEvento(this.evento.id, this.evento);
@@ -186,6 +188,7 @@ export class RegistrocheckinComponent implements OnInit {
     solicitudReserva.estado = this.estados.find(x => x.identificador == EstadosConst.estadoPagado)
     solicitudReserva.montoSenia = this.cancelacionPagoForm.value.sena;
     solicitudReserva.montoTotal = this.cancelacionPagoForm.value.total;
+    // solicitudReserva.cupon = this.cancelacionPagoForm.value.cupon;
     solicitudReserva.realizoCheckIn = true;
 
     this._solicituReservaService.actualizarReserva(solicitudReserva);
@@ -282,7 +285,7 @@ export class RegistrocheckinComponent implements OnInit {
     let saldoPendiente = checkIn.evento.extendedProps.montoTotal - checkIn.evento.extendedProps.montoSenia;
     doc.text("Saldo Pendiente: " + saldoPendiente, 13, 70);
     doc.text("Forma de Pago: " + checkIn.formaPago.descripcion, 13, 80);
-
+    doc.text("El numero de cupon es: " + checkIn.evento.extendedProps.cupon, 13, 100);
     
     doc.save(checkIn.evento.id.toString() + '.pdf');
     

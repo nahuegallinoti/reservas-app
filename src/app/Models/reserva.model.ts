@@ -16,6 +16,7 @@ export class Reserva extends BaseClass<Reserva> {
   fechaHasta: Date;
   montoSenia: number;
   montoTotal: number;
+  cupon: number;
   realizoCheckIn: boolean;
   realizoCheckOut: boolean;
 }
