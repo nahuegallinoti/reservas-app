@@ -252,8 +252,16 @@
             <mat-label> Nro. cupon:</mat-label>
             <input matInput formControlName="cupon" type="number">
           </mat-form-field>
+          
+          <mat-form-field>
+            <mat-select name="bancos" (selectionChange)="selectedValue($event)" [(value)]="selectedBanco"
+              placeholder="Banco">
+              <mat-option *ngFor="let people of peoples" [value]="people.name">
+                {{people.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        
         <div>
           <button mat-button matStepperPrevious color="accent">Volver</button>
           <button mat-button matStepperNext color="primary" (click)="registrarCheckIn()">Guardar</button>

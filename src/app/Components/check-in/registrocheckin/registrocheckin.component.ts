@@ -11,7 +11,9 @@ import { ReservaService } from 'src/app/Services/evento.service';
 import { Subscription } from 'rxjs';
 import { Evento } from 'src/app/Models/evento.model';
 import { FormaPagoService } from 'src/app/Services/forma-pago.service';
+import { BancosService } from 'src/app/Services/banco.service';
 import { FormaPago } from 'src/app/Models/formaPago.model';
+import { Bancos } from 'src/app/Models/banco.model'
 import { MatSelectChange } from '@angular/material/select';
 import { EmailService } from 'src/app/Services/email.service';
 import jsPDF from 'jspdf';
@@ -46,9 +48,26 @@ export class RegistrocheckinComponent implements OnInit {
   evento: Evento;
   eventosSubscription: Subscription;
   formasPago: FormaPago[] = [];
+  bancos: Bancos[] = [];
+  peoples = [
+    {
+      nombre: "Macro"
+    },
+    {
+      nombre:"Nacion"
+    }
+]
+  
+
+
+
+
   faDollarSign = faDollarSign;
   formasPagoSubscription: Subscription;
+  bancosSubscription: Subscription;
+
   selectedFormaPago: string = "Contado";
+  selectedBanco: string = "";
   selectedData: { value: string; text: string } = {
     value: "",
     text: "",
@@ -71,6 +90,7 @@ export class RegistrocheckinComponent implements OnInit {
     private route: ActivatedRoute,
     private reservaService: ReservaService,
     private formaPagoService: FormaPagoService,
+    private bancosService: BancosService,
     private _uploadFileService: UploadFileFirebaseService,
     private _estadoService: EstadoService,
     private _solicituReservaService: SolicitudReservaService
@@ -92,6 +112,11 @@ export class RegistrocheckinComponent implements OnInit {
         this.formasPago = formasPago;
       }
     )    
+    this.bancosSubscription = this.bancosService.bancosChanged.subscribe(
+      (bancos) => {
+        this.bancos = bancos;
+      } 
+    )
 
     this.estadosSubscription = this._estadoService.estadosChanged.subscribe((estados) => {
       this.estados = estados;
@@ -157,7 +182,7 @@ export class RegistrocheckinComponent implements OnInit {
     let checkIn = new CheckIn();
     
     checkIn.formaPago = this.formasPago.find(x => x.id.toString() == this.selectedData.value);
-
+    checkIn.bancos= this.bancos.find(x => x.id.toString() == this.selectedData.value);
     checkIn.titular = this.datosPersonalesForm.value;
     checkIn.datosDomicilio = this.datosContactoForm.value;
     checkIn.acompanantes = this.acompanantes;
