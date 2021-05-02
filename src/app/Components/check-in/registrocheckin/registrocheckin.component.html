@@ -254,10 +254,10 @@
           </mat-form-field>
           
           <mat-form-field>
-            <mat-select name="bancos" (selectionChange)="selectedValue($event)" [(value)]="selectedBanco"
+            <mat-select name="bancos" (selectionChange)="selectedBancos($event)" [(value)]="selectedBanco"
               placeholder="Banco">
-              <mat-option *ngFor="let people of peoples" [value]="people.name">
-                {{people.name}}
+              <mat-option *ngFor="let banquitos of bancon" [value]="banquitos.name">
+                {{banquitos.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>

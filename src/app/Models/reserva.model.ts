@@ -17,6 +17,7 @@ export class Reserva extends BaseClass<Reserva> {
   montoSenia: number;
   montoTotal: number;
   cupon: number;
+  banco: string;
   realizoCheckIn: boolean;
   realizoCheckOut: boolean;
 }

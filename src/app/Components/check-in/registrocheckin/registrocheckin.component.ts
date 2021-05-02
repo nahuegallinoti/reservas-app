@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CheckIn } from 'src/app/Models/checkin.model';
@@ -11,7 +11,7 @@ import { ReservaService } from 'src/app/Services/evento.service';
 import { Subscription } from 'rxjs';
 import { Evento } from 'src/app/Models/evento.model';
 import { FormaPagoService } from 'src/app/Services/forma-pago.service';
-import { BancosService } from 'src/app/Services/banco.service';
+// import { BancosService } from 'src/app/Services/banco.service';
 import { FormaPago } from 'src/app/Models/formaPago.model';
 import { Bancos } from 'src/app/Models/banco.model'
 import { MatSelectChange } from '@angular/material/select';
@@ -49,29 +49,60 @@ export class RegistrocheckinComponent implements OnInit {
   eventosSubscription: Subscription;
   formasPago: FormaPago[] = [];
   bancos: Bancos[] = [];
-  peoples = [
-    {
-      nombre: "Macro"
-    },
-    {
-      nombre:"Nacion"
-    }
-]
-  
+  selectedBanco: any;
+   
+   bancon = [
+    { name: "Bancor" },
+    { name: "Citibank" },
+    { name: "Columbia" },
+    { name: "Comafi" },
+    { name: "Credicoop" },
+    { name: "Frances" },
+    { name: "Galicia" },
+    { name: "Hipotecario" },
+    { name: "HSBC" },
+    { name: "ICBC" },
+    { name: "industrial" },
+    { name: "itau" },
+    { name: "Macro"},
+    { name: "Naranja" },
+    { name: "Patagonia" },
+    { name: "Piano" },
+    { name: "Roela" },
+    { name: "Santander"},
+    { name: "Santiago del Estero" },
+    { name: "Supervielle" },
+    { name: "Otro" },
+    { name: "Ninguno" },
 
 
+
+
+
+
+
+
+
+
+
+  ];
 
 
   faDollarSign = faDollarSign;
   formasPagoSubscription: Subscription;
-  bancosSubscription: Subscription;
+  // bancosSubscription: Subscription;
 
+ 
   selectedFormaPago: string = "Contado";
-  selectedBanco: string = "";
   selectedData: { value: string; text: string } = {
     value: "",
     text: "",
   };
+  selectedDataBancos: { value: string; text: string } = {
+    value: "",
+    text: "",
+  };
+
 
   solicitudesReservaSubscription: Subscription;
   solicitudesReserva: Reserva[] = [];
@@ -90,7 +121,7 @@ export class RegistrocheckinComponent implements OnInit {
     private route: ActivatedRoute,
     private reservaService: ReservaService,
     private formaPagoService: FormaPagoService,
-    private bancosService: BancosService,
+    // private bancosService: BancosService,
     private _uploadFileService: UploadFileFirebaseService,
     private _estadoService: EstadoService,
     private _solicituReservaService: SolicitudReservaService
@@ -112,11 +143,11 @@ export class RegistrocheckinComponent implements OnInit {
         this.formasPago = formasPago;
       }
     )    
-    this.bancosSubscription = this.bancosService.bancosChanged.subscribe(
-      (bancos) => {
-        this.bancos = bancos;
-      } 
-    )
+    // this.bancosSubscription = this.bancosService.bancosChanged.subscribe(
+    //   (bancos) => {
+    //     this.bancos = bancos;
+    //   } 
+    // )
 
     this.estadosSubscription = this._estadoService.estadosChanged.subscribe((estados) => {
       this.estados = estados;
@@ -164,9 +195,11 @@ export class RegistrocheckinComponent implements OnInit {
       total: [],
       remanente: [],
       cupon : [],
+      banco : []
     });
     
   }
+
 
   
   selectedValue(event: MatSelectChange) {
@@ -175,6 +208,13 @@ export class RegistrocheckinComponent implements OnInit {
       text: event.source.triggerValue
     };
   };
+  selectedBancos(event: MatSelectChange){
+    console.log('cambiooooooooo%%@@#$@#$@#$@#$@#$@#$@#$@#$#',event.value)
+    this.selectedData = {
+      value: event.value,
+      text: event.source.triggerValue
+    };
+  }
 
 
   async registrarCheckIn() {
@@ -182,18 +222,18 @@ export class RegistrocheckinComponent implements OnInit {
     let checkIn = new CheckIn();
     
     checkIn.formaPago = this.formasPago.find(x => x.id.toString() == this.selectedData.value);
-    checkIn.bancos= this.bancos.find(x => x.id.toString() == this.selectedData.value);
+    // checkIn.bancos= this.bancos.find(x => x.id.toString() == this.selectedData.value);
     checkIn.titular = this.datosPersonalesForm.value;
     checkIn.datosDomicilio = this.datosContactoForm.value;
     checkIn.acompanantes = this.acompanantes;
     checkIn.vehiculos = this.vehiculos;
-
     this.evento.extendedProps.realizoCheckIn = true;
     this.evento.extendedProps.estado = this.estados.find(x => x.identificador == EstadosConst.estadoPagado);
 
     this.evento.extendedProps.montoSenia = this.cancelacionPagoForm.value.sena;
     this.evento.extendedProps.montoTotal = this.cancelacionPagoForm.value.total;
     this.evento.extendedProps.cupon = this.cancelacionPagoForm.value.cupon;
+    this.evento.extendedProps.banco = this.cancelacionPagoForm.value.banco
 
     this.actualizarEstadoSolicitudReserva(this.evento.extendedProps.codigoReserva);
     this.reservaService.actualizarEvento(this.evento.id, this.evento);
@@ -242,6 +282,27 @@ export class RegistrocheckinComponent implements OnInit {
 
   }
 
+  onChange(banquitos){
+   console.log(banquitos)
+    }
+
+
+
+
+agregarBanco(banquitos){
+  const bancos = this.cancelacionPagoForm.value;
+    
+  // if (bancos.name == null){
+  //   this.uiService.showSnackBar(
+  //     'Debe ingresar datos obligatorios para poder cargar el vehículo.',
+  //     null,
+  //     3000
+  //   );
+  //   return;
+  // }
+  this.bancos.push(banquitos);
+  this.cancelacionPagoForm.reset();
+}
   agregarVehiculo() {
 
     const vehiculo = this.datosVehiculosForm.value;
