@@ -345,7 +345,8 @@ export class RegistrocheckinComponent implements OnInit {
     let saldoPendiente = checkIn.evento.extendedProps.montoTotal - checkIn.evento.extendedProps.montoSenia;
     doc.text("Saldo Pendiente: " + saldoPendiente, 13, 70);
     doc.text("Forma de Pago: " + checkIn.formaPago.descripcion, 13, 80);
-    doc.text("El numero de cupon es: " + checkIn.evento.extendedProps.cupon, 13, 100);
+    doc.text("El numero de cupon es: " + checkIn.evento.extendedProps.cupon, 13, 90);
+    doc.text("El banco es: " + checkIn.evento.extendedProps.banco, 13, 100);
     
     doc.save(checkIn.evento.id.toString() + '.pdf');
     
