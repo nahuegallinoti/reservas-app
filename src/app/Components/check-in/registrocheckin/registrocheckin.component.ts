@@ -48,8 +48,7 @@ export class RegistrocheckinComponent implements OnInit {
   evento: Evento;
   eventosSubscription: Subscription;
   formasPago: FormaPago[] = [];
-  bancos: Bancos[] = [];
-  selectedBanco: any;
+  bancos: Bancos;
    
    bancon = [
     { name: "Bancor" },
@@ -74,17 +73,6 @@ export class RegistrocheckinComponent implements OnInit {
     { name: "Supervielle" },
     { name: "Otro" },
     { name: "Ninguno" },
-
-
-
-
-
-
-
-
-
-
-
   ];
 
 
@@ -98,6 +86,7 @@ export class RegistrocheckinComponent implements OnInit {
     value: "",
     text: "",
   };
+  // selectedBanco: string = "Contado";
   selectedDataBancos: { value: string; text: string } = {
     value: "",
     text: "",
@@ -195,7 +184,7 @@ export class RegistrocheckinComponent implements OnInit {
       total: [],
       remanente: [],
       cupon : [],
-      banco : []
+      // banco : []
     });
     
   }
@@ -208,9 +197,10 @@ export class RegistrocheckinComponent implements OnInit {
       text: event.source.triggerValue
     };
   };
+
+
   selectedBancos(event: MatSelectChange){
-    console.log('cambiooooooooo%%@@#$@#$@#$@#$@#$@#$@#$@#$#',event.value)
-    this.selectedData = {
+    this.selectedDataBancos = {
       value: event.value,
       text: event.source.triggerValue
     };
@@ -222,7 +212,11 @@ export class RegistrocheckinComponent implements OnInit {
     let checkIn = new CheckIn();
     
     checkIn.formaPago = this.formasPago.find(x => x.id.toString() == this.selectedData.value);
-    // checkIn.bancos= this.bancos.find(x => x.id.toString() == this.selectedData.value);
+    // checkIn.bancos = this.bancon.find(x =>x.name.toString == this.selectedBanco.value) 
+
+    // checkIn.bancos= this.bancon.find(x => x.name.toString() == this.selectedDataBancos.value);
+    console.log(this.selectedDataBancos.value,'32423$@#$@#$@#$@#$@#$@#$@#$@#$@#$@#$@#$')
+    // checkIn.bancos=this.selectedDataBancos.value;
     checkIn.titular = this.datosPersonalesForm.value;
     checkIn.datosDomicilio = this.datosContactoForm.value;
     checkIn.acompanantes = this.acompanantes;
@@ -233,7 +227,8 @@ export class RegistrocheckinComponent implements OnInit {
     this.evento.extendedProps.montoSenia = this.cancelacionPagoForm.value.sena;
     this.evento.extendedProps.montoTotal = this.cancelacionPagoForm.value.total;
     this.evento.extendedProps.cupon = this.cancelacionPagoForm.value.cupon;
-    this.evento.extendedProps.banco = this.cancelacionPagoForm.value.banco
+    this.evento.extendedProps.banco= this.selectedDataBancos.value;
+    // this.evento.extendedProps.banco = this.cancelacionPagoForm.value.banco
 
     this.actualizarEstadoSolicitudReserva(this.evento.extendedProps.codigoReserva);
     this.reservaService.actualizarEvento(this.evento.id, this.evento);
@@ -282,27 +277,6 @@ export class RegistrocheckinComponent implements OnInit {
 
   }
 
-  onChange(banquitos){
-   console.log(banquitos)
-    }
-
-
-
-
-agregarBanco(banquitos){
-  const bancos = this.cancelacionPagoForm.value;
-    
-  // if (bancos.name == null){
-  //   this.uiService.showSnackBar(
-  //     'Debe ingresar datos obligatorios para poder cargar el vehículo.',
-  //     null,
-  //     3000
-  //   );
-  //   return;
-  // }
-  this.bancos.push(banquitos);
-  this.cancelacionPagoForm.reset();
-}
   agregarVehiculo() {
 
     const vehiculo = this.datosVehiculosForm.value;
