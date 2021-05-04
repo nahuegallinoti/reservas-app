@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CheckIn } from 'src/app/Models/checkin.model';
@@ -11,7 +11,9 @@ import { ReservaService } from 'src/app/Services/evento.service';
 import { Subscription } from 'rxjs';
 import { Evento } from 'src/app/Models/evento.model';
 import { FormaPagoService } from 'src/app/Services/forma-pago.service';
+// import { BancosService } from 'src/app/Services/banco.service';
 import { FormaPago } from 'src/app/Models/formaPago.model';
+import { Bancos } from 'src/app/Models/banco.model'
 import { MatSelectChange } from '@angular/material/select';
 import { EmailService } from 'src/app/Services/email.service';
 import jsPDF from 'jspdf';
@@ -46,13 +48,50 @@ export class RegistrocheckinComponent implements OnInit {
   evento: Evento;
   eventosSubscription: Subscription;
   formasPago: FormaPago[] = [];
+  bancos: Bancos;
+   
+   bancon = [
+    { name: "Bancor" },
+    { name: "Citibank" },
+    { name: "Columbia" },
+    { name: "Comafi" },
+    { name: "Credicoop" },
+    { name: "Frances" },
+    { name: "Galicia" },
+    { name: "Hipotecario" },
+    { name: "HSBC" },
+    { name: "ICBC" },
+    { name: "industrial" },
+    { name: "itau" },
+    { name: "Macro"},
+    { name: "Naranja" },
+    { name: "Patagonia" },
+    { name: "Piano" },
+    { name: "Roela" },
+    { name: "Santander"},
+    { name: "Santiago del Estero" },
+    { name: "Supervielle" },
+    { name: "Otro" },
+    { name: "Ninguno" },
+  ];
+
+
   faDollarSign = faDollarSign;
   formasPagoSubscription: Subscription;
+  // bancosSubscription: Subscription;
+
+ 
   selectedFormaPago: string = "Contado";
   selectedData: { value: string; text: string } = {
     value: "",
     text: "",
   };
+  // selectedBanco: string = "Contado";
+  selectedDataBancos: { value: string; text: string } = {
+    value: "",
+    text: "",
+  };
+
 
   solicitudesReservaSubscription: Subscription;
   solicitudesReserva: Reserva[] = [];
@@ -71,6 +110,7 @@ export class RegistrocheckinComponent implements OnInit {
     private route: ActivatedRoute,
     private reservaService: ReservaService,
     private formaPagoService: FormaPagoService,
+    // private bancosService: BancosService,
     private _uploadFileService: UploadFileFirebaseService,
     private _estadoService: EstadoService,
     private _solicituReservaService: SolicitudReservaService
@@ -92,6 +132,11 @@ export class RegistrocheckinComponent implements OnInit {
         this.formasPago = formasPago;
       }
     )    
+    // this.bancosSubscription = this.bancosService.bancosChanged.subscribe(
+    //   (bancos) => {
+    //     this.bancos = bancos;
+    //   } 
+    // )
 
     this.estadosSubscription = this._estadoService.estadosChanged.subscribe((estados) => {
       this.estados = estados;
@@ -138,9 +183,12 @@ export class RegistrocheckinComponent implements OnInit {
       sena: [],
       total: [],
       remanente: [],
+      cupon : [],
+      // banco : []
     });
     
   }
+
 
   
   selectedValue(event: MatSelectChange) {
@@ -151,22 +199,36 @@ export class RegistrocheckinComponent implements OnInit {
   };
 
 
+  selectedBancos(event: MatSelectChange){
+    this.selectedDataBancos = {
+      value: event.value,
+      text: event.source.triggerValue
+    };
+  }
+
+
   async registrarCheckIn() {
 
     let checkIn = new CheckIn();
     
     checkIn.formaPago = this.formasPago.find(x => x.id.toString() == this.selectedData.value);
+    // checkIn.bancos = this.bancon.find(x =>x.name.toString == this.selectedBanco.value) 
 
+    // checkIn.bancos= this.bancon.find(x => x.name.toString() == this.selectedDataBancos.value);
+    console.log(this.selectedDataBancos.value,'32423$@#$@#$@#$@#$@#$@#$@#$@#$@#$@#$@#$')
+    // checkIn.bancos=this.selectedDataBancos.value;
     checkIn.titular = this.datosPersonalesForm.value;
     checkIn.datosDomicilio = this.datosContactoForm.value;
     checkIn.acompanantes = this.acompanantes;
     checkIn.vehiculos = this.vehiculos;
-
     this.evento.extendedProps.realizoCheckIn = true;
     this.evento.extendedProps.estado = this.estados.find(x => x.identificador == EstadosConst.estadoPagado);
 
     this.evento.extendedProps.montoSenia = this.cancelacionPagoForm.value.sena;
     this.evento.extendedProps.montoTotal = this.cancelacionPagoForm.value.total;
+    this.evento.extendedProps.cupon = this.cancelacionPagoForm.value.cupon;
+    this.evento.extendedProps.banco= this.selectedDataBancos.value;
+    // this.evento.extendedProps.banco = this.cancelacionPagoForm.value.banco
 
     this.actualizarEstadoSolicitudReserva(this.evento.extendedProps.codigoReserva);
     this.reservaService.actualizarEvento(this.evento.id, this.evento);
@@ -186,6 +248,7 @@ export class RegistrocheckinComponent implements OnInit {
     solicitudReserva.estado = this.estados.find(x => x.identificador == EstadosConst.estadoPagado)
     solicitudReserva.montoSenia = this.cancelacionPagoForm.value.sena;
     solicitudReserva.montoTotal = this.cancelacionPagoForm.value.total;
+    // solicitudReserva.cupon = this.cancelacionPagoForm.value.cupon;
     solicitudReserva.realizoCheckIn = true;
 
     this._solicituReservaService.actualizarReserva(solicitudReserva);
@@ -282,7 +345,8 @@ export class RegistrocheckinComponent implements OnInit {
     let saldoPendiente = checkIn.evento.extendedProps.montoTotal - checkIn.evento.extendedProps.montoSenia;
     doc.text("Saldo Pendiente: " + saldoPendiente, 13, 70);
     doc.text("Forma de Pago: " + checkIn.formaPago.descripcion, 13, 80);
-
+    doc.text("El numero de cupon es: " + checkIn.evento.extendedProps.cupon, 13, 90);
+    doc.text("El banco es: " + checkIn.evento.extendedProps.banco, 13, 100);
     
     doc.save(checkIn.evento.id.toString() + '.pdf');
     
