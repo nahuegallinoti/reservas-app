@@ -137,6 +137,18 @@
             <mat-label>Fecha de Nacimiento</mat-label>
             <input matInput type="date" formControlName="fechaNacimiento">
           </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-select name="pariente" (selectionChange)="selectedPariente($event)"
+              placeholder="Parentesco">
+              <mat-option *ngFor="let pariente of parentesco" [value]="pariente.name">
+                {{pariente.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
           <button mat-button color="primary" (click)="agregarAcompanante()">Agregar
             <mat-icon>add</mat-icon>
           </button>

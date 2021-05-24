@@ -48,7 +48,14 @@ export class RegistrocheckinComponent implements OnInit {
   evento: Evento;
   eventosSubscription: Subscription;
   formasPago: FormaPago[] = [];
-  bancos: Bancos;
+  // bancos: Bancos;
+
+
+  parentesco = [
+    {name: "pareja"},
+    {name: "pariente"},
+    {name : "amigos"}
+  ]
    
    bancon = [
     { name: "Bancor" },
@@ -78,7 +85,7 @@ export class RegistrocheckinComponent implements OnInit {
 
   faDollarSign = faDollarSign;
   formasPagoSubscription: Subscription;
-  // bancosSubscription: Subscription;
+  
 
  
   selectedFormaPago: string = "Contado";
@@ -86,8 +93,13 @@ export class RegistrocheckinComponent implements OnInit {
     value: "",
     text: "",
   };
-  // selectedBanco: string = "Contado";
+  
   selectedDataBancos: { value: string; text: string } = {
+    value: "",
+    text: "",
+  };
+
+  selectedParentesco: { value: string; text: string } = {
     value: "",
     text: "",
   };
@@ -132,11 +144,7 @@ export class RegistrocheckinComponent implements OnInit {
         this.formasPago = formasPago;
       }
     )    
-    // this.bancosSubscription = this.bancosService.bancosChanged.subscribe(
-    //   (bancos) => {
-    //     this.bancos = bancos;
-    //   } 
-    // )
+
 
     this.estadosSubscription = this._estadoService.estadosChanged.subscribe((estados) => {
       this.estados = estados;
@@ -205,18 +213,18 @@ export class RegistrocheckinComponent implements OnInit {
       text: event.source.triggerValue
     };
   }
-
+  selectedPariente(event: MatSelectChange){
+    this.selectedParentesco = {
+      value: event.value,
+      text: event.source.triggerValue
+    };
+  }
 
   async registrarCheckIn() {
 
     let checkIn = new CheckIn();
     
     checkIn.formaPago = this.formasPago.find(x => x.id.toString() == this.selectedData.value);
-    // checkIn.bancos = this.bancon.find(x =>x.name.toString == this.selectedBanco.value) 
-
-    // checkIn.bancos= this.bancon.find(x => x.name.toString() == this.selectedDataBancos.value);
-    console.log(this.selectedDataBancos.value,'32423$@#$@#$@#$@#$@#$@#$@#$@#$@#$@#$@#$')
-    // checkIn.bancos=this.selectedDataBancos.value;
     checkIn.titular = this.datosPersonalesForm.value;
     checkIn.datosDomicilio = this.datosContactoForm.value;
     checkIn.acompanantes = this.acompanantes;
@@ -228,7 +236,7 @@ export class RegistrocheckinComponent implements OnInit {
     this.evento.extendedProps.montoTotal = this.cancelacionPagoForm.value.total;
     this.evento.extendedProps.cupon = this.cancelacionPagoForm.value.cupon;
     this.evento.extendedProps.banco= this.selectedDataBancos.value;
-    // this.evento.extendedProps.banco = this.cancelacionPagoForm.value.banco
+    this.evento.extendedProps.parentesco=this.selectedParentesco.value; 
 
     this.actualizarEstadoSolicitudReserva(this.evento.extendedProps.codigoReserva);
     this.reservaService.actualizarEvento(this.evento.id, this.evento);

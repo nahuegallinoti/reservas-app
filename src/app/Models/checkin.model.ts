@@ -15,5 +15,4 @@ export class CheckIn extends BaseClass<CheckIn> {
   evento: Evento;
   formaPago: FormaPago;
   bancos: Bancos[];
-  // bancos:string;
 }
