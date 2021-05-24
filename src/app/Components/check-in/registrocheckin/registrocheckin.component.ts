@@ -103,7 +103,7 @@ export class RegistrocheckinComponent implements OnInit {
     value: "",
     text: "",
   };
-
+// sdsd
 
   solicitudesReservaSubscription: Subscription;
   solicitudesReserva: Reserva[] = [];
