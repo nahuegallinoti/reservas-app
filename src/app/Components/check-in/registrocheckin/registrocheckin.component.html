@@ -141,7 +141,7 @@
         <div>
           <mat-form-field>
             <mat-select name="pariente" (selectionChange)="selectedPariente($event)"
-              placeholder="relacion">
+              placeholder="Parentesco">
               <mat-option *ngFor="let pariente of parentesco" [value]="pariente.name">
                 {{pariente.name}}
               </mat-option>
