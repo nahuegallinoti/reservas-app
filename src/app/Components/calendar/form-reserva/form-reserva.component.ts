@@ -52,6 +52,7 @@ export class FormReservaComponent implements OnInit, OnDestroy {
   reservasSubscription: Subscription;
 
   fechaDesde: Date;
+  fechaDesdeMinima;
   fechaHastaMinima;
   eventos: Evento[] = [];
   solicitudesReservas: Reserva[] = [];
@@ -136,8 +137,13 @@ export class FormReservaComponent implements OnInit, OnDestroy {
     this.buildForm();
     if (!this.isEditing) {
       this.limitarFechaHasta();
+      this.limitarFechaDesde();
+      
     } else {
       this.inicializarCamposParaEdicion();
+      this.limitarFechaDesde();
+      this.limitarFechaHasta();
+
     }
   }
 
@@ -221,9 +227,14 @@ export class FormReservaComponent implements OnInit, OnDestroy {
       MontoTotal: this.eventoAEditar.extendedProps.montoTotal,
     });
   }
-
+  limitarFechaDesde(){
+    // let fechaMinima = new Date();
+    // this.fechaDesdeMinima.setDate(fechaMinima.getDate());
+     this.fechaDesdeMinima = new Date();
+  }
   limitarFechaHasta() {
     this.fechaHastaMinima = new Date();
+    // this.fechaHastaMinima.setDate(this.fechaDesde.getDate() + 1);
     this.fechaHastaMinima.setDate(this.fechaDesde.getDate() + 1);
   }
 
